@@ -1,4 +1,4 @@
-package Pattern_Two_Pointers;
+package Two_Pointers_Technique;
 
 // Problem Statement: Comparing Strings containing Backspaces (medium)
 // LeetCode Question: 844. Backspace String Compare

@@ -18,7 +18,9 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 ## 2. Outline
 
-[1: Two Pointers ](src/Pattern_Two_Pointers)
+[1: Two Pointers Technique ](src/Two_Pointers_Technique)
+
+[2. Fast And Slow Pointer Pattern](src/Fast_And_Slow_Pointers_Pattern)
 
 ## 3. Resources:
 

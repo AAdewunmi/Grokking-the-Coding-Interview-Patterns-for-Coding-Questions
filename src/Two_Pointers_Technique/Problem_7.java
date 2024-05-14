@@ -1,4 +1,4 @@
-package Pattern_Two_Pointers;
+package Two_Pointers_Technique;
 
 // Problem Statement: Subarrays with Product Less than a Target (medium)
 // LeetCode Question: 713. Subarray Product Less Than K

@@ -1,4 +1,4 @@
-package Pattern_Two_Pointers;
+package Two_Pointers_Technique;
 
 // Problem Statement: Triplets with Smaller Sum (medium)
 // LeetCode Question: 259. 3Sum Smaller

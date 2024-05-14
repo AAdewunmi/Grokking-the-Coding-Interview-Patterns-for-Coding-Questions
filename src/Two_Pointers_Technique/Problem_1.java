@@ -1,4 +1,4 @@
-package Pattern_Two_Pointers;
+package Two_Pointers_Technique;
 
 // Problem Statement: Pair with Target Sum (easy)
 // LeetCode Question: 1. Two Sum

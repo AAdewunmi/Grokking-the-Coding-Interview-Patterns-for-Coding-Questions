@@ -1,4 +1,4 @@
-package Pattern_Two_Pointers;
+package Two_Pointers_Technique;
 
 // Problem Statement: Triplet Sum to Zero (medium)
 // LeetCode Question: 15. 3Sum

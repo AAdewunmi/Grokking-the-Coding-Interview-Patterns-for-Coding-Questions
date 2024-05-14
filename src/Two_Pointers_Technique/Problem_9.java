@@ -1,4 +1,4 @@
-package Pattern_Two_Pointers;
+package Two_Pointers_Technique;
 
 // Problem Statement: Quadruple Sum to Target (medium)
 // LeetCode Question: 18. 4Sum

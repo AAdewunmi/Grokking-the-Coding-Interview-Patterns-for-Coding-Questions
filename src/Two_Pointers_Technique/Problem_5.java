@@ -1,4 +1,4 @@
-package Pattern_Two_Pointers;
+package Two_Pointers_Technique;
 
 // Problem Statement: Triplet Sum Close to Target (medium)
 // LeetCode Question: 3Sum Closest

@@ -1,4 +1,4 @@
-package Pattern_Two_Pointers;
+package Two_Pointers_Technique;
 
 // Problem Statement: Dutch National Flag Problem (medium)
 // LeetCode Question: 75. Sort Colors

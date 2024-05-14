@@ -1,4 +1,4 @@
-package Pattern_Two_Pointers;
+package Two_Pointers_Technique;
 
 // Problem Statement: Minimum Window Sort (medium)
 // LeetCode Question: 581. Shortest Unsorted Continuous Subarray

@@ -1,3 +1,5 @@
+The Two Pointers Technique
+
 The Two Pointers Technique is a problem-solving approach used to solve certain types of problems efficiently. It typically involves using two pointers (or indices) that move through the data structure in a way that helps to solve the problem more effectively than using a single pointer or brute force methods.
 
 Here's how the Two Pointers Technique generally works:
@@ -24,7 +26,9 @@ Some common scenarios where the Two Pointers Technique is applied include:
 
 The Two Pointers Technique is efficient and often results in solutions with better time complexity compared to brute force approaches. It's particularly effective for problems where the data structure is sorted or can be processed in a specific order.
 
-Here's a pseudocode example illustrating the Two Pointers Technique:
+This pseudocode demonstrates the general structure of the Two Pointers Technique. It initializes two pointers, leftPointer and rightPointer, and moves them through the array towards each other based on certain conditions.
+
+In this example, the condition is checking for pairs with a given sum, but you can adapt the code for other problems by adjusting the condition and operations inside the loop.
 
 function twoPointersAlgorithm(array):
     // Initialize pointers

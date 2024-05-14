@@ -1,4 +1,4 @@
-package Pattern_Two_Pointers;
+package Two_Pointers_Technique;
 
 // Problem Statement: Find Non-Duplicate Number Instances (easy)
 // LeetCode Question: 26. Remove Duplicates from Sorted Array
