@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Problem_9 {
+public class Problem_9_Quadruple_Sum_to_Target {
     public List<List<Integer>> searchQuadruples(int[] arr, int target){
         Arrays.sort(arr);
         List<List<Integer>> quadruplets = new ArrayList<>();

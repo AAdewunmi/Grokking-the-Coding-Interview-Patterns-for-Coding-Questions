@@ -3,7 +3,7 @@ package Two_Pointers_Technique;
 // Problem Statement: Minimum Window Sort (medium)
 // LeetCode Question: 581. Shortest Unsorted Continuous Subarray
 
-public class Problem_11 {
+public class Problem_11_Minimum_Window_Sort {
     public static int sort(int[] arr) {
         int low = 0, high = arr.length - 1;
         // find the first number out of sorting order from the beginning

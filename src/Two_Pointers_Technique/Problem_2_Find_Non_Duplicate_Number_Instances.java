@@ -3,7 +3,7 @@ package Two_Pointers_Technique;
 // Problem Statement: Find Non-Duplicate Number Instances (easy)
 // LeetCode Question: 26. Remove Duplicates from Sorted Array
 
-public class Problem_2 {
+public class Problem_2_Find_Non_Duplicate_Number_Instances {
     public int remove(int[] arr){
         int nextDuplicateItem = 1;
         for (int i = 1; i < arr.length; i++) {

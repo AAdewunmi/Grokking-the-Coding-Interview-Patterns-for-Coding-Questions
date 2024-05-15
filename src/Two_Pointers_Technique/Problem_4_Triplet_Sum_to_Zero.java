@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Problem_4 {
+public class Problem_4_Triplet_Sum_to_Zero {
     public static List<List<Integer>> searchTriplets(int[] arr){
         Arrays.sort(arr);
         List<List<Integer>> triplets = new ArrayList<>();

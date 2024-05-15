@@ -5,7 +5,7 @@ package Two_Pointers_Technique;
 
 import java.util.Arrays;
 
-public class Problem_6 {
+public class Problem_6_Triplets_with_Smaller_Sum {
     public int searchTriplets(int[] arr, int target){
         if (arr.length < 3) {
             return 0;

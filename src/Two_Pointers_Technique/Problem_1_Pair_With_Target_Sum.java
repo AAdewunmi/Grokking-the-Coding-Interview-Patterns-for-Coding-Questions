@@ -3,7 +3,7 @@ package Two_Pointers_Technique;
 // Problem Statement: Pair with Target Sum (easy)
 // LeetCode Question: 1. Two Sum
 
-public class Problem_1 {
+public class Problem_1_Pair_With_Target_Sum {
     public static int[] search(int[] arr, int targetSum){
         int left = 0;
         int right = arr.length - 1;

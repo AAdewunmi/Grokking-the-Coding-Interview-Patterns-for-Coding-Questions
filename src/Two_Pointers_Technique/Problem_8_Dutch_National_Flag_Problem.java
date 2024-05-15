@@ -3,7 +3,7 @@ package Two_Pointers_Technique;
 // Problem Statement: Dutch National Flag Problem (medium)
 // LeetCode Question: 75. Sort Colors
 
-public class Problem_8 {
+public class Problem_8_Dutch_National_Flag_Problem {
     public int[] sort(int[] arr){
         int low = 0, high = arr.length - 1;
         for (int i = 0; i <= high;) {

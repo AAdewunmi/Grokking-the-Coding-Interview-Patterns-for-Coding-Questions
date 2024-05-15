@@ -5,7 +5,7 @@ package Two_Pointers_Technique;
 
 import java.util.Arrays;
 
-public class Problem_5 {
+public class Problem_5_Triplet_Sum_Close_to_Target {
     public int searchTriplet(int[] arr, int targetSum){
         if (arr == null || arr.length < 3) {
             throw new IllegalArgumentException();
