@@ -1,7 +1,7 @@
 package Fast_And_Slow_Pointers;
 
 // Problem Statement: Rearrange a LinkedList (medium)
-// LeetCode Question: 143. Reorder List
+// LeetCode Question: 143.Reorder List
 
 public class Problem_6_Rearrange_A_LinkedList {
     class ListNode{
