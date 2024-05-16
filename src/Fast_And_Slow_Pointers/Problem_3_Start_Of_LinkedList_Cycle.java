@@ -1,6 +1,6 @@
 package Fast_And_Slow_Pointers;
 
-// Design Guru Problem Statement: Start of LinkedList Cycle
+// Problem Statement: Start of LinkedList Cycle
 // LeetCode Question: 142. Linked List Cycle II
 
 public class Problem_3_Start_Of_LinkedList_Cycle {
