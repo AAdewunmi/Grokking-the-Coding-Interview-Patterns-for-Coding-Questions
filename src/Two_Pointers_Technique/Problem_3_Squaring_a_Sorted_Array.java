@@ -1,7 +1,7 @@
 package Two_Pointers_Technique;
 
 // Problem Statement: Squaring a Sorted Array (easy)
-// LeetCode Question: 26. Remove Duplicates from Sorted Array
+// LeetCode Question: 977. Squares of a sorted array
 
 public class Problem_3_Squaring_a_Sorted_Array {
     public static int[] makeSquares(int[] arr){
