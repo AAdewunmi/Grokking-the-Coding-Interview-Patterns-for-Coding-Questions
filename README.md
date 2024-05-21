@@ -2,14 +2,14 @@
 
 # Project Title:
 
-Patterns for Coding Interview Questions
+Patterns for Coding Interview Questions: Solutions to Grokking the Coding Interview Patterns for Coding Questions in JAVA ☕️
 
 
 ## 1. Project Description:
 
-This repository contains a list of "must know" patterns for coding interview questions. 
+This repository contains a list of "must know" patterns for coding interview questions and their solutions in Java programming language. 
 
-This list and its contents are based on a popular resource - "Grokking the Coding Interview: Patterns for Coding Questions"
+This list and its contents are based on a popular resource - "Grokking the Coding Interview: Patterns for Coding Questions" by Design Gurus.
 
 I am an advocate for learning-in-public, so I thought I'd create a public repository to keep all my learning on the subject.
 
@@ -30,7 +30,7 @@ I acknowledge the use of OpenAI's ChatGPT for topic explanation and LeetCode for
 
 ## 4. Adapted from: 
 
-Grokking the Coding Interview: Patterns for Coding Questions
+"Grokking the Coding Interview: Patterns for Coding Questions" by Design Gurus (2024).
 
 URL: https://www.designgurus.io/course-play/grokking-the-coding-interview/doc/63afd6338d316e91ad9fc027
 
