@@ -2,7 +2,7 @@
 
 # Project Title:
 
-Patterns for Coding Interview Questions: Solutions to Grokking the Coding Interview Patterns for Coding Questions in JAVA ☕️
+Solutions to "Grokking the Coding Interview: Patterns for Coding Questions" by Design Gurus implemented in JAVA ☕️
 
 
 ## 1. Project Description:
