@@ -24,6 +24,8 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [3. Sliding Window Technique](src/Sliding_Window_Technique)
 
+[4. Merge Interval Pattern](src/Merge_Intervals_Pattern)
+
 ## 3. Resources:
 
 I acknowledge the use of OpenAI's ChatGPT for topic explanation and LeetCode for coding interview questions 👨‍💻
