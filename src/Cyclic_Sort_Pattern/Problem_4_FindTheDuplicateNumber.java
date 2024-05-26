@@ -1,6 +1,6 @@
 package Cyclic_Sort_Pattern;
 
-// Problem Statement: Find the Duplicate Number (medium)
+// Problem Statement: Find the Duplicate Number (easy)
 // LeetCode Question: 287. Find the Duplicate Number
 
 public class Problem_4_FindTheDuplicateNumber {

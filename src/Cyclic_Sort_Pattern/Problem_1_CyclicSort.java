@@ -1,6 +1,6 @@
 package Cyclic_Sort_Pattern;
 
-// Problem Statement: Cyclic Sort
+// Problem Statement: Cyclic Sort (easy)
 // LeetCode Question: 912. Sort an Array
 
 public class Problem_1_CyclicSort {
