@@ -1,0 +1,69 @@
+Cyclic Sort Pattern:
+
+The cyclic sort pattern is a useful algorithmic approach to solve problems involving arrays where elements are within a known range (e.g., 1 to n).
+This pattern is particularly effective for sorting such arrays in place and for finding missing or duplicate elements in these arrays.
+Let's delve into the details, implementation, and examples of the cyclic sort pattern for coding interviews.
+
+Key Concepts of Cyclic Sort Pattern
+
+- Array Elements in Known Range: Cyclic sort works best with arrays where elements are within a known range, such as 1 to n or 0 to n-1.
+- Correct Index Placement: Each element should be placed at the index equal to its value minus one (i.e., number 1 at index 0, number 2 at index 1, etc.).
+- In-Place Sorting: The algorithm sorts the array in place, minimizing the space complexity.
+
+Steps to Implement Cyclic Sort
+
+- Initialize Index: Start with the first element.
+- Correct Position Check: Check if the current element is in its correct position.
+- Swap If Necessary: If the current element is not in the correct position, swap it with the element at its target position.
+- Iterate: Move to the next element and repeat the process until all elements are in their correct positions.
+
+Problems Solvable with Cyclic Sort
+
+- Sort the Array: Given an array containing numbers from 1 to n, sort it using cyclic sort.
+- Find the Missing Number: Given an array containing numbers from 0 to n with one number missing, find the missing number.
+- Find All Missing Numbers: Given an array containing numbers from 1 to n with some numbers missing, find all missing numbers.
+- Find Duplicate Numbers: Given an array containing numbers from 1 to n with some duplicates, find all duplicates.
+
+Example Implementations
+
+Finding All Missing Numbers
+
+Here's an implementation for finding all missing numbers from an array containing numbers from 1 to n:
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class AllMissingNumbers {
+    public static List<Integer> findDisappearedNumbers(int[] nums) {
+        int i = 0;
+        while (i < nums.length) {
+            int correctIndex = nums[i] - 1;
+            if (nums[i] != nums[correctIndex]) {
+                swap(nums, i, correctIndex);
+            } else {
+                i++;
+            }
+        }
+
+        List<Integer> missingNumbers = new ArrayList<>();
+        for (i = 0; i < nums.length; i++) {
+            if (nums[i] != i + 1) {
+                missingNumbers.add(i + 1);
+            }
+        }
+
+        return missingNumbers;
+    }
+
+    private static void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {4, 3, 2, 7, 8, 2, 3, 1};
+        List<Integer> missingNumbers = findDisappearedNumbers(nums);
+        System.out.println("Missing numbers: " + missingNumbers);  // Output: Missing numbers: [5, 6]
+    }
+}
