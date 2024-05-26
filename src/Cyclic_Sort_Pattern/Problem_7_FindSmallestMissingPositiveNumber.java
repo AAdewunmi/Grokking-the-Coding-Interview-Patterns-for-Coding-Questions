@@ -1,7 +1,7 @@
 package Cyclic_Sort_Pattern;
 
 // Problem Statement: Find the Smallest Missing Positive Number (medium)
-// LeetCode Question: 645. Set Mismatch
+// LeetCode Question: 41. First Missing Positive
 
 public class Problem_7_FindSmallestMissingPositiveNumber {
     public int findNumber(int[] nums) {
