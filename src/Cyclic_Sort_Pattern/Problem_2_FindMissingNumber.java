@@ -1,6 +1,6 @@
 package Cyclic_Sort_Pattern;
 
-// Problem Statement: Find all Missing Number (easy)
+// Problem Statement: Find the Missing Number (easy)
 // LeetCode Question: 268. Missing Number
 
 public class Problem_2_FindMissingNumber {
