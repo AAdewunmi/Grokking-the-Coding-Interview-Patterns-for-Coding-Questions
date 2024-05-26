@@ -26,6 +26,9 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [4. Merge Interval Pattern](src/Merge_Intervals_Pattern)
 
+[5. Cyclic Sort Pattern](src/Cyclic_Sort_Pattern)
+
+
 ## 3. Resources:
 
 I acknowledge the use of OpenAI's ChatGPT for topic explanation and LeetCode for coding interview questions 👨‍💻
