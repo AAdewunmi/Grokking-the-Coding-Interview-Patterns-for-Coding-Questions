@@ -28,6 +28,7 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [5. Cyclic Sort Pattern](src/Cyclic_Sort_Pattern)
 
+[6. In Place Reversal LinkedList Pattern](src/In_Place_Reversal_LinkedList_Pattern)
 
 ## 3. Resources:
 
