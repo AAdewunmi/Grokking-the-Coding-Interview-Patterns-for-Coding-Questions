@@ -30,6 +30,9 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [6. In Place Reversal LinkedList Pattern](src/In_Place_Reversal_LinkedList_Pattern)
 
+[7. Stacks](src/Stacks)
+
+
 ## 3. Resources:
 
 I acknowledge the use of OpenAI's ChatGPT for topic explanation and LeetCode for coding interview questions 👨‍💻
