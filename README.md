@@ -11,7 +11,7 @@ This repository contains a list of "must know" patterns for coding interview que
 
 This list and its contents are based on a popular resource - "Grokking the Coding Interview: Patterns for Coding Questions" by Design Gurus.
 
-I am an advocate for learning-in-public, so I thought I'd create a public repository to keep all my learning on the subject.
+I am an advocate of learning-in-public, so I thought I'd create a public repository to keep all my learning on the subject.
 
 Hope you find it useful (as soon as I complete it!) 😎 
 
@@ -35,7 +35,7 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 ## 3. Resources:
 
-I acknowledge the use of OpenAI's ChatGPT for topic explanation and LeetCode for coding interview questions 👨‍💻
+I acknowledge the use of OpenAI's ChatGPT for topic explanation, LeetCode and HackerRank for coding interview questions 👨‍💻
 
 ## 4. Adapted from: 
 
