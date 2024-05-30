@@ -32,6 +32,8 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [7. Stacks](src/Stacks)
 
+[8. Monotonic Stacks](src/Monotonic_Stack)
+
 
 ## 3. Resources:
 
