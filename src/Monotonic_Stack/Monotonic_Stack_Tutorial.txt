@@ -1,0 +1,129 @@
+Monotonic Stack
+
+A monotonic stack is a stack data structure that maintains its elements in a specific order, either strictly increasing or strictly decreasing.
+The term "monotonic" refers to this consistent order.
+
+There are two main types of monotonic stacks:
+
+- Monotonic Increasing Stack: In this stack, each new element pushed onto the stack is greater than or equal to the element before it.
+Thus, as you go from the bottom to the top of the stack, the values are in non-decreasing order.
+
+- Monotonic Decreasing Stack: In this stack, each new element pushed onto the stack is less than or equal to the element before it.
+Therefore, as you go from the bottom to the top of the stack, the values are in non-increasing order.
+
+Applications
+
+Monotonic stacks are useful for various algorithms, particularly those involving finding the next greater or smaller element in an array.
+Some common applications include:
+
+- Next Greater Element: Finding the next greater element for each element in an array.
+- Largest Rectangle in Histogram: Calculating the largest rectangle that can be formed in a histogram.
+- Sliding Window Maximum: Finding the maximum value in each sliding window of a given size in an array.
+
+Example: Next Greater Element
+
+Here’s an example of how a monotonic decreasing stack can be used to find the next greater element for each element in an array:
+
+Implementing the "Next Greater Element" problem using a linked list in Java involves creating a custom stack with a linked list instead of
+using Java's built-in stack. Below is the Java implementation of this approach:
+
+### Linked List Node Definition
+
+First, we need a class for the nodes in our linked list:
+
+class ListNode {
+    int value;
+    int index;
+    ListNode next;
+
+    ListNode(int value, int index) {
+        this.value = value;
+        this.index = index;
+        this.next = null;
+    }
+}
+
+Linked List Stack Implementation
+
+Next, we'll implement a custom stack using this `ListNode` class:
+
+class LinkedListStack {
+    private ListNode top;
+
+    public LinkedListStack() {
+        this.top = null;
+    }
+
+    public void push(int value, int index) {
+        ListNode newNode = new ListNode(value, index);
+        newNode.next = top;
+        top = newNode;
+    }
+
+    public ListNode pop() {
+        if (top == null) {
+            return null;
+        }
+        ListNode node = top;
+        top = top.next;
+        return node;
+    }
+
+    public ListNode peek() {
+        return top;
+    }
+
+    public boolean isEmpty() {
+        return top == null;
+    }
+}
+
+Next Greater Element Function
+
+Now we use this custom stack to implement the "Next Greater Element" functionality:
+
+import java.util.Arrays;
+
+public class NextGreaterElementLinkedList {
+
+    public static int[] nextGreaterElements(int[] nums) {
+        int[] result = new int[nums.length];
+        Arrays.fill(result, -1);  // Initialize the result array with -1
+        LinkedListStack stack = new LinkedListStack();  // Custom stack using linked list
+
+        for (int i = 0; i < nums.length; i++) {
+            // Check if the current element is greater than the element at the index stored at the top of the stack
+            while (!stack.isEmpty() && stack.peek().value < nums[i]) {
+                ListNode node = stack.pop();
+                result[node.index] = nums[i];  // Set the next greater element for the popped index
+            }
+            stack.push(nums[i], i);  // Push the current value and index onto the stack
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 1, 2, 4, 3};
+        int[] result = nextGreaterElements(nums);
+        System.out.println(Arrays.toString(result));  // Output: [4, 2, 4, -1, -1]
+    }
+}
+
+Explanation
+
+1. ListNode Class:
+    - This class represents a node in the linked list, containing a value, an index, and a reference to the next node.
+
+2. LinkedListStack Class:
+    - This class implements a stack using the `ListNode` class. It provides methods for pushing a node onto the stack, popping a node from the stack, peeking at the top node, and checking if the stack is empty.
+
+3. Next Greater Elements Function:
+    - Similar to the earlier implementation, we initialize the result array with `-1`.
+    - We create an instance of `LinkedListStack` to use as our stack.
+    - We iterate through the `nums` array, and for each element:
+        - While the stack is not empty and the current element is greater than the value of the node at the top of the stack, we pop the node and set the corresponding index in the result array to the current element.
+        - We push the current value and its index onto the stack.
+    - Finally, we return the result array containing the next greater elements.
+
+This implementation leverages a custom linked list stack to manage the indices and values, achieving the same functionality as a monotonic stack.
