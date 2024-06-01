@@ -34,6 +34,8 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [8. Monotonic Stack](src/Monotonic_Stack)
 
+[9. Hash Map](src/HashMap)
+
 
 ## 3. Resources:
 
