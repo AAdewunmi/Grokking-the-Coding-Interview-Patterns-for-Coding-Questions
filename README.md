@@ -36,6 +36,8 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [9. Hash Map](src/HashMap)
 
+[10. Tree Breadth First Search Pattern](src/Tree_Breadth_First_Search_Pattern)
+
 
 ## 3. Resources:
 
