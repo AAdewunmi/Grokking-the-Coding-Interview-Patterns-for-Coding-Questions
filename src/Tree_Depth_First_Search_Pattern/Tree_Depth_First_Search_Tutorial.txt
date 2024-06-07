@@ -1,2 +1,202 @@
 Depth First Search
 
+Depth First Search
+
+Tree Depth First Search (DFS) is an algorithm used for traversing or searching tree or graph data structures.
+The goal is to explore as far as possible along each branch before backtracking.
+DFS is implemented using a stack, either implicitly with recursion or explicitly with an iterative approach.
+Here's an overview of how DFS works on a tree:
+
+* Steps of DFS in a Tree:
+
+- Start at the Root: Begin the search at the root node of the tree.
+- Explore Each Branch Fully:
+    * Visit a node.
+    * Recursively (or iteratively) explore each of its children one by one.
+    * Continue this process until you reach a leaf node (a node with no children).
+- Backtrack: Once a leaf node or a node with no unvisited children is reached, backtrack to the previous node
+    and continue the search from there.
+- Repeat Until All Nodes are Visited: The process repeats until all nodes in the tree have been visited.
+
+* Types of DFS Traversals:
+
+- Pre-order Traversal:
+
+    Visit the current node.
+    Traverse the left subtree.
+    Traverse the right subtree.
+
+Pre-order (Root, Left, Right)
+
+- In-order Traversal:
+
+    Traverse the left subtree.
+    Visit the current node.
+    Traverse the right subtree.
+
+In-order (Left, Root, Right)
+
+- Post-order Traversal:
+
+    Traverse the left subtree.
+    Traverse the right subtree.
+    Visit the current node.
+
+Post-order (Left, Right, Root)
+
+Example:
+
+Consider the following binary tree:
+
+       A
+      / \
+     B   C
+    / \   \
+   D   E   F
+
+Pre-order Traversal:
+
+    Visit A
+    Visit B
+    Visit D
+    Visit E
+    Visit C
+    Visit F
+
+Result: A, B, D, E, C, F
+
+In-order Traversal:
+
+    Visit D
+    Visit B
+    Visit E
+    Visit A
+    Visit C
+    Visit F
+
+Result: D, B, E, A, C, F
+
+Post-order Traversal:
+
+    Visit D
+    Visit E
+    Visit B
+    Visit F
+    Visit C
+    Visit A
+
+Result: D, E, B, F, C, A
+
+* Java implementation of Depth First Search (DFS) for a tree using recursion. This example includes pre-order, in-order, and post-order traversals.
+
+First, define the `Node` class to represent each node in the tree.
+
+class Node {
+    String value;
+    Node left, right;
+
+    public Node(String item) {
+        value = item;
+        left = right = null;
+    }
+}
+
+Now, implement the DFS traversals: pre-order, in-order, and post-order.
+
+public class DFSTree {
+    Node root;
+
+    // Pre-order traversal (Root, Left, Right)
+    void dfsPreOrder(Node node) {
+        if (node == null) {
+            return;
+        }
+        // Visit the root
+        System.out.print(node.value + " ");
+        // Traverse the left subtree
+        dfsPreOrder(node.left);
+        // Traverse the right subtree
+        dfsPreOrder(node.right);
+    }
+
+    // In-order traversal (Left, Root, Right)
+    void dfsInOrder(Node node) {
+        if (node == null) {
+            return;
+        }
+        // Traverse the left subtree
+        dfsInOrder(node.left);
+        // Visit the root
+        System.out.print(node.value + " ");
+        // Traverse the right subtree
+        dfsInOrder(node.right);
+    }
+
+    // Post-order traversal (Left, Right, Root)
+    void dfsPostOrder(Node node) {
+        if (node == null) {
+            return;
+        }
+        // Traverse the left subtree
+        dfsPostOrder(node.left);
+        // Traverse the right subtree
+        dfsPostOrder(node.right);
+        // Visit the root
+        System.out.print(node.value + " ");
+    }
+
+    public static void main(String[] args) {
+        DFSTree tree = new DFSTree();
+
+        tree.root = new Node("A");
+        tree.root.left = new Node("B");
+        tree.root.right = new Node("C");
+        tree.root.left.left = new Node("D");
+        tree.root.left.right = new Node("E");
+        tree.root.right.right = new Node("F");
+
+        System.out.println("Pre-order traversal:");
+        tree.dfsPreOrder(tree.root);
+
+        System.out.println("\nIn-order traversal:");
+        tree.dfsInOrder(tree.root);
+
+        System.out.println("\nPost-order traversal:");
+        tree.dfsPostOrder(tree.root);
+    }
+}
+
+Explanation
+
+1. Node Class: Defines a simple node structure with a value and pointers to the left and right children.
+2. DFSTree Class:
+    - dfsPreOrder(Node node): Implements the pre-order traversal (Root, Left, Right).
+    - dfsInOrder(Node node): Implements the in-order traversal (Left, Root, Right).
+    - dfsPostOrder(Node node): Implements the post-order traversal (Left, Right, Root).
+3. main Method: Creates a tree and demonstrates the three types of DFS traversals.
+
+Usage
+
+When you run this code, it will output the traversal of the tree defined in the `main` method:
+
+Pre-order traversal:
+A B D E C F
+
+In-order traversal:
+D B E A C F
+
+Post-order traversal:
+D E B F C A
+
+This example illustrates the basic structure and recursive nature of the DFS algorithm for tree traversal in Java.
+
+Use Cases of DFS
+
+- Solving puzzles: Such as mazes where each path is explored fully before backtracking.
+- Topological sorting: Used in directed acyclic graphs (DAGs) to order tasks.
+- Cycle detection: In graphs.
+- Pathfinding: In games or applications where all possible paths need to be explored.
+
+DFS is a foundational algorithm in computer science, offering a method to explore all nodes and paths in a tree or graph systematically.
+
+
