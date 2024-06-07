@@ -38,6 +38,9 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [10. Tree Breadth First Search Pattern](src/Tree_Breadth_First_Search_Pattern)
 
+[11. Tree Depth First Search Pattern](src/Tree_Depth_First_Search_Pattern)
+
+
 
 ## 3. Resources:
 
