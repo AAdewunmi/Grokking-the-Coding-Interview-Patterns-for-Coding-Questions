@@ -1,0 +1,483 @@
+Graph
+=====
+
+A graph is a data structure that consists of a set of nodes (or vertices) and a set of edges that connect pairs of nodes.
+Graphs are used to represent relationships between entities, where the entities are represented by the nodes
+and the relationships by the edges.
+
+- Components of a Graph
+1. Vertices (Nodes): The fundamental units of a graph. In a graph G = (V, E) , V represents the set of vertices.
+2. Edges: The connections between the vertices. E represents the set of edges. Each edge is a pair of vertices.
+
+- Types of Graphs
+1. Directed Graph (Digraph): Each edge has a direction, going from one vertex to another.
+    Represented as an ordered pair (u, v), where u is the starting vertex and v is the ending vertex.
+2. Undirected Graph: Edges do not have a direction. An edge is represented as an unordered pair {u, v\},
+    meaning the connection is bidirectional.
+3. Weighted Graph: Each edge has an associated weight or cost. Used to represent scenarios like distances, costs, or capacities.
+4. Unweighted Graph: All edges are equal, with no specific weights assigned to them.
+
+- Special Graphs
+1. Cyclic Graph: Contains at least one cycle (a path where the first and last vertices are the same).
+2. Acyclic Graph: Contains no cycles. A directed acyclic graph is called a DAG.
+3. Connected Graph: There is a path between any two vertices in the graph.
+4. Disconnected Graph: At least one pair of vertices does not have a path between them.
+
+- Representations of Graphs
+1. Adjacency Matrix: A 2D array Adj where {Adj}[i][j] is 1 (or the weight of the edge) if there is an edge
+    from vertex i to vertex j ; otherwise, it is 0.
+2. Adjacency List: An array of lists. The index represents the vertex, and the list at each index contains all adjacent vertices.
+3. Edge List: A list of all edges in the graph, where each edge is represented as a pair of vertices (and possibly the edge weight).
+
+- Applications of Graphs
+1. Social Networks: Representing relationships between users.
+2. Transportation Networks: Representing routes between locations.
+3. Web Page Ranking: Representing links between web pages.
+4. Network Topology: Representing connections in computer networks.
+5. Biological Networks: Representing interactions between proteins or genes.
+
+- Graph Traversal Algorithms
+1. Depth-First Search (DFS): Explores as far as possible along each branch before backtracking.
+2. Breadth-First Search (BFS): Explores all neighbors at the present depth prior to moving on to nodes at the next depth level.
+
+- Example
+Consider an undirected graph with vertices {A, B, C, D\} and edges {(A, B), (A, C), (B, D), (C, D)}.
+
+- Adjacency Matrix:
+
+    A B C D
+  A 0 1 1 0
+  B 1 0 0 1
+  C 1 0 0 1
+  D 0 1 1 0
+
+- Adjacency List:
+
+  A: B, C
+  B: A, D
+  C: A, D
+  D: B, C
+
+Graphs are a versatile data structure used in various domains to model relationships and processes.
+Understanding their properties and implementations is essential for solving many computational problems efficiently.
+
+Graph ADT
+=========
+
+A graph as an Abstract Data Type (ADT) is a conceptual representation that defines a set of operations for manipulating
+graphs without specifying the underlying implementation. This abstraction allows the focus to be on what operations can
+be performed on the graph, rather than how they are implemented. Below is a description of the Graph ADT, including its operations and properties.
+
+- Components
+
+    Vertices (Nodes): The fundamental units of a graph.
+    Edges: The connections between the vertices.
+
+- Operations
+
+    Add Vertex:
+        Description: Adds a new vertex to the graph.
+        Signature: add_vertex(vertex: V) -> None
+
+    Add Edge:
+        Description: Adds a new edge connecting two vertices.
+        Signature: add_edge(vertex1: V, vertex2: V, weight: Optional[W] = None) -> None
+
+    Remove Vertex:
+        Description: Removes a vertex and all associated edges from the graph.
+        Signature: remove_vertex(vertex: V) -> None
+
+    Remove Edge:
+        Description: Removes an edge between two vertices.
+        Signature: remove_edge(vertex1: V, vertex2: V) -> None
+
+    Get Vertices:
+        Description: Returns a list of all vertices in the graph.
+        Signature: get_vertices() -> List[V]
+
+    Get Edges:
+        Description: Returns a list of all edges in the graph.
+        Signature: get_edges() -> List[Tuple[V, V, Optional[W]]]
+
+    Adjacent:
+        Description: Checks if there is an edge between two vertices.
+        Signature: adjacent(vertex1: V, vertex2: V) -> bool
+
+    Neighbors:
+        Description: Returns a list of all vertices adjacent to a given vertex.
+        Signature: neighbors(vertex: V) -> List[V]
+
+    Get Edge Weight:
+        Description: Returns the weight of the edge between two vertices (for weighted graphs).
+        Signature: get_edge_weight(vertex1: V, vertex2: V) -> W
+
+    Degree:
+        Description: Returns the number of edges connected to a vertex.
+        Signature: degree(vertex: V) -> int
+
+Here's an example implementation of a simple Graph ADT in Java using an adjacency list representation.
+This example includes the essential operations such as adding vertices, adding edges, removing vertices, removing edges,
+and retrieving information about the graph.
+
+import java.util.*;
+
+public class GraphADT {
+    private Map<String, List<Edge>> adjList;
+
+    public GraphADT() {
+        this.adjList = new HashMap<>();
+    }
+
+    public void addVertex(String vertex) {
+        adjList.putIfAbsent(vertex, new ArrayList<>());
+    }
+
+    public void addEdge(String vertex1, String vertex2, int weight) {
+        if (adjList.containsKey(vertex1) && adjList.containsKey(vertex2)) {
+            adjList.get(vertex1).add(new Edge(vertex2, weight));
+            adjList.get(vertex2).add(new Edge(vertex1, weight));
+        }
+    }
+
+    public void removeVertex(String vertex) {
+        if (adjList.containsKey(vertex)) {
+            for (Edge edge : adjList.get(vertex)) {
+                adjList.get(edge.vertex).removeIf(e -> e.vertex.equals(vertex));
+            }
+            adjList.remove(vertex);
+        }
+    }
+
+    public void removeEdge(String vertex1, String vertex2) {
+        if (adjList.containsKey(vertex1) && adjList.containsKey(vertex2)) {
+            adjList.get(vertex1).removeIf(edge -> edge.vertex.equals(vertex2));
+            adjList.get(vertex2).removeIf(edge -> edge.vertex.equals(vertex1));
+        }
+    }
+
+    public List<String> getVertices() {
+        return new ArrayList<>(adjList.keySet());
+    }
+
+    public List<Edge> getEdges() {
+        List<Edge> edges = new ArrayList<>();
+        for (String vertex : adjList.keySet()) {
+            for (Edge edge : adjList.get(vertex)) {
+                if (!edges.contains(new Edge(vertex, edge.vertex, edge.weight))) {
+                    edges.add(new Edge(vertex, edge.vertex, edge.weight));
+                }
+            }
+        }
+        return edges;
+    }
+
+    public boolean adjacent(String vertex1, String vertex2) {
+        if (adjList.containsKey(vertex1)) {
+            for (Edge edge : adjList.get(vertex1)) {
+                if (edge.vertex.equals(vertex2)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public List<String> neighbors(String vertex) {
+        List<String> neighbors = new ArrayList<>();
+        if (adjList.containsKey(vertex)) {
+            for (Edge edge : adjList.get(vertex)) {
+                neighbors.add(edge.vertex);
+            }
+        }
+        return neighbors;
+    }
+
+    public Integer getEdgeWeight(String vertex1, String vertex2) {
+        if (adjList.containsKey(vertex1)) {
+            for (Edge edge : adjList.get(vertex1)) {
+                if (edge.vertex.equals(vertex2)) {
+                    return edge.weight;
+                }
+            }
+        }
+        return null;
+    }
+
+    public int degree(String vertex) {
+        if (adjList.containsKey(vertex)) {
+            return adjList.get(vertex).size();
+        }
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        GraphADT graph = new GraphADT();
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addEdge("A", "B", 1);
+        graph.addEdge("A", "C", 2);
+
+        System.out.println("Vertices: " + graph.getVertices()); // Output: [A, B, C]
+        System.out.println("Edges: " + graph.getEdges()); // Output: [A-B(1), A-C(2)]
+        System.out.println("Adjacent (A, B): " + graph.adjacent("A", "B")); // Output: true
+        System.out.println("Neighbors of A: " + graph.neighbors("A")); // Output: [B, C]
+        System.out.println("Edge weight (A, C): " + graph.getEdgeWeight("A", "C")); // Output: 2
+        System.out.println("Degree of A: " + graph.degree("A")); // Output: 2
+    }
+
+    static class Edge {
+        String vertex;
+        int weight;
+
+        Edge(String vertex, int weight) {
+            this.vertex = vertex;
+            this.weight = weight;
+        }
+
+        Edge(String vertex1, String vertex2, int weight) {
+            this.vertex = vertex1 + "-" + vertex2;
+            this.weight = weight;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            Edge edge = (Edge) obj;
+            return weight == edge.weight &&
+                   Objects.equals(vertex, edge.vertex);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(vertex, weight);
+        }
+
+        @Override
+        public String toString() {
+            return vertex + "(" + weight + ")";
+        }
+    }
+}
+
+- Explanation
+
+    GraphADT Class:
+        Uses a Map to store the adjacency list, where each key is a vertex and the value is a list of edges.
+    Edge Class:
+        Represents an edge between two vertices. Contains the target vertex and the weight of the edge.
+    Operations:
+        addVertex: Adds a new vertex to the adjacency list.
+        addEdge: Adds an edge between two vertices with a specified weight.
+        removeVertex: Removes a vertex and all edges connected to it.
+        removeEdge: Removes an edge between two specified vertices.
+        getVertices: Returns a list of all vertices.
+        getEdges: Returns a list of all edges.
+        adjacent: Checks if there is an edge between two vertices.
+        neighbors: Returns a list of all adjacent vertices for a given vertex.
+        getEdgeWeight: Returns the weight of the edge between two vertices.
+        degree: Returns the number of edges connected to a vertex.
+
+This implementation provides a clear and functional Graph ADT in Java, demonstrating the basic operations and how to use them.
+
+Depth-First Search (DFS) Implementation in Java
+===============================================
+
+Depth-First Search (DFS) is a graph traversal algorithm that explores as far as possible along each branch before backtracking.
+It can be implemented using a stack (either implicitly via recursion or explicitly using an iterative approach).
+
+Here is an example implementation of DFS for a graph using an adjacency list representation in Java.
+
+import java.util.*;
+
+public class Graph {
+    private Map<String, List<String>> adjList;
+
+    public Graph() {
+        adjList = new HashMap<>();
+    }
+
+    public void addVertex(String vertex) {
+        adjList.putIfAbsent(vertex, new ArrayList<>());
+    }
+
+    public void addEdge(String vertex1, String vertex2) {
+        adjList.get(vertex1).add(vertex2);
+        adjList.get(vertex2).add(vertex1); // For undirected graph; remove this line for directed graph
+    }
+
+    public void dfsRecursive(String start) {
+        Set<String> visited = new HashSet<>();
+        dfsRecursiveHelper(start, visited);
+    }
+
+    private void dfsRecursiveHelper(String vertex, Set<String> visited) {
+        if (!visited.contains(vertex)) {
+            visited.add(vertex);
+            System.out.print(vertex + " ");
+            for (String neighbor : adjList.get(vertex)) {
+                dfsRecursiveHelper(neighbor, visited);
+            }
+        }
+    }
+
+    public void dfsIterative(String start) {
+        Set<String> visited = new HashSet<>();
+        Stack<String> stack = new Stack<>();
+        stack.push(start);
+
+        while (!stack.isEmpty()) {
+            String vertex = stack.pop();
+            if (!visited.contains(vertex)) {
+                visited.add(vertex);
+                System.out.print(vertex + " ");
+                for (String neighbor : adjList.get(vertex)) {
+                    if (!visited.contains(neighbor)) {
+                        stack.push(neighbor);
+                    }
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Graph graph = new Graph();
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addVertex("D");
+        graph.addVertex("E");
+
+        graph.addEdge("A", "B");
+        graph.addEdge("A", "C");
+        graph.addEdge("B", "D");
+        graph.addEdge("C", "E");
+        graph.addEdge("D", "E");
+
+        System.out.println("DFS Recursive:");
+        graph.dfsRecursive("A"); // Output: A B D E C
+
+        System.out.println("\nDFS Iterative:");
+        graph.dfsIterative("A"); // Output: A C E D B
+    }
+}
+
+Explanation
+
+    Graph Class:
+        Uses a Map to store the adjacency list, where each key is a vertex and the value is a list of adjacent vertices.
+
+    addVertex:
+        Adds a new vertex to the adjacency list.
+
+    addEdge:
+        Adds an edge between two vertices. For an undirected graph, it adds the edge in both directions.
+
+    dfsRecursive:
+        Initializes the DFS recursive traversal from a starting vertex.
+        Uses a Set to keep track of visited vertices to avoid cycles and infinite loops.
+
+    dfsRecursiveHelper:
+        The recursive helper function that performs the actual DFS traversal.
+        Visits a vertex, marks it as visited, and recursively visits all its unvisited neighbors.
+
+    dfsIterative:
+        Performs DFS traversal using an iterative approach with a stack.
+        Uses a Set to keep track of visited vertices and a Stack to manage the traversal order.
+
+Usage Example
+
+    The main method demonstrates how to create a graph, add vertices and edges, and perform both recursive and iterative DFS traversals.
+
+When you run this program, it outputs the order in which the vertices are visited during DFS traversal.
+The recursive and iterative approaches might yield different orders of visiting nodes due to the nature of the stack operations
+and the order of neighbors in the adjacency list. However, both approaches correctly traverse the graph depth-first.
+
+Breadth-First Search (BFS) Implementation in Java
+=================================================
+
+Breadth-First Search (BFS) is a graph traversal algorithm that explores all vertices at the present depth level before moving on to vertices at the next depth level.
+It is typically implemented using a queue.
+
+Here is an example implementation of BFS for a graph using an adjacency list representation in Java.
+
+import java.util.*;
+
+public class Graph {
+    private Map<String, List<String>> adjList;
+
+    public Graph() {
+        adjList = new HashMap<>();
+    }
+
+    public void addVertex(String vertex) {
+        adjList.putIfAbsent(vertex, new ArrayList<>());
+    }
+
+    public void addEdge(String vertex1, String vertex2) {
+        adjList.get(vertex1).add(vertex2);
+        adjList.get(vertex2).add(vertex1); // For undirected graph; remove this line for directed graph
+    }
+
+    public void bfs(String start) {
+        Set<String> visited = new HashSet<>();
+        Queue<String> queue = new LinkedList<>();
+        queue.add(start);
+        visited.add(start);
+
+        while (!queue.isEmpty()) {
+            String vertex = queue.poll();
+            System.out.print(vertex + " ");
+            for (String neighbor : adjList.get(vertex)) {
+                if (!visited.contains(neighbor)) {
+                    queue.add(neighbor);
+                    visited.add(neighbor);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Graph graph = new Graph();
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addVertex("D");
+        graph.addVertex("E");
+
+        graph.addEdge("A", "B");
+        graph.addEdge("A", "C");
+        graph.addEdge("B", "D");
+        graph.addEdge("C", "E");
+        graph.addEdge("D", "E");
+
+        System.out.println("BFS:");
+        graph.bfs("A"); // Output: A B C D E
+    }
+}
+
+Explanation
+
+    Graph Class:
+        Uses a Map to store the adjacency list, where each key is a vertex and the value is a list of adjacent vertices.
+
+    addVertex:
+        Adds a new vertex to the adjacency list.
+
+    addEdge:
+        Adds an edge between two vertices. For an undirected graph, it adds the edge in both directions.
+
+    bfs:
+        Initializes the BFS traversal from a starting vertex.
+        Uses a Set to keep track of visited vertices to avoid revisiting them.
+        Uses a Queue to manage the order of traversal. It starts with the initial vertex, adds it to the queue, and marks it as visited.
+        While the queue is not empty, it removes a vertex from the front of the queue, visits it, and then adds all its unvisited neighbors to the back of the queue, marking them as visited.
+
+Usage Example
+
+    The main method demonstrates how to create a graph, add vertices and edges, and perform BFS traversal.
+
+When you run this program, it outputs the order in which the vertices are visited during BFS traversal.
+BFS explores each level of the graph before moving on to the next level, ensuring that all vertices at the current depth are visited before going deeper.
+This is useful for finding the shortest path on an unweighted graph and for many other applications where breadth-wise exploration is required.
