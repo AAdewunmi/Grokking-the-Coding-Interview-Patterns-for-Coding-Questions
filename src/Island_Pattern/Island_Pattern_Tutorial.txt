@@ -1,0 +1,217 @@
+Island Pattern (Matrix Traversal)
+==============
+
+The Island pattern, also known as Matrix Traversal, is a technique used to navigate through a 2D array or matrix.
+The primary goal is to identify and process contiguous groups of elements, often referred to as ‘islands’.
+This pattern is particularly useful when you need to explore and manipulate grid-based data.
+The goal is to identify and count distinct clusters or "islands" within a binary matrix.
+
+* Steps to Implement the Island Pattern
+
+1. Identify the Problem:
+   - You are given a binary matrix (grid) where 1 represents land and 0 represents water.
+   - The goal is to count the number of distinct islands. An island is a group of connected 1s (horizontally or vertically).
+
+2. Define Neighbor Traversal:
+   - Define how to traverse neighbors (up, down, left, right) to explore an island.
+
+3. Mark Visited Cells:
+   - Keep track of visited cells to avoid counting the same island multiple times.
+
+4. Traverse the Matrix:
+   - Use Depth-First Search (DFS) or Breadth-First Search (BFS) to explore and mark all cells of an island starting from each unvisited 1.
+
+* Example Implementation
+
+Let's implement the Island Pattern to count the number of islands in a binary matrix using DFS in Java.
+
+- Step 1: Identify the Problem
+Given a binary matrix, count the number of distinct islands.
+
+- Step 2: Define Neighbor Traversal
+Define the directions for neighbor traversal (up, down, left, right).
+
+class Solution {
+    private final int[] dX = {-1, 1, 0, 0};
+    private final int[] dY = {0, 0, -1, 1};
+
+    private boolean isValid(int x, int y, int rows, int cols) {
+        return x >= 0 && x < rows && y >= 0 && y < cols;
+    }
+
+    private void dfs(int[][] grid, int x, int y, boolean[][] visited) {
+        Stack<int[]> stack = new Stack<>();
+        stack.push(new int[]{x, y});
+        visited[x][y] = true;
+
+        while (!stack.isEmpty()) {
+            int[] cell = stack.pop();
+            int cx = cell[0], cy = cell[1];
+
+            for (int i = 0; i < 4; i++) {
+                int nx = cx + dX[i];
+                int ny = cy + dY[i];
+
+                if (isValid(nx, ny, grid.length, grid[0].length) && grid[nx][ny] == 1 && !visited[nx][ny]) {
+                    visited[nx][ny] = true;
+                    stack.push(new int[]{nx, ny});
+                }
+            }
+        }
+    }
+
+    public int numIslands(int[][] grid) {
+        if (grid == null || grid.length == 0) {
+            return 0;
+        }
+
+        int rows = grid.length;
+        int cols = grid[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+        int islandCount = 0;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 1 && !visited[i][j]) {
+                    dfs(grid, i, j, visited);
+                    islandCount++;
+                }
+            }
+        }
+
+        return islandCount;
+    }
+}
+
+* Explanation of the Code
+
+1. Neighbor Traversal:
+   - The `isValid` method checks if a cell is within the bounds of the matrix.
+   - The `dX` and `dY` arrays define the directions for moving up, down, left, and right.
+
+2. Depth-First Search (DFS):
+   - The `dfs` method uses a stack to explore all connected cells of an island, marking them as visited.
+   - It iterates over the neighboring cells and adds unvisited land cells to the stack.
+
+3. Counting Islands:
+   - The `numIslands` method iterates through each cell in the matrix.
+   - If it finds an unvisited land cell (`1`), it initiates a DFS to mark the entire island and increments the island count.
+
+Step 3: Test the Solution
+
+public class Main {
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int[][] grid = {
+            {1, 1, 0, 0, 0},
+            {1, 1, 0, 0, 1},
+            {0, 0, 0, 1, 1},
+            {0, 0, 0, 0, 0},
+            {1, 0, 1, 0, 1}
+        };
+
+        System.out.println(solution.numIslands(grid));  // Output: 5
+    }
+}
+
+- Benefits of the Island Pattern
+
+    1. Clarity: Breaking the problem into smaller parts (neighbor traversal, DFS) makes the solution easier to understand.
+    2. Modularity: Functions like isValid and dfs are modular and reusable.
+    3. Efficiency: By marking visited cells, the algorithm ensures each cell is processed only once, leading to efficient traversal of the matrix.
+
+This implementation provides a clear and organized solution for counting the number of islands in a binary matrix using DFS in Java.
+
+Here is the implementation of the Island Pattern to count the number of islands in a binary matrix using Breadth-First Search (BFS) in Java:
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+class Solution {
+    private final int[] dX = {-1, 1, 0, 0}; // Directions for moving up, down, left, right
+    private final int[] dY = {0, 0, -1, 1};
+
+    private boolean isValid(int x, int y, int rows, int cols) {
+        return x >= 0 && x < rows && y >= 0 && y < cols;
+    }
+
+    private void bfs(int[][] grid, int x, int y, boolean[][] visited) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{x, y});
+        visited[x][y] = true;
+
+        while (!queue.isEmpty()) {
+            int[] cell = queue.poll();
+            int cx = cell[0], cy = cell[1];
+
+            for (int i = 0; i < 4; i++) {
+                int nx = cx + dX[i];
+                int ny = cy + dY[i];
+
+                if (isValid(nx, ny, grid.length, grid[0].length) && grid[nx][ny] == 1 && !visited[nx][ny]) {
+                    visited[nx][ny] = true;
+                    queue.offer(new int[]{nx, ny});
+                }
+            }
+        }
+    }
+
+    public int numIslands(int[][] grid) {
+        if (grid == null || grid.length == 0) {
+            return 0;
+        }
+
+        int rows = grid.length;
+        int cols = grid[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+        int islandCount = 0;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 1 && !visited[i][j]) {
+                    bfs(grid, i, j, visited);
+                    islandCount++;
+                }
+            }
+        }
+
+        return islandCount;
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int[][] grid = {
+            {1, 1, 0, 0, 0},
+            {1, 1, 0, 0, 1},
+            {0, 0, 0, 1, 1},
+            {0, 0, 0, 0, 0},
+            {1, 0, 1, 0, 1}
+        };
+
+        System.out.println(solution.numIslands(grid));  // Output: 5
+    }
+}
+
+- Explanation of the Code
+
+1. Neighbor Traversal:
+   - The `isValid` method checks if a cell is within the bounds of the matrix.
+   - The `dX` and `dY` arrays define the directions for moving up, down, left, and right.
+
+2. Breadth-First Search (BFS):
+   - The `bfs` method uses a queue to explore all connected cells of an island, marking them as visited.
+   - It iterates over the neighboring cells and adds unvisited land cells to the queue.
+
+3. Counting Islands:
+   - The `numIslands` method iterates through each cell in the matrix.
+   - If it finds an unvisited land cell (`1`), it initiates a BFS to mark the entire island and increments the island count.
+
+4. Main Method:
+   - The `main` method tests the implementation with a sample matrix.
+
+- Benefits of the Island Pattern
+- Clarity: Breaking the problem into smaller parts (neighbor traversal, BFS) makes the solution easier to understand.
+- Modularity: Functions like `isValid` and `bfs` are modular and reusable.
+- Efficiency: By marking visited cells, the algorithm ensures each cell is processed only once, leading to efficient traversal of the matrix.
+
+This implementation provides a clear and organized solution for counting the number of islands in a binary matrix using BFS in Java.
