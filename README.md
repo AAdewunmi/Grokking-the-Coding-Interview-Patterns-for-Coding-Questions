@@ -42,6 +42,9 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [12. Graphs ](src/Graphs)
 
+[13. Island Pattern (Matrix Traversal) ](src/Island_Pattern)
+
+
 ## 3. Resources:
 
 I acknowledge the use of OpenAI's ChatGPT for topic explanation, LeetCode and HackerRank for coding interview questions 👨‍💻
