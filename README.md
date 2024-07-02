@@ -18,19 +18,19 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 ## 2. Outline
 
-[1. Two Pointers Technique ](src/Two_Pointers)
+[1. Two Pointers ](src/Two_Pointers)
 
-[2. Fast And Slow Pointer Technique ](src/Fast_And_Slow_Pointers)
+[2. Fast And Slow Pointers ](src/Fast_And_Slow_Pointers)
 
-[3. Sliding Window Technique ](src/Sliding_Window)
+[3. Sliding Window ](src/Sliding_Window)
 
-[4. Merge Interval Technique ](src/Merge_Intervals)
+[4. Merge Intervals ](src/Merge_Intervals)
 
-[5. Cyclic Sort Technique ](src/Cyclic_Sort)
+[5. Cyclic Sort ](src/Cyclic_Sort)
 
-[6. In-Place Reversal LinkedList Technique ](src/In_Place_Reversal_LinkedList)
+[6. In-Place Reversal LinkedList ](src/In_Place_Reversal_LinkedList)
 
-[7. Stacks ](src/Stack)
+[7. Stack ](src/Stack)
 
 [8. Monotonic Stack ](src/Monotonic_Stack)
 
@@ -40,9 +40,11 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [11. Tree - Depth First Search Technique ](src/Tree_Depth_First_Search)
 
-[12. Graphs ](src/Graph)
+[12. Graph ](src/Graph)
 
 [13. Island Pattern (Matrix Traversal) ](src/Island_Matrix_Traversal)
+
+[14. Heap ](src/Heap)
 
 
 ## 3. Resources:
