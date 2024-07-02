@@ -1,0 +1,318 @@
+Heap (Data Structure)
+====
+
+A HEAP is a specialized tree-based data structure that satisfies the heap property. The heap property for a max heap is
+that for any given node II, the value of II is greater than or equal to the values of its children. In a min heap, the
+value of II is less than or equal to the values of its children.
+
+- Heap Properties:
+
+    1. Complete Binary Tree:
+        A heap is always a complete binary tree, meaning all levels of the tree are fully filled except possibly for the
+        last level, which is filled from left to right.
+
+    2. Heap Property:
+        Min-Heap: The value of each node is less than or equal to the values of its children. The minimum value is at the root.
+        Max-Heap: The value of each node is greater than or equal to the values of its children. The maximum value is at the root.
+
+- Applications of Heaps:
+
+    1. Priority Queues:
+        Heaps are commonly used to implement priority queues, where the highest (or lowest) priority element is always at the front.
+
+    2. Heapsort:
+        An efficient sorting algorithm with O(n log n) time complexity, which uses a heap to sort elements.
+
+    3. Graph Algorithms:
+        Used in algorithms like Dijkstra's shortest path and Prim's minimum spanning tree.
+
+    4. Scheduling Algorithms:
+        Useful in job scheduling systems where tasks with higher priority need to be executed first.
+
+- Basic Operations:
+
+    1. Insertion:
+        Add the new element at the end of the tree (complete binary tree property).
+        Percolate up to maintain the heap property.
+
+    2. Deletion (usually the root):
+        Replace the root with the last element.
+        Percolate down to maintain the heap property.
+
+    3. Peek:
+        Return the root element without removing it.
+
+    4. Heapify:
+        Process of creating a heap data structure from a binary tree. It is used to create a Min-Heap or a Max-Heap.
+
+*** MAX HEAP
+
+- Example of Max-Heap Operations:
+
+Insertion:
+
+    Insert the new element at the end of the heap.
+    Compare the inserted element with its parent; if the inserted element is larger, swap it with its parent.
+    Repeat until the heap property is restored.
+
+Deletion (Removing the maximum element):
+
+    Remove the root element (maximum element).
+    Replace the root with the last element in the heap.
+    Compare the new root with its children; if it is smaller than the largest child, swap it with the largest child.
+    Repeat until the heap property is restored.
+
+- Here is a basic example of how to implement a max-heap in Java. The implementation includes methods for inserting
+elements, removing the maximum element, and heapifying the tree to maintain the max-heap property.
+
+import java.util.Arrays;
+
+public class MinHeap {
+    private int[] heap;
+    private int size;
+    private int capacity;
+
+    public MinHeap(int capacity) {
+        this.capacity = capacity;
+        this.size = 0;
+        this.heap = new int[capacity + 1];
+        Arrays.fill(this.heap, Integer.MAX_VALUE);
+    }
+
+    private int parent(int pos) {
+        return pos / 2;
+    }
+
+    private int leftChild(int pos) {
+        return 2 * pos;
+    }
+
+    private int rightChild(int pos) {
+        return (2 * pos) + 1;
+    }
+
+    private void swap(int pos1, int pos2) {
+        int temp = heap[pos1];
+        heap[pos1] = heap[pos2];
+        heap[pos2] = temp;
+    }
+
+    private void heapifyUp(int pos) {
+        while (pos > 1 && heap[pos] < heap[parent(pos)]) {
+            swap(pos, parent(pos));
+            pos = parent(pos);
+        }
+    }
+
+    private void heapifyDown(int pos) {
+        int smallest = pos;
+        int left = leftChild(pos);
+        int right = rightChild(pos);
+
+        if (left <= size && heap[left] < heap[smallest]) {
+            smallest = left;
+        }
+        if (right <= size && heap[right] < heap[smallest]) {
+            smallest = right;
+        }
+        if (smallest != pos) {
+            swap(pos, smallest);
+            heapifyDown(smallest);
+        }
+    }
+
+    public void insert(int element) {
+        if (size >= capacity) {
+            throw new RuntimeException("Heap is full");
+        }
+        heap[++size] = element;
+        heapifyUp(size);
+    }
+
+    public int remove() {
+        if (size == 0) {
+            throw new RuntimeException("Heap is empty");
+        }
+        int removedElement = heap[1];
+        heap[1] = heap[size--];
+        heapifyDown(1);
+        return removedElement;
+    }
+
+    public void printHeap() {
+        for (int i = 1; i <= size / 2; i++) {
+            System.out.print(" PARENT : " + heap[i]
+                + " LEFT CHILD : " + heap[2 * i]
+                + " RIGHT CHILD :" + heap[2 * i + 1]);
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] arg) {
+        MinHeap minHeap = new MinHeap(15);
+        minHeap.insert(5);
+        minHeap.insert(3);
+        minHeap.insert(17);
+        minHeap.insert(10);
+        minHeap.insert(84);
+        minHeap.insert(19);
+        minHeap.insert(6);
+        minHeap.insert(22);
+        minHeap.insert(9);
+
+        minHeap.printHeap();
+
+        System.out.println("The Min val is " + minHeap.remove());
+    }
+}
+
+
+- Explanation:
+
+    1. Heap Array: The heap is represented as an array. The heap array stores the heap elements, capacity is the maximum
+        size of the heap, and size is the current number of elements in the heap.
+    2. Parent and Child Nodes: Methods parent, leftChild, and rightChild calculate the indices of the parent and child
+        nodes in the array.
+    3. Heapify Up: The heapifyUp method restores the heap property by moving up from a given position.
+    4. Heapify Down: The heapifyDown method restores the heap property by moving down from a given position.
+    5. Insert: Adds a new element to the heap and restores the heap property using heapifyUp.
+    6. Remove: Removes and returns the maximum element (root) from the heap and restores the heap property using heapifyDown.
+    7. Print Heap: Displays the heap structure.
+
+This implementation provides a functional max-heap with basic operations to insert and remove elements while maintaining the heap property.
+
+*** MIN HEAP
+
+- Example of Min-Heap Operations:
+
+    Here’s a simple explanation of the basic operations in a min-heap:
+
+    1. Insertion:
+
+        Insert the new element at the end of the heap.
+        Compare the inserted element with its parent; if the inserted element is smaller, swap it with its parent.
+        Repeat step 2 until the heap property is restored.
+
+    2. Deletion (Removing the minimum element):
+
+        Remove the root element (minimum element).
+        Replace the root with the last element in the heap.
+        Compare the new root with its children; if it is larger than the smallest child, swap it with the smallest child.
+        Repeat step 3 until the heap property is restored.
+
+- Here is a basic example of how to implement a min-heap in Java. The implementation includes methods for inserting elements,
+    removing the minimum element, and heapifying the tree to maintain the min-heap property.
+
+import java.util.Arrays;
+
+public class MinHeap {
+    private int[] heap;
+    private int size;
+    private int capacity;
+
+    public MinHeap(int capacity) {
+        this.capacity = capacity;
+        this.size = 0;
+        this.heap = new int[capacity + 1];
+        Arrays.fill(this.heap, Integer.MAX_VALUE);
+    }
+
+    private int parent(int pos) {
+        return pos / 2;
+    }
+
+    private int leftChild(int pos) {
+        return 2 * pos;
+    }
+
+    private int rightChild(int pos) {
+        return (2 * pos) + 1;
+    }
+
+    private void swap(int pos1, int pos2) {
+        int temp = heap[pos1];
+        heap[pos1] = heap[pos2];
+        heap[pos2] = temp;
+    }
+
+    private void heapifyUp(int pos) {
+        while (pos > 1 && heap[pos] < heap[parent(pos)]) {
+            swap(pos, parent(pos));
+            pos = parent(pos);
+        }
+    }
+
+    private void heapifyDown(int pos) {
+        int smallest = pos;
+        int left = leftChild(pos);
+        int right = rightChild(pos);
+
+        if (left <= size && heap[left] < heap[smallest]) {
+            smallest = left;
+        }
+        if (right <= size && heap[right] < heap[smallest]) {
+            smallest = right;
+        }
+        if (smallest != pos) {
+            swap(pos, smallest);
+            heapifyDown(smallest);
+        }
+    }
+
+    public void insert(int element) {
+        if (size >= capacity) {
+            throw new RuntimeException("Heap is full");
+        }
+        heap[++size] = element;
+        heapifyUp(size);
+    }
+
+    public int remove() {
+        if (size == 0) {
+            throw new RuntimeException("Heap is empty");
+        }
+        int removedElement = heap[1];
+        heap[1] = heap[size--];
+        heapifyDown(1);
+        return removedElement;
+    }
+
+    public void printHeap() {
+        for (int i = 1; i <= size / 2; i++) {
+            System.out.print(" PARENT : " + heap[i]
+                + " LEFT CHILD : " + heap[2 * i]
+                + " RIGHT CHILD :" + heap[2 * i + 1]);
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] arg) {
+        MinHeap minHeap = new MinHeap(15);
+        minHeap.insert(5);
+        minHeap.insert(3);
+        minHeap.insert(17);
+        minHeap.insert(10);
+        minHeap.insert(84);
+        minHeap.insert(19);
+        minHeap.insert(6);
+        minHeap.insert(22);
+        minHeap.insert(9);
+
+        minHeap.printHeap();
+
+        System.out.println("The Min val is " + minHeap.remove());
+    }
+}
+
+- Explanation:
+
+    1. Heap Array: The heap is represented as an array. The heap array stores the heap elements, capacity is the maximum
+        size of the heap, and size is the current number of elements in the heap.
+    2. Parent and Child Nodes: Methods parent, leftChild, and rightChild calculate the indices of the parent and child nodes in the array.
+    3. Heapify Up: The heapifyUp method restores the heap property by moving up from a given position.
+    4. Heapify Down: The heapifyDown method restores the heap property by moving down from a given position.
+    5. Insert: Adds a new element to the heap and restores the heap property using heapifyUp.
+    6. Remove: Removes and returns the minimum element (root) from the heap and restores the heap property using heapifyDown.
+    7. Print Heap: Displays the heap structure.
+
+This implementation demonstrates the core operations of a min-heap, including insertion, removal, and maintaining the heap property.
