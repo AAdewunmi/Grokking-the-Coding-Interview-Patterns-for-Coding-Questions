@@ -46,6 +46,8 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [14. Heap ](src/Heap)
 
+[15. Subsets ](src/Subsets)
+
 
 ## 3. Resources:
 
