@@ -1,0 +1,108 @@
+Subsets
+=======
+
+The subsets coding pattern is a common approach in algorithm design and problem-solving, particularly in combinatorics
+and backtracking problems. This pattern is used to generate all possible subsets of a given set of elements.
+It can be applied to various problems, including generating power sets, solving permutation and combination problems,
+and finding all possible ways to partition a set.
+
+Here's a breakdown of the subsets coding pattern:
+
+- Definition:
+
+The subsets pattern involves finding all possible subsets of a given set. A subset is a set that contains some or all
+elements of the original set, including the empty set and the set itself.
+
+- Applications:
+
+    Power Set Generation: Finding all subsets of a given set.
+    Combination Problems: Finding all combinations of a set of elements.
+    Partition Problems: Dividing a set into two or more subsets.
+    Subset Sum Problems: Finding subsets that satisfy certain criteria (e.g., sum of elements equals a given value).
+
+- Methods:
+
+There are several ways to generate subsets, including iterative and recursive approaches. Two common methods are:
+
+*** Iterative Method:
+
+The iterative method often uses bit manipulation to generate all subsets of a given set.
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class SubsetsIterative {
+    public static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        int n = nums.length;
+        int numberOfSubsets = 1 << n; // 2^n
+
+        for (int i = 0; i < numberOfSubsets; i++) {
+            List<Integer> subset = new ArrayList<>();
+            for (int j = 0; j < n; j++) {
+                if ((i & (1 << j)) != 0) {
+                    subset.add(nums[j]);
+                }
+            }
+            result.add(subset);
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3};
+        List<List<Integer>> subsets = subsets(nums);
+        System.out.println(subsets);
+    }
+}
+
+- Explanation:
+
+    Iterative Method:
+    - Bit Manipulation: We use a loop to iterate through numbers from `0` to `2^n - 1`, where `n` is the length of the input array `nums`.
+    - Each number in this range represents a subset. The binary representation of the number determines which elements are included in the subset.
+        For example, if `i` is `5` (binary `101`), it means the subset includes the 1st and 3rd elements of `nums`.
+    - We check each bit position using the expression `(i & (1 << j))` to determine if the j-th element should be included in the subset.
+
+*** Recursive Method:
+
+The recursive method uses backtracking to generate all subsets.
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class SubsetsRecursive {
+    public static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(result, new ArrayList<>(), nums, 0);
+        return result;
+    }
+
+    private static void backtrack(List<List<Integer>> result, List<Integer> tempList, int[] nums, int start) {
+        result.add(new ArrayList<>(tempList));
+        for (int i = start; i < nums.length; i++) {
+            tempList.add(nums[i]);
+            backtrack(result, tempList, nums, i + 1);
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3};
+        List<List<Integer>> subsets = subsets(nums);
+        System.out.println(subsets);
+    }
+}
+
+- Explanation:
+
+Recursive Method:
+    - Backtracking: We use a helper method `backtrack` to generate subsets. This method takes the current list of subsets `result`,
+        a temporary list `tempList` that represents the current subset being built, the input array `nums`, and the starting index `start`.
+    - At each step, we add a copy of `tempList` to `result`.
+    - Then, we iterate over the remaining elements, adding each one to `tempList`, recursing to generate subsets that include this new element,
+        and then removing the element to backtrack and try the next possibility.
+
+Both methods generate all possible subsets of the given set, but they do so in slightly different ways. The iterative method is more direct
+and may be easier to understand, while the recursive method provides a clear illustration of the backtracking approach.
