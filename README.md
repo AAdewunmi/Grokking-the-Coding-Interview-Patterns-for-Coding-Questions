@@ -48,6 +48,8 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [15. Subsets ](src/Subsets)
 
+[16. Binary Search ](src/Binary_Search)
+
 
 ## 3. Resources:
 
