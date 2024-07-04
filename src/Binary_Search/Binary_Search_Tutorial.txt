@@ -1,0 +1,90 @@
+Binary Search
+=============
+
+Binary search is an efficient algorithm for finding an item from a sorted list of items. It works by repeatedly dividing
+in half the portion of the list that could contain the item, until you've narrowed down the possible locations to just one.
+
+Here’s a step-by-step explanation of how binary search works:
+
+    * Initial Setup: Start with two pointers representing the bounds of the search area: low at the beginning of the list
+        and high at the end of the list.
+
+    * Middle Calculation: Calculate the middle index of the current search area: mid = (low + high) // 2.
+
+    * Comparison:
+        If the item at mid is equal to the target value, you've found the item.
+        If the target value is less than the item at mid, move the high pointer to mid - 1.
+        If the target value is greater than the item at mid, move the low pointer to mid + 1.
+
+    * Repeat: Repeat steps 2 and 3 until the low pointer exceeds the high pointer or the item is found.
+
+    * Conclusion: If the item is found, return the index of the item. If the low pointer exceeds the high pointer, the item is not in the list.
+
+- Example
+
+    Let's assume we want to search for the number 7 in the following sorted list:
+
+    1, 3, 5, 7, 9, 11, 13
+
+        Initial pointers: low = 0, high = 6
+        Calculate middle: mid = (0 + 6) // 2 = 3
+        Comparison: List at index 3 is 7, which matches our target.
+        Found: Return index 3.
+
+    Key Characteristics
+
+        Efficiency: Binary search runs in O(log n) time complexity, making it much faster than linear search for large lists.
+        Requirement: The list must be sorted for binary search to work.
+
+- Java Implementation
+
+Here's a Java implementation of binary search for a sorted list of integers. This implementation will search for the number 7 in the provided list:
+
+public class BinarySearch {
+
+    public static int binarySearch(int[] arr, int target) {
+        int low = 0;
+        int high = arr.length - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;  // Calculate mid point to avoid overflow
+            if (arr[mid] == target) {
+                return mid;  // Target found
+            } else if (arr[mid] < target) {
+                low = mid + 1;  // Search in the right half
+            } else {
+                high = mid - 1;  // Search in the left half
+            }
+        }
+
+        return -1;  // Target not found
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 3, 5, 7, 9, 11, 13};
+        int target = 7;
+        int result = binarySearch(arr, target);
+
+        if (result != -1) {
+            System.out.println("Element found at index: " + result);
+        } else {
+            System.out.println("Element not found");
+        }
+    }
+}
+
+- Explanation
+
+    Initialization:
+        low is initialized to the start of the array (index 0).
+        high is initialized to the end of the array (index arr.length - 1).
+
+    Loop:
+        While low is less than or equal to high:
+            Calculate the middle index mid.
+            If the element at mid is equal to the target, return mid (target found).
+            If the element at mid is less than the target, adjust low to mid + 1 (search in the right half).
+            If the element at mid is greater than the target, adjust high to mid - 1 (search in the left half).
+
+    Return:
+        If the target is not found, return -1.

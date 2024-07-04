@@ -36,9 +36,9 @@ Hope you find it useful (as soon as I complete it!) 😎
 
 [9. Hash Map ](src/HashMap_HashTable)
 
-[10. Tree - Breadth First Search Technique ](src/Tree_Breadth_First_Search)
+[10. Tree - Breadth First Search ](src/Tree_Breadth_First_Search)
 
-[11. Tree - Depth First Search Technique ](src/Tree_Depth_First_Search)
+[11. Tree - Depth First Search ](src/Tree_Depth_First_Search)
 
 [12. Graph ](src/Graph)
 
