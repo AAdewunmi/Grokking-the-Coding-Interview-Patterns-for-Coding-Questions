@@ -42,7 +42,7 @@ Hope you find it useful 😎
 
 [5. Cyclic Sort ](src/Cyclic_Sort)
 
-[6. In-Place Reversal LinkedList ](src/In_Place_Reversal_LinkedList)
+[6. LinkedList - In-Place Reversal ](src/LinkedList_In_Place_Traversal)
 
 [7. Stack ](src/Stack)
 

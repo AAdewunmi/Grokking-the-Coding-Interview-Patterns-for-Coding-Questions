@@ -1,4 +1,4 @@
-package In_Place_Reversal_LinkedList;
+package LinkedList_In_Place_Traversal;
 
 // Problem Statement: Reverse a Sub-list
 // LeetCode Question: 92. Reverse Linked List II

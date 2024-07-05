@@ -1,25 +1,25 @@
-package In_Place_Reversal_LinkedList;
+package LinkedList_In_Place_Traversal;
 
-// Problem Statement: Reverse alternating K-element Sub-list (medium)
-// LeetCode Question: -
+// Problem Statement: Reverse every K-element Sub-list (medium)
+// LeetCode Question: 25. Reverse Nodes in k-Group
 
-public class Problem_4_ReverseAlternatingKElementSubList {
-    class ListNode {
+public class Problem_3_ReverseEveryKElementSubList {
+    class ListNode{
         int val = 0;
         ListNode next;
-        ListNode (int value) {
-            this.val = value;
+        public ListNode (int val){
+            this.val = val;
         }
     }
 
-    public ListNode reverse (ListNode head, int k){
-        if (k <= 1 || head == null) {
+    public static ListNode reverse(ListNode head, int k){
+        if(k <= 1 || head == null){
             return head;
         }
         ListNode current = head, previous = null;
-        while (current != null){
+        while (true) {
             ListNode lastNodeOfPreviousPart = previous;
-            ListNode lastNodeOfSubList = current;
+            ListNode lastNodeOfSublist = current;
             ListNode next = null;
             for (int i = 0; current != null && i < k; i++) {
                 next = current.next;
@@ -32,11 +32,11 @@ public class Problem_4_ReverseAlternatingKElementSubList {
             } else {
                 head = previous;
             }
-            lastNodeOfSubList.next = current;
-            for (int i = 0; current != null && i < k; ++i) {
-                previous = current;
-                current = current.next;
+            lastNodeOfSublist.next = current;
+            if (current == null) {
+                break;
             }
+            previous = lastNodeOfSublist;
         }
         return head;
     }

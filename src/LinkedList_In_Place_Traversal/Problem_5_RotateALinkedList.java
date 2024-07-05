@@ -1,4 +1,4 @@
-package In_Place_Reversal_LinkedList;
+package LinkedList_In_Place_Traversal;
 
 // Problem Statement: Rotate a LinkedList (medium)
 // LeetCode Question: 61. Rotate List
