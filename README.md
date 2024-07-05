@@ -8,7 +8,19 @@ Grokking the Coding Interview Patterns: Includes Topic Tutorials Plus LeetCode Q
 ## 1. Project Description:
 
 This repository contains topic tutorials on "must know" coding interview patterns, their associated LeetCode questions 
-and solutions in Java programming language. 
+and solutions in Java programming language. Each section is structured as follows:
+    
+    * Bitwise XOR
+
+        L Bitwise_XOR_Tutorial.txt (What is Bitwise XOR (exclusive OR)?)
+        
+        L Problem_1_Single_Number.java (LeetCode Question: 136. Single Number)
+
+        L Problem_2_Two_Single_Numbers.java (LeetCode Question: 260. Single Number III)
+
+        L Problem_3_Complement_Of_Base_10_Number.java (LeetCode Question: 1009. Complement of Base 10 Integer)
+
+        L Problem_4_Flip_And_Invert_An_Image.java (LeetCode Question: 832. Flipping an Image)
 
 This coding interview resource is based on "Grokking the Coding Interview: Patterns for Coding Questions" by Design Gurus.
 
