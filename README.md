@@ -2,18 +2,20 @@
 
 # Project Title:
 
-Solutions to "Grokking the Coding Interview: Patterns for Coding Questions" by Design Gurus implemented in JAVA ☕️
+Grokking the Coding Interview Patterns: Includes Topic Tutorials Plus LeetCode Questions & Solutions in JAVA ☕️
 
 
 ## 1. Project Description:
 
-This repository contains a list of "must know" patterns for coding interview questions and their solutions in Java programming language. 
+This repository contains topic tutorials on "must know" coding interview patterns, their associated LeetCode questions 
+and solutions in Java programming language. 
 
-This list and its contents are based on a popular resource - "Grokking the Coding Interview: Patterns for Coding Questions" by Design Gurus.
+This coding interview resource is based on "Grokking the Coding Interview: Patterns for Coding Questions" by Design Gurus.
 
-I am an advocate of learning-in-public, so I thought I'd create a public repository to keep all my learning on the subject.
+I am an advocate of learning-in-public, so I thought I'd create a public repository to keep all my learning on preparation
+for FAANGM coding interviews.
 
-Hope you find it useful (as soon as I complete it!) 😎 
+Hope you find it useful 😎 
 
 
 ## 2. Outline
