@@ -1,2 +1,217 @@
-Top_K_Elements
+Top K Elements
 ==============
+
+The Top 'K' Elements pattern is a technique that aims to find the top k largest or smallest elements in a collection
+such as an array or a stream of data.
+
+- Methods to Find Top kk Elements
+
+Several algorithms and data structures can be used to find the top k elements efficiently:
+
+1. Sorting: Sort the entire dataset and then pick the first k elements. This is simple but not always efficient,
+        especially for large datasets. The time complexity is O(nlogn).
+
+   - Approach: Sort the entire list and then pick the first \( k \) elements.
+   - Time Complexity: O(n log n)
+   - Space Complexity: O(n)
+   - Example:
+
+     import java.util.Arrays;
+
+     public class TopKElementsSort {
+         public static int[] findTopKElements(int[] nums, int k) {
+             Arrays.sort(nums);
+             int[] result = new int[k];
+             for (int i = 0; i < k; i++) {
+                 result[i] = nums[nums.length - 1 - i];
+             }
+             return result;
+         }
+
+         public static void main(String[] args) {
+             int[] nums = {3, 2, 1, 5, 6, 4};
+             int k = 2;
+             int[] topK = findTopKElements(nums, k);
+             System.out.println(Arrays.toString(topK));  // Output: [6, 5]
+         }
+     }
+
+2. Heap (Priority Queue): Use a min-heap (for top k largest) or max-heap (for top k smallest) of size k.
+        This method maintains the top k elements with a time complexity of O(nlogk).
+
+   - Approach: Use a priority queue (min-heap) to efficiently keep track of the top k largest elements.
+               The smallest element in the heap is compared with incoming elements, and replaced if a larger element is found.
+   - Time Complexity: O(n log k)
+   - Space Complexity: O(k)
+   - Example:
+
+     import java.util.PriorityQueue;
+
+     public class TopKElementsHeap {
+         public static int[] findTopKElements(int[] nums, int k) {
+             PriorityQueue<Integer> minHeap = new PriorityQueue<>(k);
+
+             for (int num : nums) {
+                 if (minHeap.size() < k) {
+                     minHeap.add(num);
+                 } else if (num > minHeap.peek()) {
+                     minHeap.poll();
+                     minHeap.add(num);
+                 }
+             }
+
+             int[] result = new int[k];
+             for (int i = 0; i < k; i++) {
+                 result[i] = minHeap.poll();
+             }
+
+             return result;
+         }
+
+         public static void main(String[] args) {
+             int[] nums = {3, 2, 1, 5, 6, 4};
+             int k = 2;
+             int[] topK = findTopKElements(nums, k);
+             System.out.println(Arrays.toString(topK));  // Output: [5, 6]
+         }
+     }
+
+    - Approach: Use a priority queue (max-heap) to keep track of the top k smallest elements.
+        Here, the largest element in the heap is compared with incoming elements, and replaced if a smaller element is found.
+    - Time Complexity: O(n log k)
+    - Space Complexity: O(k)
+    - Example:
+
+    import java.util.PriorityQueue;
+
+    public class TopKElementsMaxHeap {
+        public static int[] findTopKElements(int[] nums, int k) {
+            // Create a max-heap using PriorityQueue
+            PriorityQueue<Integer> maxHeap = new PriorityQueue<>(k, (a, b) -> Integer.compare(b, a));
+
+            // Insert the first k elements into the max-heap
+            for (int i = 0; i < k; i++) {
+                maxHeap.offer(nums[i]);
+            }
+
+            // Process the rest of the elements
+            for (int i = k; i < nums.length; i++) {
+                if (nums[i] > maxHeap.peek()) {
+                    maxHeap.poll();
+                    maxHeap.offer(nums[i]);
+                }
+            }
+
+            // Convert max-heap to an array
+            int[] result = new int[k];
+            for (int i = 0; i < k; i++) {
+                result[i] = maxHeap.poll();
+            }
+
+            return result;
+        }
+
+        public static void main(String[] args) {
+            int[] nums = {3, 2, 1, 5, 6, 4};
+            int k = 2;
+            int[] topK = findTopKElements(nums, k);
+            System.out.println(java.util.Arrays.toString(topK));  // Output: [6, 5]
+        }
+    }
+
+    - Explanation
+
+        Min-Heap for Top K Largest Elements:
+            Initialize a min-heap with a capacity of kk.
+            Add elements to the heap. If the heap exceeds size kk, remove the smallest element.
+            The heap will maintain the top kk largest elements.
+            Extract the elements from the heap to get the result.
+
+        Max-Heap for Top K Smallest Elements:
+            Initialize a max-heap with a capacity of kk.
+            Add elements to the heap. If the heap exceeds size kk, remove the largest element.
+            The heap will maintain the top kk smallest elements.
+            Extract the elements from the heap to get the result.
+
+    - When to Use Each Approach
+
+        Min-Heap: Use this approach when you need the top kk largest elements.
+        Max-Heap: Use this approach when you need the top kk smallest elements.
+
+3. Quick Select: An algorithm similar to quicksort that can find the kth largest element in expected O(n) time,
+        which can then be used to find the top k elements.
+
+   - Approach: An efficient selection algorithm to find the k th the largest element.
+   - Time Complexity: Average O(n), Worst-case O(n^2)
+   - Space Complexity: O(1)
+   - Example:
+
+     import java.util.Random;
+
+     public class TopKElementsQuickSelect {
+         private static final Random random = new Random();
+
+         public static int[] findTopKElements(int[] nums, int k) {
+             int left = 0, right = nums.length - 1;
+             int target = nums.length - k;
+             while (left <= right) {
+                 int pivotIndex = partition(nums, left, right);
+                 if (pivotIndex == target) {
+                     break;
+                 } else if (pivotIndex < target) {
+                     left = pivotIndex + 1;
+                 } else {
+                     right = pivotIndex - 1;
+                 }
+             }
+
+             int[] result = new int[k];
+             System.arraycopy(nums, nums.length - k, result, 0, k);
+             return result;
+         }
+
+         private static int partition(int[] nums, int left, int right) {
+             int pivotIndex = left + random.nextInt(right - left + 1);
+             int pivot = nums[pivotIndex];
+             swap(nums, pivotIndex, right);
+             int storeIndex = left;
+             for (int i = left; i < right; i++) {
+                 if (nums[i] < pivot) {
+                     swap(nums, storeIndex, i);
+                     storeIndex++;
+                 }
+             }
+             swap(nums, storeIndex, right);
+             return storeIndex;
+         }
+
+         private static void swap(int[] nums, int i, int j) {
+             int temp = nums[i];
+             nums[i] = nums[j];
+             nums[j] = temp;
+         }
+
+         public static void main(String[] args) {
+             int[] nums = {3, 2, 1, 5, 6, 4};
+             int k = 2;
+             int[] topK = findTopKElements(nums, k);
+             System.out.println(Arrays.toString(topK));  // Output: [5, 6]
+         }
+     }
+
+4. When to Use Each Technique:
+
+- Sorting: Use this method when simplicity is preferred and the dataset size is manageable.
+- Heap: Best for scenarios where the dataset is large, and k is significantly smaller than n.
+    It is also efficient for streaming data.
+- Quick Select: Suitable for in-memory data and when an average-case O(n) time complexity is acceptable.
+
+5. Applications:
+
+- Search Engines: To retrieve the top k search results based on relevance.
+- Recommendation Systems: Generating top k recommendations for users.
+- Financial Analysis: Identifying top k performing stocks or assets.
+- Real-time Analytics: Monitoring top k metrics in streaming data.
+
+Understanding and implementing the Top 'K' Elements pattern in Java is crucial for solving many practical problems efficiently,
+making it a common and important topic in coding interviews.
