@@ -52,10 +52,13 @@ Hope you find it useful 😎
 
 [16. Modified Binary Search ](src/Modified_Binary_Search)
 
+[17. Bitwise XOR ](src/Bitwise_XOR)
+
 
 ## 3. Resources:
 
 I acknowledge the use of OpenAI's ChatGPT for topic explanation, LeetCode and HackerRank for coding interview questions 👨‍💻
+
 
 ## 4. Adapted from: 
 
