@@ -1,4 +1,4 @@
-package Binary_Search;
+package Modified_Binary_Search;
 
 // Problem Statement: Search in Rotated Array (medium)
 // LeetCode Question: 33. Search in Rotated Sorted Array

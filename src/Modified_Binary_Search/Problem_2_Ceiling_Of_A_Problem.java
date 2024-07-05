@@ -1,4 +1,4 @@
-package Binary_Search;
+package Modified_Binary_Search;
 
 // Problem Statement: Ceiling of a Number
 // LeetCode Question:

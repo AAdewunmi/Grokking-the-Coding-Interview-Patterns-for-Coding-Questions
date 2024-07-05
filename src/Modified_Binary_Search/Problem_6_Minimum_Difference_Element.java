@@ -1,4 +1,4 @@
-package Binary_Search;
+package Modified_Binary_Search;
 
 // Problem Statement: Minimum Difference Element (medium)
 // LeetCode Question: 1200. Minimum Absolute Difference

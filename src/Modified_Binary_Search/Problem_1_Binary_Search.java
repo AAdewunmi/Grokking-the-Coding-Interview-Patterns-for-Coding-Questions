@@ -1,4 +1,4 @@
-package Binary_Search;
+package Modified_Binary_Search;
 
 // Problem Statement: Order-agnostic Binary Search (easy)
 // LeetCode Question: 704. Binary Search

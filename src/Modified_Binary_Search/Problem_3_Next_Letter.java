@@ -1,4 +1,4 @@
-package Binary_Search;
+package Modified_Binary_Search;
 
 // Problem Statement: Next Letter (medium)
 // LeetCode Question: 744. Find Smallest Letter Greater Than Target

@@ -1,4 +1,4 @@
-package Binary_Search;
+package Modified_Binary_Search;
 
 // Problem Statement: Search in a Sorted Infinite Array (medium)
 // LeetCode Question: 702. Search in a Sorted Array of Unknown Size

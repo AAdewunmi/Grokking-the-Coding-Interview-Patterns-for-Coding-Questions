@@ -1,4 +1,4 @@
-package Binary_Search;
+package Modified_Binary_Search;
 
 // Problem Statement: Rotation Count (medium)
 // LeetCode Question: 153. Find Minimum in Rotated Sorted Array

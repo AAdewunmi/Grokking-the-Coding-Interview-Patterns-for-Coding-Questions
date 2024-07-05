@@ -1,4 +1,4 @@
-package Binary_Search;
+package Modified_Binary_Search;
 
 // Problem Statement: Search Bitonic Array (medium)
 // LeetCode Question:
