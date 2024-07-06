@@ -1,6 +1,6 @@
 package Top_K_Elements;
 
-// Problem Statement: Top 'K' Numbers (easy)
+// Problem Statement: Kth Smallest Number (easy)
 // LeetCode Question:
 
 import java.util.PriorityQueue;
