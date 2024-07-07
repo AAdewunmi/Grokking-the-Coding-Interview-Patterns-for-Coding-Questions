@@ -5,7 +5,7 @@ package Top_K_Elements;
 
 import java.util.*;
 
-public class Problem_5_K_Frequent_Numbers {
+public class Problem_5_Top_K_Frequent_Numbers {
     public List<Integer> findTopKFrequentNumbers(int[] nums, int k) {
 
         Map<Integer, Integer> numFrequencyMap = new HashMap<>();
