@@ -1,4 +1,7 @@
 Merge Interval Pattern:
+=======================
+
+- Introduction:
 
 The merge interval pattern refers to the process of combining overlapping or adjacent intervals in a list of intervals.
 This concept is widely used in computer science, particularly in problems involving scheduling, computational geometry, and data compression.

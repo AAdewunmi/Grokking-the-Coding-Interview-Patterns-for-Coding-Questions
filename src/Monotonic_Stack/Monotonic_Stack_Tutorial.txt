@@ -1,4 +1,7 @@
 Monotonic Stack
+===============
+
+- Introduction:
 
 A monotonic stack is a stack data structure that maintains its elements in a specific order, either strictly increasing or strictly decreasing.
 The term "monotonic" refers to this consistent order.

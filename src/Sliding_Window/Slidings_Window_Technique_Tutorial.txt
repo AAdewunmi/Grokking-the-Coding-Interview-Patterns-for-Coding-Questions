@@ -1,4 +1,7 @@
 Sliding Window
+==============
+
+- Introduction:
 
 The sliding window technique is a fundamental concept in computer science and software engineering used to solve various types of problems,
 particularly those involving arrays, strings, and other linear data structures. It is a strategy to optimize the solution by reducing the

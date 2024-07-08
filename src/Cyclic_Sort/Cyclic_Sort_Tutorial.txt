@@ -1,4 +1,7 @@
 Cyclic Sort Pattern:
+===================
+
+- Introduction:
 
 The cyclic sort pattern is a useful algorithmic approach to solve problems involving arrays where elements are within a known range (e.g., 1 to n).
 This pattern is particularly effective for sorting such arrays in place and for finding missing or duplicate elements in these arrays.

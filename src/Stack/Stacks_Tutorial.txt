@@ -1,4 +1,7 @@
 Stacks
+======
+
+- Introduction:
 
 A Stack is a linear data structure that follows the Last In, First Out (LIFO) principle.
 This means that the last element added to the stack will be the first one to be removed.

@@ -1,6 +1,8 @@
 Modified Binary Search
 =============
 
+- Introduction:
+
 Binary Search is the most popular Searching Algorithm which is most asked in coding interviews.
 Its popularity is because of it’s time complexity, where the linear search algorithm takes O(N) time, the Binary Search
 takes O(log N) time. The only condition in Binary Search is that the array should be sorted.

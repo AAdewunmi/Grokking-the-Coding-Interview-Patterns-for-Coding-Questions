@@ -1,4 +1,7 @@
 Hash Map, also known as a Hash Table
+====================================
+
+- Introduction:
 
 A hash table, also known as a hash map, is a data structure that provides efficient storage and retrieval of
 data using key-value pairs. It achieves this efficiency through a process called hashing. Here's a detailed explanation

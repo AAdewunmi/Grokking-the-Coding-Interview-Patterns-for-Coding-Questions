@@ -1,34 +1,53 @@
 The Two Pointers Technique
+==========================
 
-The Two Pointers Technique is a problem-solving approach used to solve certain types of problems efficiently. It typically involves using two pointers (or indices) that move through the data structure in a way that helps to solve the problem more effectively than using a single pointer or brute force methods.
+- Introduction:
+
+The Two Pointers Technique is a problem-solving approach used to solve certain types of problems efficiently.
+It typically involves using two pointers (or indices) that move through the data structure in a way that helps to solve
+the problem more effectively than using a single pointer or brute force methods.
 
 Here's how the Two Pointers Technique generally works:
 
-1. **Initialization:** Start with two pointers or indices pointing to different positions within the data structure. These pointers can be initialized at the beginning, end, or any suitable positions based on the problem requirements.
+1. Initialization: Start with two pointers or indices pointing to different positions within the data structure.
+These pointers can be initialized at the beginning, end, or any suitable positions based on the problem requirements.
 
-2. **Move Pointers:** Adjust the positions of the pointers based on certain conditions defined by the problem. The movement of the pointers can be controlled to traverse the data structure in a specific way.
+2. Move Pointers: Adjust the positions of the pointers based on certain conditions defined by the problem.
+The movement of the pointers can be controlled to traverse the data structure in a specific way.
 
-3. **Check Conditions:** At each step, check certain conditions defined by the problem statement. These conditions often involve comparing values at the positions pointed to by the pointers or performing certain operations based on those values.
+3. Check Conditions: At each step, check certain conditions defined by the problem statement. These conditions often
+involve comparing values at the positions pointed to by the pointers or performing certain operations based on those values.
 
-4. **Iterate or Terminate:** Continue moving the pointers and checking conditions until the problem is solved or a termination condition is met. This might involve reaching the end of the data structure, finding a specific solution, or meeting certain constraints.
+4. Iterate or Terminate: Continue moving the pointers and checking conditions until the problem is solved or a
+termination condition is met. This might involve reaching the end of the data structure, finding a specific solution,
+or meeting certain constraints.
 
-The Two Pointers Technique is often used to solve problems related to arrays, linked lists, or strings. It can be particularly useful for problems that involve searching, sorting, or manipulating elements within the data structure.
+The Two Pointers Technique is often used to solve problems related to arrays, linked lists, or strings.
+It can be particularly useful for problems that involve searching, sorting, or manipulating elements within the data structure.
 
 Some common scenarios where the Two Pointers Technique is applied include:
 
-- **Finding pairs with a given sum:** Use two pointers starting from the beginning and end of a sorted array, adjusting them based on whether the current sum is greater or less than the target sum.
+- Finding pairs with a given sum: Use two pointers starting from the beginning and end of a sorted array, adjusting
+    them based on whether the current sum is greater or less than the target sum.
 
-- **Finding a subarray with a given sum:** Use two pointers to define a sliding window over the array, adjusting the window size based on whether the current sum is greater or less than the target sum.
+- Finding a subarray with a given sum: Use two pointers to define a sliding window over the array, adjusting the
+    window size based on whether the current sum is greater or less than the target sum.
 
-- **Merging sorted arrays or lists:** Use two pointers to iterate over two sorted arrays or lists simultaneously and merge them into a single sorted array or list.
+- Merging sorted arrays or lists: Use two pointers to iterate over two sorted arrays or lists simultaneously and
+    merge them into a single sorted array or list.
 
-- **Removing duplicates from a sorted array or list:** Use two pointers to traverse the array or list, removing duplicates as they are encountered.
+- Removing duplicates from a sorted array or list: Use two pointers to traverse the array or list, removing duplicates
+    as they are encountered.
 
-The Two Pointers Technique is efficient and often results in solutions with better time complexity compared to brute force approaches. It's particularly effective for problems where the data structure is sorted or can be processed in a specific order.
+The Two Pointers Technique is efficient and often results in solutions with better time complexity compared to brute
+    force approaches. It's particularly effective for problems where the data structure is sorted or can be processed
+    in a specific order.
 
-This pseudocode demonstrates the general structure of the Two Pointers Technique. It initializes two pointers, leftPointer and rightPointer, and moves them through the array towards each other based on certain conditions.
+This pseudocode demonstrates the general structure of the Two Pointers Technique. It initializes two pointers,
+leftPointer and rightPointer, and moves them through the array towards each other based on certain conditions.
 
-In this example, the condition is checking for pairs with a given sum, but you can adapt the code for other problems by adjusting the condition and operations inside the loop.
+In this example, the condition is checking for pairs with a given sum, but you can adapt the code for other problems
+by adjusting the condition and operations inside the loop.
 
 function twoPointersAlgorithm(array):
     // Initialize pointers

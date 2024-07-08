@@ -1,31 +1,43 @@
 Fast & Slow Pointers Pattern
+============================
 
-The Fast & Slow Pointers Pattern, also known as the Floyd's Tortoise and Hare algorithm or cycle detection algorithm, is a technique used to solve problems where you need to detect cycles or find a certain position within a sequence or linked list.
+- Introduction:
 
-The basic idea behind this pattern involves using two pointers that move through the data structure at different speeds. One pointer (the "slow" pointer) advances one step at a time, while the other pointer (the "fast" pointer) advances two steps at a time. By moving these pointers through the sequence or linked list, you can identify certain properties of the structure, such as cycle detection or finding a position.
+The Fast & Slow Pointers Pattern, also known as the Floyd's Tortoise and Hare algorithm or cycle detection algorithm,
+is a technique used to solve problems where you need to detect cycles or find a certain position within a sequence or linked list.
+
+The basic idea behind this pattern involves using two pointers that move through the data structure at different speeds.
+One pointer (the "slow" pointer) advances one step at a time, while the other pointer (the "fast" pointer) advances two steps at a time.
+By moving these pointers through the sequence or linked list, you can identify certain properties of the structure, such as cycle detection
+or finding a position.
 
 Here's a simple breakdown of how the Fast & Slow Pointers Pattern works:
 
-1. **Initialization:** Start with two pointers pointing to the beginning of the sequence or linked list. Let's call them the "slow" pointer and the "fast" pointer.
+1. Initialization: Start with two pointers pointing to the beginning of the sequence or linked list. Let's call them the "slow" pointer
+and the "fast" pointer.
 
-2. **Move Pointers:** Move the "slow" pointer one step forward and the "fast" pointer two steps forward.
+2. Move Pointers: Move the "slow" pointer one step forward and the "fast" pointer two steps forward.
 
-3. **Check for Conditions:** Depending on the problem you're solving, you might have different conditions to check. Some common scenarios include:
+3. Check for Conditions: Depending on the problem you're solving, you might have different conditions to check. Some common scenarios include:
 
-   - **Cycle Detection:** If the pointers meet or overlap at some point, there's a cycle in the sequence or linked list.
-   - **Finding a Position:** If the problem requires finding a certain position or element, you might have additional conditions to check based on the problem statement.
+   - Cycle Detection: If the pointers meet or overlap at some point, there's a cycle in the sequence or linked list.
+   - Finding a Position: If the problem requires finding a certain position or element, you might have additional conditions to check based
+   on the problem statement.
 
-4. **Iterate:** Repeat steps 2 and 3 until you meet the conditions specified by the problem or reach the end of the sequence or linked list.
+4. Iterate: Repeat steps 2 and 3 until you meet the conditions specified by the problem or reach the end of the sequence or linked list.
 
-5. **Handle Edge Cases:** Depending on the problem, you might need to handle edge cases such as null pointers or empty sequences.
+5. Handle Edge Cases: Depending on the problem, you might need to handle edge cases such as null pointers or empty sequences.
 
-The Fast & Slow Pointers Pattern is particularly useful for solving problems related to cycle detection in linked lists, finding the middle of a linked list, or determining if a sequence has a repeating pattern.
+The Fast & Slow Pointers Pattern is particularly useful for solving problems related to cycle detection in linked lists, finding the middle
+of a linked list, or determining if a sequence has a repeating pattern.
 
 This pattern is efficient and often has a time complexity of O(n), where n is the number of elements in the sequence or linked list.
 
-This pseudocode demonstrates the basic idea of the Fast & Slow Pointer Pattern for cycle detection in a linked list. The pattern involves moving two pointers through the list at different speeds—one pointer moves one step at a time (slow), and the other pointer moves two steps at a time (fast).
+This pseudocode demonstrates the basic idea of the Fast & Slow Pointer Pattern for cycle detection in a linked list. The pattern involves
+moving two pointers through the list at different speeds—one pointer moves one step at a time (slow), and the other pointer moves two steps at a time (fast).
 
-If there's a cycle in the linked list, the fast pointer will eventually catch up to the slow pointer, indicating the presence of a cycle. If the fast pointer reaches the end of the list (or becomes null) before catching up to the slow pointer, it means there's no cycle.
+If there's a cycle in the linked list, the fast pointer will eventually catch up to the slow pointer, indicating the presence of a cycle.
+If the fast pointer reaches the end of the list (or becomes null) before catching up to the slow pointer, it means there's no cycle.
 
 function detectCycle(head):
     // Initialize fast and slow pointers

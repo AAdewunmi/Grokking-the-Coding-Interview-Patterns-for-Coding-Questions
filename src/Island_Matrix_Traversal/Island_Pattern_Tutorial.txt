@@ -1,6 +1,8 @@
 Island Pattern (Matrix Traversal)
 ==============
 
+- Introduction:
+
 The Island pattern, also known as Matrix Traversal, is a technique used to navigate through a 2D array or matrix.
 The primary goal is to identify and process contiguous groups of elements, often referred to as ‘islands’.
 This pattern is particularly useful when you need to explore and manipulate grid-based data.

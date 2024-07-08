@@ -1,5 +1,7 @@
 Heap (Data Structure)
-====
+=====================
+
+- Introduction:
 
 A HEAP is a specialized tree-based data structure that satisfies the heap property. The heap property for a max heap is
 that for any given node II, the value of II is greater than or equal to the values of its children. In a min heap, the

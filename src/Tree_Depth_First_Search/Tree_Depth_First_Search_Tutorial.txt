@@ -1,6 +1,7 @@
-Depth First Search
+Tree: Depth First Search (DFS)
+============================
 
-Depth First Search
+- Introduction:
 
 Tree Depth First Search (DFS) is an algorithm used for traversing or searching tree or graph data structures.
 The goal is to explore as far as possible along each branch before backtracking.

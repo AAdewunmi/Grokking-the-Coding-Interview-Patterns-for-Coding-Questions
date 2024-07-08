@@ -1,6 +1,8 @@
 Graph
 =====
 
+- Introduction:
+
 A graph is a data structure that consists of a set of nodes (or vertices) and a set of edges that connect pairs of nodes.
 Graphs are used to represent relationships between entities, where the entities are represented by the nodes
 and the relationships by the edges.

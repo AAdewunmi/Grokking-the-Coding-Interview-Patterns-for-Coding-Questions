@@ -1,6 +1,8 @@
 Top K Elements
 ==============
 
+- Introduction:
+
 The Top 'K' Elements pattern is a technique that aims to find the top k largest or smallest elements in a collection
 such as an array or a stream of data.
 

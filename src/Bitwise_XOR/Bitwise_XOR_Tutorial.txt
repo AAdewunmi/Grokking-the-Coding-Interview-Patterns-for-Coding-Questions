@@ -1,6 +1,8 @@
 Bitwise XOR
 ===========
 
+- Introduction:
+
 Bitwise XOR (exclusive OR) is a binary operation that operates on the individual bits of its operands. It is a fundamental
 operation in digital logic and computer science, commonly used in tasks like encryption, error detection, and data manipulation.
 
@@ -52,6 +54,53 @@ The result is `0110`.
 
 Bitwise XOR is a versatile and efficient operation widely used in low-level programming and computer science for its
 unique properties and simplicity.
+
+Certainly! Here’s a high-level pseudocode for performing a Bitwise XOR (exclusive OR) operation between two integers:
+
+- Pseudocode
+
+Function BitwiseXOR(a, b):
+    Initialize result to 0
+    Initialize bitPosition to 0
+
+    While a is not 0 or b is not 0:
+        // Extract the least significant bit of a and b
+        bitA = a AND 1
+        bitB = b AND 1
+
+        // Perform XOR on the extracted bits
+        xorBit = bitA XOR bitB
+
+        // Place the xorBit in the correct bit position in the result
+        result = result OR (xorBit << bitPosition)
+
+        // Shift a and b to the right to process the next bit
+        a = a >> 1
+        b = b >> 1
+
+        // Move to the next bit position
+        bitPosition = bitPosition + 1
+
+    Return result
+
+- Explanation
+
+1. Function Signature: Define a function `BitwiseXOR` that takes two integers, `a` and `b`.
+2. Initialize Variables:
+   - `result` to store the final result of the XOR operation.
+   - `bitPosition` to keep track of the current bit position being processed.
+3. Loop Until Both Numbers Are Zero: Use a `while` loop to process each bit of `a` and `b` until both numbers become zero.
+4. Extract the Least Significant Bits: Use the bitwise AND operation to extract the least significant bit of `a` and `b`.
+5. Perform XOR on the Extracted Bits: Use the XOR operation to compute the XOR of the extracted bits.
+6. Update the Result: Place the `xorBit` in the correct position in the `result` using bitwise OR and left shift.
+7. Shift `a` and `b` Right: Move to the next bit by shifting `a` and `b` to the right.
+8. Update the Bit Position: Increment the `bitPosition` to reflect the shift.
+9. Return the Result: After processing all bits, return the final `result`.
+
+This pseudocode outlines the process of performing a bitwise XOR operation bit by bit. It ensures that each bit of the
+two input numbers is XORed and the result is constructed correctly.
+
+- Implementation
 
 In Java, the bitwise XOR operator is represented by the caret symbol (`^`). It operates on the individual bits of its operands
 and returns a new integer whose bits are set according to the XOR logic.
@@ -122,4 +171,5 @@ public class XORSwapExample {
 
 - Conclusion
 
-The bitwise XOR operator in Java is a powerful tool for bit-level manipulation, enabling efficient and concise operations that are fundamental in many areas of programming and computer science.
+The bitwise XOR operator in Java is a powerful tool for bit-level manipulation, enabling efficient and concise operations that
+are fundamental in many areas of programming and computer science.
