@@ -70,6 +70,7 @@ Hope you find it useful 😎
 
 [19. K Way Merge ](src/K_Way_Merge)
 
+[20. Greedy Algorithm ](src/Greedy_Algorithm)
 
 
 ## 3. Resources:
