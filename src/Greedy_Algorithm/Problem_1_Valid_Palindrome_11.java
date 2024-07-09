@@ -1,6 +1,6 @@
 package Greedy_Algorithm;
 
-// Problem Statement: Valid Palindrome II
+// Problem Statement: Valid Palindrome II (easy)
 // LeetCode Question: 680. Valid Palindrome II
 
 public class Problem_1_Valid_Palindrome_11 {
