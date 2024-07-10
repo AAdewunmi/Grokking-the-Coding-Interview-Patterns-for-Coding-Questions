@@ -75,7 +75,7 @@ Hope you find it useful 😎
 
 ## 3. Resources:
 
-I acknowledge the use of OpenAI's ChatGPT for topic explanation, LeetCode and HackerRank for coding interview questions 👨‍💻
+I acknowledge the use of OpenAI's ChatGPT for topic explanation 🤖, LeetCode and HackerRank for coding interview questions 👨‍💻
 
 
 ## 4. Adapted from: 
