@@ -11,7 +11,7 @@ public class Problem_2_Equal_Sum_Partition {
         for (int i = 0; i < n; i++)
             sum += num[i];
 
-        // if 'sum' is a an odd number, we can't have two subsets with same total
+        // if 'sum' is an odd number, we can't have two subsets with same total
         if(sum % 2 != 0)
             return false;
 
