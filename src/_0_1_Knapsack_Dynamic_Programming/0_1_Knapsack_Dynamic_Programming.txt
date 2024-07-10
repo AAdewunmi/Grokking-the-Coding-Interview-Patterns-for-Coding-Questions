@@ -1,0 +1,8 @@
+Knapsack Problem (Dynamic Programming)
+======================================
+- Knapsack Problem
+- Solution Approach
+- Dynamic Programming
+    L Introduction
+    L Pseudocode
+    L Example Problem and Solution (Java Implementation)
