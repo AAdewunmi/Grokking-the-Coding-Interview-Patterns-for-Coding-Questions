@@ -72,6 +72,8 @@ Hope you find it useful 😎
 
 [20. Greedy Algorithm ](src/Greedy_Algorithm)
 
+[21. 0/1 Knapsack (Dynamic Programming) ](src/_0_1_Knapsack_Dynamic_Programming)
+
 
 ## 3. Resources:
 
