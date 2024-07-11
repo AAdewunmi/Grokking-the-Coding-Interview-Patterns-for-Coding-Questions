@@ -74,6 +74,8 @@ Hope you find it useful 😎
 
 [21. 0/1 Knapsack (Dynamic Programming) ](src/_0_1_Knapsack_Dynamic_Programming)
 
+[22. Backtracking ](src/Backtracking)
+
 
 ## 3. Resources:
 
