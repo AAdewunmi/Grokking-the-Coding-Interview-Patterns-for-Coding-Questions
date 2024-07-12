@@ -76,6 +76,8 @@ Hope you find it useful 😎
 
 [22. Backtracking ](src/Backtracking)
 
+[23. Trie ](src/Trie)
+
 
 ## 3. Resources:
 
