@@ -132,7 +132,7 @@ Knapsack Problem (Dynamic Programming)
         maximum value that can be achieved without exceeding the knapsack's capacity.
 
 
-- Example 0/1 Knapsack: LeetCode 1235. Maximum Profit in Job Scheduling (Runtime 25ms Beats 97.12% Java Users on LeetCode)
+- 0/1 Knapsack Example: LeetCode Problem 1235. Maximum Profit in Job Scheduling (Runtime 25ms Beats 97.12% Java Users on LeetCode)
 
     To solve this problem, we can use a dynamic programming approach along with binary search for efficiency.
     The idea is to sort the jobs by their end times and use dynamic programming to find the maximum profit at each step.
