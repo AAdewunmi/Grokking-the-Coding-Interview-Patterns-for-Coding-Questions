@@ -1,3 +1,340 @@
 Topological Sort
 ================
 
+- Introduction:
+
+    Topological sort is a linear ordering of the vertices in a directed acyclic graph (DAG) such that for every directed edge
+    u -> v, vertex u comes before vertex v in the ordering. This concept is used in various applications, including scheduling tasks,
+    resolving symbol dependencies in linkers, and determining the compilation order of program modules.
+
+    *** Key Points:
+    1. Directed Acyclic Graph (DAG): The graph must be directed (edges have a direction) and acyclic (no cycles).
+    2. Linear Ordering: A sequence of vertices where each directed edge u -> v implies u appears before v.
+
+    *** Steps to Perform Topological Sort:
+    1. Identify vertices with no incoming edges: These are the starting points since no other vertices depend on them.
+    2. Remove the vertex and its outgoing edges from the graph**: Add the vertex to the topological ordering.
+    3. Repeat the process: Continue with the vertices that now have no incoming edges until all vertices are processed.
+
+- Algorithms:
+
+    There are two primary algorithms for performing a topological sort:
+
+    1. Kahn's Algorithm:
+        - Uses a queue to process vertices with no incoming edges.
+        - Repeatedly removes vertices with no incoming edges, adds them to the ordering, and decreases the in-degree of their neighbors.
+        - Time Complexity: O(V + E) where V is the number of vertices and E is the number of edges.
+
+        Here is a Java implementation of topological sort using Kahn's Algorithm. This approach uses a queue to process vertices with no incoming edges.
+
+        import java.util.*;
+
+        public class TopologicalSortKahns {
+
+            // Method to perform topological sort using Kahn's algorithm
+            public List<String> topologicalSort(Map<String, List<String>> graph) {
+                // Calculate in-degrees of all nodes
+                Map<String, Integer> inDegree = new HashMap<>();
+                for (String node : graph.keySet()) {
+                    inDegree.put(node, 0);
+                }
+                for (List<String> neighbors : graph.values()) {
+                    for (String neighbor : neighbors) {
+                        inDegree.put(neighbor, inDegree.get(neighbor) + 1);
+                    }
+                }
+
+                // Initialize the queue with nodes having zero in-degree
+                Queue<String> queue = new LinkedList<>();
+                for (String node : inDegree.keySet()) {
+                    if (inDegree.get(node) == 0) {
+                        queue.add(node);
+                    }
+                }
+
+                // Process the nodes
+                List<String> topologicalOrder = new ArrayList<>();
+                while (!queue.isEmpty()) {
+                    String node = queue.poll();
+                    topologicalOrder.add(node);
+
+                    // Decrease the in-degree of the neighboring nodes
+                    List<String> neighbors = graph.get(node);
+                    if (neighbors != null) {
+                        for (String neighbor : neighbors) {
+                            inDegree.put(neighbor, inDegree.get(neighbor) - 1);
+                            if (inDegree.get(neighbor) == 0) {
+                                queue.add(neighbor);
+                            }
+                        }
+                    }
+                }
+
+                // Check for cycles in the graph
+                if (topologicalOrder.size() != graph.size()) {
+                    throw new IllegalArgumentException("Graph has at least one cycle. Topological sort not possible.");
+                }
+
+                return topologicalOrder;
+            }
+
+            public static void main(String[] args) {
+                TopologicalSortKahns ts = new TopologicalSortKahns();
+
+                // Create a sample graph
+                Map<String, List<String>> graph = new HashMap<>();
+                graph.put("A", Arrays.asList("B", "C"));
+                graph.put("B", Arrays.asList("D"));
+                graph.put("C", Arrays.asList("E"));
+                graph.put("D", Arrays.asList("F"));
+                graph.put("E", Arrays.asList("F"));
+                graph.put("F", Collections.emptyList());
+
+                // Perform topological sort
+                try {
+                    List<String> result = ts.topologicalSort(graph);
+                    // Print the result
+                    System.out.println("Topological Sort Order: " + result);
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        ```
+
+        *** Explanation:
+
+        1. Graph Representation:
+           - The graph is represented as a `Map<String, List<String>>`, where each key is a node and its value is a list of neighboring nodes.
+
+        2. In-Degree Calculation:
+           - The in-degrees of all nodes are calculated by iterating through the graph. The in-degree of a node is the number of edges directed towards it.
+
+        3. Queue Initialization:
+           - Nodes with zero in-degree are added to the queue, as these nodes have no dependencies.
+
+        4. Processing Nodes:
+           - Nodes are processed by dequeuing from the queue, adding them to the topological order, and decreasing the in-degree of their neighbors.
+           If a neighbor's in-degree becomes zero, it is added to the queue.
+
+        5. Cycle Detection:
+           - If the size of the topological order list is not equal to the number of nodes in the graph, it indicates that there is at least one cycle,
+           and topological sort is not possible.
+
+        6. Sample Graph:
+           - The `main` method sets up a sample graph and calls `topologicalSort` to print the topological order.
+
+        This implementation ensures that the graph is processed correctly using Kahn's Algorithm and detects cycles in the graph.
+
+    2. Depth-First Search (DFS) Based Algorithm:
+        - Uses a stack to store the order of vertices.
+        - Recursively visits each vertex, exploring its descendants before marking it as finished and pushing it onto the stack.
+        - Time Complexity: O(V + E).
+
+        Here’s a Java implementation of topological sort using DFS. This example assumes you have a directed graph
+        represented using an adjacency list.
+
+        import java.util.*;
+
+        public class TopologicalSortDFS {
+
+            // Method to perform DFS and fill the stack with the topological order
+            private void dfs(String node, Map<String, List<String>> graph, Set<String> visited, Stack<String> stack) {
+                if (visited.contains(node)) {
+                    return;
+                }
+
+                visited.add(node);
+
+                // Visit all the neighbors
+                List<String> neighbors = graph.get(node);
+                if (neighbors != null) {
+                    for (String neighbor : neighbors) {
+                        dfs(neighbor, graph, visited, stack);
+                    }
+                }
+
+                // Push the node to the stack after visiting all its neighbors
+                stack.push(node);
+            }
+
+            // Method to perform topological sort on the graph
+            public List<String> topologicalSort(Map<String, List<String>> graph) {
+                Set<String> visited = new HashSet<>();
+                Stack<String> stack = new Stack<>();
+
+                // Perform DFS for all vertices
+                for (String node : graph.keySet()) {
+                    if (!visited.contains(node)) {
+                        dfs(node, graph, visited, stack);
+                    }
+                }
+
+                // Pop all elements from the stack to get the topological order
+                List<String> topologicalOrder = new ArrayList<>();
+                while (!stack.isEmpty()) {
+                    topologicalOrder.add(stack.pop());
+                }
+
+                return topologicalOrder;
+            }
+
+            public static void main(String[] args) {
+                TopologicalSortDFS ts = new TopologicalSortDFS();
+
+                // Create a sample graph
+                Map<String, List<String>> graph = new HashMap<>();
+                graph.put("A", Arrays.asList("B", "C"));
+                graph.put("B", Arrays.asList("D"));
+                graph.put("C", Arrays.asList("E"));
+                graph.put("D", Arrays.asList("F"));
+                graph.put("E", Arrays.asList("F"));
+                graph.put("F", Collections.emptyList());
+
+                // Perform topological sort
+                List<String> result = ts.topologicalSort(graph);
+
+                // Print the result
+                System.out.println("Topological Sort Order: " + result);
+            }
+        }
+
+        *** Explanation:
+
+        1. Graph Representation:
+           - The graph is represented as a `Map<String, List<String>>`, where each key is a node and its value is a list of neighboring nodes.
+
+        2. DFS Method:
+           - The `dfs` method is a recursive function that marks nodes as visited and pushes them onto a stack after visiting all their neighbors.
+
+        3. Topological Sort Method:
+           - The `topologicalSort` method initializes the visited set and stack, iterates through all nodes, and calls `dfs` for unvisited nodes.
+            After DFS traversal, it pops all nodes from the stack to get the topological order.
+
+        4. Sample Graph:
+           - The `main` method sets up a sample graph and calls `topologicalSort` to print the topological order.
+
+        This implementation assumes the graph is a Directed Acyclic Graph (DAG). If the graph contains cycles, the `dfs` method will detect them,
+        and you can handle them accordingly.
+
+        *** Applications:
+
+        - Task Scheduling: Order tasks with dependencies (e.g., Task A must be completed before Task B).
+        - Build Systems: Determine the order to compile files when some files depend on others.
+        - Course Prerequisites: Order of courses to take based on prerequisite relationships.
+
+- Topological Sort Example: LeetCode Question 207. Course Schedule ((ChatGPT coded the solution 🤖))
+
+    To determine if it's possible to finish all courses given the prerequisites, we can use Kahn's Algorithm to detect cycles in the directed
+    graph formed by the courses and their prerequisites. If we detect a cycle, it means it's not possible to complete all courses, and we should
+    return false. Otherwise, we return true.
+
+    Here's a Java implementation of this logic along with the explanation of time and space complexity::
+
+    import java.util.*;
+
+    public class CourseSchedule {
+
+        public boolean canFinish(int numCourses, int[][] prerequisites) {
+            // Step 1: Initialize in-degree and adjacency list
+            int[] inDegree = new int[numCourses];
+            List<List<Integer>> adjList = new ArrayList<>();
+
+            for (int i = 0; i < numCourses; i++) {
+                adjList.add(new ArrayList<>());
+            }
+
+            // Step 2: Build the graph
+            for (int[] prerequisite : prerequisites) {
+                int course = prerequisite[0];
+                int prerequisiteCourse = prerequisite[1];
+                adjList.get(prerequisiteCourse).add(course);
+                inDegree[course]++;
+            }
+
+            // Step 3: Find all the vertices with zero in-degree
+            Queue<Integer> queue = new LinkedList<>();
+            for (int i = 0; i < numCourses; i++) {
+                if (inDegree[i] == 0) {
+                    queue.add(i);
+                }
+            }
+
+            // Step 4: Process the vertices
+            int completedCourses = 0;
+            while (!queue.isEmpty()) {
+                int course = queue.poll();
+                completedCourses++;
+                for (int nextCourse : adjList.get(course)) {
+                    inDegree[nextCourse]--;
+                    if (inDegree[nextCourse] == 0) {
+                        queue.add(nextCourse);
+                    }
+                }
+            }
+
+            // Step 5: Check if all courses have been completed
+            return completedCourses == numCourses;
+        }
+
+        public static void main(String[] args) {
+            CourseSchedule cs = new CourseSchedule();
+            int numCourses = 4;
+            int[][] prerequisites = {{1, 0}, {2, 1}, {3, 2}};
+
+            if (cs.canFinish(numCourses, prerequisites)) {
+                System.out.println("Yes, you can finish all courses.");
+            } else {
+                System.out.println("No, you cannot finish all courses.");
+            }
+        }
+    }
+
+    *** Explanation:
+
+    1. Graph Initialization:
+        - `inDegree`: An array to keep track of the number of prerequisites each course has.
+        - `adjList`: An adjacency list to represent the graph where each course points to a list of courses that depend on it.
+
+    2. Building the Graph:
+        - For each prerequisite pair `[a, b]`, add `a` to the adjacency list of `b` and increment the in-degree of `a`.
+
+    3. Finding Zero In-Degree Vertices:
+        - Initialize a queue and enqueue all courses with zero in-degree (i.e., no prerequisites).
+
+    4. Processing the Queue:
+        - While the queue is not empty:
+            - Dequeue a course and increment the count of completed courses.
+            - For each neighboring course in the adjacency list, decrement its in-degree.
+            - If a neighbor's in-degree becomes zero, enqueue it.
+
+    5. Checking Completion:
+        - If the number of completed courses equals `numCourses`, it means we can finish all courses (return `true`).
+        - Otherwise, a cycle exists, and it is not possible to complete all courses (return `false`).
+
+    *** Time Complexity:
+
+    The time complexity of the algorithm is O(V+E), where V is the number of vertices (courses) and E is the number of
+    edges (prerequisites). This complexity arises because:
+
+        1. Graph Initialization: Initializing the in-degree array and adjacency list takes O(V).
+        2. Building the Graph: Adding edges to the adjacency list and updating in-degrees takes O(E).
+        3. Processing the Queue: Each vertex is processed once, and each edge is considered once, leading to O(V+E).
+
+    Space Complexity:
+
+    The space complexity of the algorithm is O(V+E), where:
+
+        In-Degree Array: The in-degree array requires O(V) space.
+        Adjacency List: The adjacency list requires O(E) space.
+        Queue: In the worst case, all vertices could be in the queue at the same time, which requires O(V) space.
+
+    Overall, the space complexity is dominated by the adjacency list and the in-degree array, resulting in O(V+E) space.
+
+    This implementation ensures that the algorithm is both time and space-efficient for determining if it's possible to finish
+    all courses given the prerequisites.
+
+    This implementation efficiently checks for cycles in the graph and determines if it is possible to complete all the courses.
+
+
+
