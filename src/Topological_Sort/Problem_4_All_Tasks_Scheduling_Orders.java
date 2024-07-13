@@ -6,10 +6,10 @@ package Topological_Sort;
 
 import java.util.*;
 
-public class Problem_All_Tasks_Scheduling_Orders {
+public class Problem_4_All_Tasks_Scheduling_Orders {
 
     List<List<Integer>> orders;
-    public Problem_All_Tasks_Scheduling_Orders() {
+    public Problem_4_All_Tasks_Scheduling_Orders() {
         orders = new ArrayList<List<Integer>>();
     }
 
