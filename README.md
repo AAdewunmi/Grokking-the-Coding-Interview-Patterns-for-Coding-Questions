@@ -78,6 +78,8 @@ Hope you find it useful 😎
 
 [23. Trie ](src/Trie)
 
+[24. Topological Sort ](src/Topological_Sort)
+
 
 ## 3. Resources:
 
