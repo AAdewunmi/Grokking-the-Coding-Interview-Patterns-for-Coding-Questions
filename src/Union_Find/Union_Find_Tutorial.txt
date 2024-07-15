@@ -1,0 +1,337 @@
+Union Find
+==========
+
+- Introduction:
+
+    The Union-Find data structure, also known as Disjoint Set Union (DSU) or Merge-Find Set, is a data structure that
+    provides efficient methods to manage and merge disjoint sets.
+
+       + Applications:
+
+            1. Network Connectivity: To determine if there is a path between nodes in a network.
+
+            2. MST Algorithms: Such as Kruskal's algorithm for finding Minimum Spanning Trees.
+
+            3. Image Processing: For detecting connected components in images.
+
+            4. Equivalence Relations: Managing equivalence relations and partitioning sets based on those relations.
+
+    *** Key Concepts and Components:
+
+       + Key Concepts:
+
+           1. Disjoint Sets:
+               A collection of sets where no item can be in more than one set.
+               Used to partition elements into non-overlapping subsets.
+
+           2. Representative (or Root):
+               Each set is identified by a representative or root element.
+               All elements in the set point directly or indirectly to this root.
+
+           3. Connected Components:
+               Subsets of elements that are interconnected.
+
+       + Components
+
+           1. Parent Array:
+               An array where each element points to its parent.
+               If an element is its own parent, it is a root.
+
+               Java Implementation:
+                   int[] parent = new int[n];
+                   for (int i = 0; i < n; i++) {
+                       parent[i] = i;  // Initially, each element is its own parent
+                   }
+
+           2. Rank Array (or Size Array):
+
+               An array used to keep track of the tree's depth or size.
+               Helps optimize the union operation by ensuring the smaller tree is merged under the root of the larger tree.
+
+               Java Implementation:
+                   int[] rank = new int[n];
+                   for (int i = 0; i < n; i++) {
+                       rank[i] = 0;  // Initially, the rank of each tree is 0
+                   }
+
+
+ - Union-Find data structure Operations:
+
+Here's an overview of the operations, including the less common deletion operation:
+
+    1. Making New Sets:
+
+        - Initializes each element as its own set.
+        - Each element is its own parent initially, and the rank of each element is 0.
+
+        public class UnionFind {
+            private int[] parent;
+            private int[] rank;
+
+            // Constructor to initialize parent and rank arrays
+            public UnionFind(int size) {
+                parent = new int[size];
+                rank = new int[size];
+                for (int i = 0; i < size; i++) {
+                    parent[i] = i;
+                    rank[i] = 0;
+                }
+            }
+        }
+
+    2. Finding Set Representatives:
+        - Determines the representative (or root) of the set containing a particular element.
+        - Uses path compression to flatten the structure, making future operations faster.
+
+        public int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]);  // Path compression
+            }
+            return parent[x];
+        }
+
+    3. Merging Two Sets:
+        - Merges two sets into a single set.
+        - Uses union by rank to attach the smaller tree under the root of the larger tree, keeping the tree flat and efficient.
+
+        public void union(int x, int y) {
+            int rootX = find(x);
+            int rootY = find(y);
+
+            if (rootX != rootY) {
+                if (rank[rootX] > rank[rootY]) {
+                    parent[rootY] = rootX;
+                } else if (rank[rootX] < rank[rootY]) {
+                    parent[rootX] = rootY;
+                } else {
+                    parent[rootY] = rootX;
+                    rank[rootX]++;
+                }
+            }
+        }
+
+    4. Deletion (Less Common):
+        - The standard Union-Find data structure does not support efficient deletion. Deleting an element from a set would
+            require significant changes to maintain the properties of the data structure. However, in some applications, a
+            workaround is to mark elements as inactive or use a different data structure to handle deletions.
+        - One common approach is to use a flag array to mark elements as "deleted" without actually removing them from the data structure.
+
+        private boolean[] active;
+
+        public UnionFind(int size) {
+            parent = new int[size];
+            rank = new int[size];
+            active = new boolean[size];
+            for (int i = 0; i < size; i++) {
+                parent[i] = i;
+                rank[i] = 0;
+                active[i] = true;  // All elements are initially active
+            }
+        }
+
+        public void delete(int x) {
+            active[x] = false;  // Mark the element as inactive
+        }
+
+        public boolean isActive(int x) {
+            return active[x];
+        }
+
+
+    5. Full Implementation in Java
+
+    Here's a complete implementation of the Union-Find data structure, including the basic operations and a
+        method to mark elements as deleted:
+
+    public class UnionFind {
+        private int[] parent;
+        private int[] rank;
+        private boolean[] active;
+
+        // Constructor to initialize parent, rank, and active arrays
+        public UnionFind(int size) {
+            parent = new int[size];
+            rank = new int[size];
+            active = new boolean[size];
+            for (int i = 0; i < size; i++) {
+                parent[i] = i;
+                rank[i] = 0;
+                active[i] = true;  // All elements are initially active
+            }
+        }
+
+        // Find operation with path compression
+        public int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]);
+            }
+            return parent[x];
+        }
+
+        // Union operation with union by rank
+        public void union(int x, int y) {
+            int rootX = find(x);
+            int rootY = find(y);
+
+            if (rootX != rootY) {
+                if (rank[rootX] > rank[rootY]) {
+                    parent[rootY] = rootX;
+                } else if (rank[rootX] < rank[rootY]) {
+                    parent[rootX] = rootY;
+                } else {
+                    parent[rootY] = rootX;
+                    rank[rootX]++;
+                }
+            }
+        }
+
+        // Mark an element as inactive (deleted)
+        public void delete(int x) {
+            active[x] = false;  // Mark the element as inactive
+        }
+
+        // Check if an element is active
+        public boolean isActive(int x) {
+            return active[x];
+        }
+
+        public static void main(String[] args) {
+            int n = 10;  // Number of elements
+            UnionFind uf = new UnionFind(n);
+
+            // Perform Union operations
+            uf.union(1, 2);
+            uf.union(2, 3);
+            uf.union(4, 5);
+
+            // Perform Find operations
+            System.out.println(uf.find(1));  // Output will be the representative of the set containing 1
+            System.out.println(uf.find(4));  // Output will be the representative of the set containing 4
+
+            // Delete an element
+            uf.delete(2);
+
+            // Check if elements are active
+            System.out.println(uf.isActive(2));  // Output will be false
+            System.out.println(uf.isActive(3));  // Output will be true
+        }
+    }
+    + Complexity
+
+    - Find and Union operations are nearly constant time, O(α(n)), where α is the Inverse Ackermann function, which
+        grows very slowly.
+    - Deletion is not supported efficiently in the basic Union-Find structure; the workaround using an active array
+        has O(1) complexity for marking an element as inactive.
+
+- Example Union-Find data structure: LeetCode Problem 547. Number of Provinces
+
+    To solve this problem, we can use the Union-Find data structure to efficiently group the connected cities and count
+    the number of disjoint sets (provinces). Here is a step-by-step Java solution (ChatGPT coded the solution 🤖):
+
+    *** Steps:
+
+    1. Initialize Union-Find Structure: Create a Union-Find data structure to manage city connections.
+    2. Process Connections: For each pair of cities that are directly connected, perform a union operation.
+    3. Count Provinces: After processing all connections, count the number of unique roots in the Union-Find structure,
+        which corresponds to the number of provinces.
+
+    *** Java Implementation:
+
+    public class Solution {
+        // Union-Find data structure
+        class UnionFind {
+            private int[] parent;
+            private int[] rank;
+
+            // Constructor to initialize parent and rank arrays
+            public UnionFind(int size) {
+                parent = new int[size];
+                rank = new int[size];
+                for (int i = 0; i < size; i++) {
+                    parent[i] = i;
+                    rank[i] = 0;
+                }
+            }
+
+            // Find operation with path compression
+            public int find(int x) {
+                if (parent[x] != x) {
+                    parent[x] = find(parent[x]);
+                }
+                return parent[x];
+            }
+
+            // Union operation with union by rank
+            public void union(int x, int y) {
+                int rootX = find(x);
+                int rootY = find(y);
+
+                if (rootX != rootY) {
+                    if (rank[rootX] > rank[rootY]) {
+                        parent[rootY] = rootX;
+                    } else if (rank[rootX] < rank[rootY]) {
+                        parent[rootX] = rootY;
+                    } else {
+                        parent[rootY] = rootX;
+                        rank[rootX]++;
+                    }
+                }
+            }
+
+            // Get the number of unique roots (provinces)
+            public int getCount() {
+                int count = 0;
+                for (int i = 0; i < parent.length; i++) {
+                    if (parent[i] == i) {
+                        count++;
+                    }
+                }
+                return count;
+            }
+        }
+
+        public int findCircleNum(int[][] isConnected) {
+            int n = isConnected.length;
+            UnionFind uf = new UnionFind(n);
+
+            for (int i = 0; i < n; i++) {
+                for (int j = i + 1; j < n; j++) {
+                    if (isConnected[i][j] == 1) {
+                        uf.union(i, j);
+                    }
+                }
+            }
+
+            return uf.getCount();
+        }
+
+        public static void main(String[] args) {
+            Solution solution = new Solution();
+            int[][] isConnected = {
+                {1, 1, 0},
+                {1, 1, 0},
+                {0, 0, 1}
+            };
+
+            int numberOfProvinces = solution.findCircleNum(isConnected);
+            System.out.println("Number of Provinces: " + numberOfProvinces);  // Output should be 2
+        }
+    }
+
+    *** Explanation:
+
+    1. Union-Find Class:
+       - The `UnionFind` class manages the parent and rank arrays, provides the `find` and `union` methods to manage connections, and a `getCount` method to count the number of unique sets (provinces).
+
+    2. findCircleNum Method:
+       - The `findCircleNum` method initializes the Union-Find structure.
+       - It processes the `isConnected` matrix to union connected cities.
+       - Finally, it returns the count of unique roots in the Union-Find structure, representing the number of provinces.
+
+    3. Main Method:
+       - The main method provides a sample `isConnected` matrix and prints the number of provinces.
+
+    4. Complexity:
+    - Time Complexity: O(n^2 * α(n)), where n is the number of cities, and α(n) is the Inverse Ackermann function.
+        The double loop iterates over all pairs of cities.
+    - Space Complexity: O(n), for storing the parent and rank arrays.
