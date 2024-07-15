@@ -72,13 +72,15 @@ Hope you find it useful 😎
 
 [20. Greedy Algorithm ](src/Greedy_Algorithm)
 
-[21. 0/1 Knapsack (Dynamic Programming) ](src/_0_1_Knapsack_Dynamic_Programming)
+[21. 0/1 Knapsack Problem (Dynamic Programming) ](src/_0_1_Knapsack_Dynamic_Programming)
 
 [22. Backtracking ](src/Backtracking)
 
 [23. Trie ](src/Trie)
 
 [24. Topological Sort ](src/Topological_Sort)
+
+[25. Union Find (Disjoint-Set Data Structure) ](src/Union_Find)
 
 
 ## 3. Resources:
