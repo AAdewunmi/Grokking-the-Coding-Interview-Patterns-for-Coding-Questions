@@ -2,9 +2,36 @@ Union Find
 ==========
 
 - Introduction:
+===============
 
-    The Union-Find data structure, also known as Disjoint Set Union (DSU) or Merge-Find Set, is a data structure that
-    provides efficient methods to manage and merge disjoint sets.
+    Union Find, also known as Disjoint Set Union (DSU), is a data structure that keeps track of a partition of a set
+    into disjoint subsets (meaning no set overlaps with another). It provides two primary operations: find, which determines
+    which subset a particular element is in, and union, which merges two subsets into a single subset. This pattern is
+    particularly useful for problems where we need to find whether 2 elements belong to the same group or need to solve
+    connectivity-related problems in a graph or tree.
+
+    *** Pros and Cons of DSU
+
+        1. Pros:
+            Efficiency: Provides near constant time operations for union and find operations, making it highly efficient.
+            Simplicity: Once set up, it’s straightforward to use for solving problems related to disjoint sets.
+        2. Cons:
+            Space Overhead: Requires additional space to store the parent and rank of each element.
+            Initial Setup: Requires initial setup to create and initialize the data structure.
+
+    *** Why Choose Union-Find Over BFS/DFS?
+
+    You can solve similar problems using the Breadth-First Search (BFS) and Depth-First Search (DFS) algorithms,
+    but the Union Find algorithm provides the optimal solution over them. For problems related to connectivity checks and
+    component identification, Union-Find is often more efficient than BFS/DFS.
+
+    *** Time Complexity:
+         1. BFS/DFS: For BFS and DFS, the time complexity is O (V + E), where V is the number of vertices and E is the
+            number of edges. This can be quite slow for large graphs.
+
+        2. Union-Find: With path compression and union by rank, the amortized time complexity for union and find operations
+            can be approximated as O(α(n)), where α(n) is the inverse Ackermann function. This function grows very slowly,
+            making Union-Find operations almost constant time in practice.
 
        + Applications:
 
@@ -56,6 +83,7 @@ Union Find
 
 
  - Union-Find data structure Operations:
+ =======================================
 
 Here's an overview of the operations, including the less common deletion operation:
 
@@ -223,7 +251,164 @@ Here's an overview of the operations, including the less common deletion operati
     - Deletion is not supported efficiently in the basic Union-Find structure; the workaround using an active array
         has O(1) complexity for marking an element as inactive.
 
+ - Union-Find data structure Optimization:
+ =========================================
+
+    The Union-Find data structure, also known as Disjoint Set Union (DSU), is used to efficiently manage and merge disjoint sets.
+    Two common optimizations improve the efficiency of union-find operations: Path Compression and Union by Rank/Union by Size.
+    These optimizations help achieve nearly constant time complexity for union and find operations.
+
+    1. Path Compression
+    Path Compression is an optimization technique used during the find operation. The main idea is to make the tree flat, so future
+    find operations are faster.
+
+    *** Implementation:
+    When performing a find operation, traverse all the way up to the root and make each node on the path point directly to the root.
+    This flattens the structure, leading to more efficient future operations.
+
+    class UnionFind {
+        private int[] parent;
+        private int[] rank; // For Union by Rank or Size
+
+        public UnionFind(int size) {
+            parent = new int[size];
+            rank = new int[size];
+            for (int i = 0; i < size; i++) {
+                parent[i] = i;
+                rank[i] = 1; // For Union by Size, initialize rank as 1
+            }
+        }
+
+        public int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]); // Path compression
+            }
+            return parent[x];
+        }
+
+        public void unionByRank(int x, int y) {
+            int rootX = find(x);
+            int rootY = find(y);
+
+            if (rootX != rootY) {
+                if (rank[rootX] > rank[rootY]) {
+                    parent[rootY] = rootX;
+                } else if (rank[rootX] < rank[rootY]) {
+                    parent[rootX] = rootY;
+                } else {
+                    parent[rootY] = rootX;
+                    rank[rootX]++;
+                }
+            }
+        }
+
+        public void unionBySize(int x, int y) {
+            int rootX = find(x);
+            int rootY = find(y);
+
+            if (rootX != rootY) {
+                if (rank[rootX] > rank[rootY]) {
+                    parent[rootY] = rootX;
+                    rank[rootX] += rank[rootY]; // Update the size
+                } else {
+                    parent[rootX] = rootY;
+                    rank[rootY] += rank[rootX]; // Update the size
+                }
+            }
+        }
+
+        public static void main(String[] args) {
+            UnionFind uf = new UnionFind(10);
+
+            uf.unionByRank(1, 2);
+            uf.unionByRank(2, 3);
+            uf.unionByRank(4, 5);
+            uf.unionByRank(6, 7);
+            uf.unionByRank(5, 6);
+            uf.unionByRank(3, 7);
+
+            System.out.println(uf.find(1)); // Output: 1
+            System.out.println(uf.find(3)); // Output: 1
+            System.out.println(uf.find(5)); // Output: 4
+            System.out.println(uf.find(7)); // Output: 4
+        }
+    }
+
+    2. Union by Rank
+    Union by Rank is an optimization that attaches the shorter tree under the root of the taller tree. This keeps the tree as flat as possible.
+
+    *** Implementation:
+    Each node has a rank (or height). When merging two sets, the root of the smaller tree is made a child of the root of the larger tree.
+    If the ranks are equal, one root is arbitrarily chosen, and its rank is increased by one.
+
+    public void unionByRank(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+
+        if (rootX != rootY) {
+            if (rank[rootX] > rank[rootY]) {
+                parent[rootY] = rootX;
+            } else if (rank[rootX] < rank[rootY]) {
+                parent[rootX] = rootY;
+            } else {
+                parent[rootY] = rootX;
+                rank[rootX]++;
+            }
+        }
+    }
+
+    3. Union by Size
+    Union by Size is similar to Union by Rank but uses the size of the trees (number of elements) instead of their height.
+    The smaller tree is always added to the larger tree, ensuring that the resultant tree remains balanced.
+
+    *** Implementation:
+    Each node keeps track of the size of the tree it represents. When merging two sets, the root of the smaller tree is
+    made a child of the root of the larger tree, and the size of the larger tree is updated.
+
+    public void unionBySize(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+
+        if (rootX != rootY) {
+            if (rank[rootX] > rank[rootY]) {
+                parent[rootY] = rootX;
+                rank[rootX] += rank[rootY]; // Update the size
+            } else {
+                parent[rootX] = rootY;
+                rank[rootY] += rank[rootX]; // Update the size
+            }
+        }
+    }
+    ```
+
+    4. Combining Path Compression with Union by Rank/Size
+    Combining these optimizations results in an extremely efficient union-find structure with nearly constant time
+    complexity for union and find operations.
+
+    *** Example Usage:
+    The `main` method in the `UnionFind` class demonstrates the usage of union by rank and union by size with path compression.
+
+    public static void main(String[] args) {
+        UnionFind uf = new UnionFind(10);
+
+        uf.unionByRank(1, 2);
+        uf.unionByRank(2, 3);
+        uf.unionByRank(4, 5);
+        uf.unionByRank(6, 7);
+        uf.unionByRank(5, 6);
+        uf.unionByRank(3, 7);
+
+        System.out.println(uf.find(1)); // Output: 1
+        System.out.println(uf.find(3)); // Output: 1
+        System.out.println(uf.find(5)); // Output: 4
+        System.out.println(uf.find(7)); // Output: 4
+    }
+
+    This implementation demonstrates how to optimize union-find operations using path compression and union by rank or size,
+    resulting in efficient and performant data structure operations.
+
 - Example Union-Find data structure: LeetCode Problem 547. Number of Provinces
+==============================================================================
 
     To solve this problem, we can use the Union-Find data structure to efficiently group the connected cities and count
     the number of disjoint sets (provinces). Here is a step-by-step Java solution (ChatGPT coded the solution 🤖):
