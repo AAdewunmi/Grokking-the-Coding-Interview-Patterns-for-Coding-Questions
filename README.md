@@ -82,6 +82,8 @@ Hope you find it useful 😎
 
 [25. Union Find (Disjoint-Set Data Structure) ](src/Union_Find)
 
+[26. Ordered Set ](src/Ordered_Set)
+
 
 ## 3. Resources:
 
