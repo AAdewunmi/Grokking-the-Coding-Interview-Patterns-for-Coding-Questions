@@ -80,7 +80,7 @@ Coding Interview Patterns are classified according to skills level:
 
 [3. Bitwise XOR ](src/Bitwise_XOR)
 
-[4. 0/1 Knapsack Problem (Dynamic Programming) ](src/_0_1_Knapsack_Dynamic_Programming)
+[4. Dynamic Programming ](src/Dynamic_Programming)
 
 [5. Backtracking ](src/Backtracking)
 
