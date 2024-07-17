@@ -1,4 +1,4 @@
-package _0_1_Knapsack_Dynamic_Programming;
+package Dynamic_Programming._0_1_Knapsack_Dynamic_Programming;
 
 // Problem Statement: Minimum Subset Sum Difference (hard)
 // LeetCode Question: 2035. Partition Array Into Two Arrays to Minimize Sum Difference
