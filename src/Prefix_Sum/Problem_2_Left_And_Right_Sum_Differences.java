@@ -3,7 +3,7 @@ package Prefix_Sum;
 // Problem Statement: Left and Right Sum Differences (easy)
 // LeetCode Question: 2574. Left and Right Sum Differences
 
-public class Problem_Left_And_Right_Sum_Differences {
+public class Problem_2_Left_And_Right_Sum_Differences {
    public int[] findDifferenceArray(int[] nums){
        int n = nums.length;
        int[] leftSum = new int[n];
