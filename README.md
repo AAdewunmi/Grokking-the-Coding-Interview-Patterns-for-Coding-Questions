@@ -4,7 +4,6 @@
 
 Grokking the Coding Interview Patterns: Includes Topic Tutorials Plus LeetCode Questions & Solutions in JAVA ☕️
 
-
 ## 1. Project Description:
 
 This repository contains topic tutorials on "must know" coding interview patterns, their associated LeetCode questions 
@@ -29,68 +28,73 @@ for FAANGM coding interviews.
 
 Hope you find it useful 😎 
 
+## 2. Outline:
 
-## 2. Outline
+Coding Interview Patterns are classified according to skills level:
+
+#### * Fundamental:
 
 [1. Two Pointers ](src/Two_Pointers)
-
+    
 [2. Fast And Slow Pointers ](src/Fast_And_Slow_Pointers)
-
+    
 [3. Sliding Window ](src/Sliding_Window)
-
+    
 [4. Merge Intervals ](src/Merge_Intervals)
-
+    
 [5. Cyclic Sort ](src/Cyclic_Sort)
-
+    
 [6. LinkedList - In-Place Reversal ](src/LinkedList_In_Place_Traversal)
-
+    
 [7. Stack ](src/Stack)
+    
+[8. Island Pattern (Matrix Traversal) ](src/Island_Matrix_Traversal)
 
-[8. Monotonic Stack ](src/Monotonic_Stack)
+[9. Prefix Sum ](src/Prefix_Sum)
 
-[9. Hash Map ](src/HashMap_HashTable)
+#### * Intermediate:
 
-[10. Tree - Breadth First Search ](src/Tree_Breadth_First_Search)
+[1. Hash Map ](src/HashMap_HashTable)
 
-[11. Tree - Depth First Search ](src/Tree_Depth_First_Search)
+[2. Tree - Breadth First Search ](src/Tree_Breadth_First_Search)
 
-[12. Graph ](src/Graph)
+[3. Tree - Depth First Search ](src/Tree_Depth_First_Search)
 
-[13. Island Pattern (Matrix Traversal) ](src/Island_Matrix_Traversal)
+[4. Graph ](src/Graph)
 
-[14. Heap ](src/Heap)
+[5. Heap ](src/Heap)
 
-[15. Subsets ](src/Subsets)
+[6. Modified Binary Search ](src/Modified_Binary_Search)
 
-[16. Modified Binary Search ](src/Modified_Binary_Search)
+[7. Top K Elements ](src/Top_K_Elements)
 
-[17. Bitwise XOR ](src/Bitwise_XOR)
+[8. K Way Merge ](src/K_Way_Merge)
 
-[18. Top K Elements ](src/Top_K_Elements)
+[9. Greedy Algorithm ](src/Greedy_Algorithm)
 
-[19. K Way Merge ](src/K_Way_Merge)
+#### * Advanced:
 
-[20. Greedy Algorithm ](src/Greedy_Algorithm)
+[1. Monotonic Stack ](src/Monotonic_Stack)
 
-[21. 0/1 Knapsack Problem (Dynamic Programming) ](src/_0_1_Knapsack_Dynamic_Programming)
+[2. Subsets ](src/Subsets)
 
-[22. Backtracking ](src/Backtracking)
+[3. Bitwise XOR ](src/Bitwise_XOR)
 
-[23. Trie ](src/Trie)
+[4. 0/1 Knapsack Problem (Dynamic Programming) ](src/_0_1_Knapsack_Dynamic_Programming)
 
-[24. Topological Sort ](src/Topological_Sort)
+[5. Backtracking ](src/Backtracking)
 
-[25. Union Find (Disjoint-Set Data Structure) ](src/Union_Find)
+[6. Trie ](src/Trie)
 
-[26. Ordered Set ](src/Ordered_Set)
+[7. Topological Sort ](src/Topological_Sort)
 
-[27. Prefix Sum ](src/Prefix_Sum)
+[8. Union Find (Disjoint-Set Data Structure) ](src/Union_Find)
 
+[9. Ordered Set ](src/Ordered_Set)
 
 ## 3. Resources:
 
 I acknowledge the use of OpenAI's ChatGPT for topic explanation 🤖, LeetCode and HackerRank for coding interview questions 👨‍💻
-
 
 ## 4. Adapted from: 
 
