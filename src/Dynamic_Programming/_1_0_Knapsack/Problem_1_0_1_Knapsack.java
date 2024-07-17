@@ -1,4 +1,4 @@
-package Pattern_Dynamic_Programming._0_1_Knapsack;
+package Dynamic_Programming._1_0_Knapsack;
 
 // Problem Statement: 0/1 Knapsack (medium)
 // LeetCode Question:

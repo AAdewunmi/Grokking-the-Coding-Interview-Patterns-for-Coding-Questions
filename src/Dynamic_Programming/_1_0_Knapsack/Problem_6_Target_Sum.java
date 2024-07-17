@@ -1,4 +1,4 @@
-package Pattern_Dynamic_Programming._0_1_Knapsack;
+package Dynamic_Programming._1_0_Knapsack;
 
 // Problem Statement: Target Sum (hard)
 // LeetCode Question: 494. Target Sum

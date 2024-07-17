@@ -1,4 +1,4 @@
-package Pattern_Dynamic_Programming._0_1_Knapsack;
+package Dynamic_Programming._1_0_Knapsack;
 
 // Problem Statement: Equal Subset Sum Partition (medium)
 // LeetCode Question: 416. Partition Equal Subset Sum
@@ -45,5 +45,5 @@ public class Problem_2_Equal_Sum_Partition {
         // the bottom-right corner will have our answer.
         return dp[n-1][sum];
     }
-
+    
 }

@@ -1,4 +1,4 @@
-package Dynamic_Programming._0_1_Knapsack_Dynamic_Programming;
+package Dynamic_Programming._1_0_Knapsack;
 
 // Problem Statement: Subset Sum (medium)
 // LeetCode Question:
