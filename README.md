@@ -84,6 +84,8 @@ Hope you find it useful 😎
 
 [26. Ordered Set ](src/Ordered_Set)
 
+[27. Prefix Sum ](src/Prefix_Sum)
+
 
 ## 3. Resources:
 
