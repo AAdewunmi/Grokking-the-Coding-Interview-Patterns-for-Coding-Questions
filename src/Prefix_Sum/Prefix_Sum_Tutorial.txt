@@ -117,4 +117,81 @@ Prefix Sum
     computation of the sum of elements in any subarray. This pattern is useful in various scenarios, including solving range
     sum queries efficiently.
 
-- Prefix Sum Example LeetCode Question:
+- Prefix Sum Example LeetCode Question: 325. Maximum Size Subarray Sum Equals k
+
+    To find the maximum length of a subarray that sums to a target value `k` in a given array `nums`, you can use a
+    hashmap to keep track of the cumulative sum at each index. This allows you to efficiently find subarrays that sum to
+    the target value (ChatGPT coded the solution 🤖).
+
+    1. Here's a step-by-step approach:
+
+        1. Initialize a hashmap to store the cumulative sum and its corresponding index.
+        2. Iterate through the array while maintaining a cumulative sum.
+        3. Check if the cumulative sum minus the target value has been seen before. If it has, it means there exists a subarray that sums to `k`.
+        4. Update the maximum length of the subarray whenever a valid subarray is found.
+        5. Store the cumulative sum in the hashmap if it hasn't been stored before, to maintain the earliest index where this sum occurs.
+
+    2. Here is the Java implementation of the algorithm:
+
+    import java.util.HashMap;
+
+    public class MaxSubarrayLength {
+
+        public static int maxSubArrayLen(int[] nums, int k) {
+            // Map to store the cumulative sum and the earliest index where it occurs
+            HashMap<Integer, Integer> sumIndexMap = new HashMap<>();
+            // Initialize with sum 0 at index -1 to handle the case where subarray starts from index 0
+            sumIndexMap.put(0, -1);
+
+            int maxLength = 0;
+            int cumulativeSum = 0;
+
+            for (int i = 0; i < nums.length; i++) {
+                cumulativeSum += nums[i];
+
+                // Check if there is a previous cumulative sum that we can subtract to get k
+                if (sumIndexMap.containsKey(cumulativeSum - k)) {
+                    int prevIndex = sumIndexMap.get(cumulativeSum - k);
+                    maxLength = Math.max(maxLength, i - prevIndex);
+                }
+
+                // Only put the cumulative sum in the map if it is not already present to ensure the earliest index
+                if (!sumIndexMap.containsKey(cumulativeSum)) {
+                    sumIndexMap.put(cumulativeSum, i);
+                }
+            }
+
+            return maxLength;
+        }
+
+        public static void main(String[] args) {
+            int[] nums = {1, -1, 5, -2, 3};
+            int k = 3;
+            System.out.println("Maximum length of subarray that sums to " + k + " is: " + maxSubArrayLen(nums, k));
+
+            nums = new int[]{-2, -1, 2, 1};
+            k = 1;
+            System.out.println("Maximum length of subarray that sums to " + k + " is: " + maxSubArrayLen(nums, k));
+
+            nums = new int[]{1, 2, 3};
+            k = 7;
+            System.out.println("Maximum length of subarray that sums to " + k + " is: " + maxSubArrayLen(nums, k));
+        }
+    }
+
+    3. Explanation:
+    - sumIndexMap: A hashmap that stores cumulative sums and their earliest indices.
+    - cumulativeSum: A variable that keeps track of the cumulative sum as we iterate through the array.
+    - maxLength: Tracks the maximum length of a subarray that sums to \( k \).
+
+    4. How It Works:
+    1. Initialization: The hashmap is initialized with a cumulative sum of 0 at index -1 to handle the case where the
+        subarray starts from index 0.
+    2. Iteration and Updates: As you iterate through the array, you update the cumulative sum and check
+        if `cumulativeSum - k` exists in the hashmap. If it does, it means a subarray summing to \( k \) is found.
+        You then update the `maxLength` if the current subarray length is greater.
+    3. Storing Cumulative Sum: Only store the cumulative sum in the hashmap if it hasn't been stored before, ensuring
+        the earliest index is recorded.
+
+    This approach efficiently finds the maximum length of a subarray summing to `k` with a time complexity of O(n),
+        where (n) is the length of the input array.
