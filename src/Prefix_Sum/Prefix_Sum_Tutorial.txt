@@ -1,0 +1,120 @@
+Prefix Sum
+==========
+
+- Introduction
+
+    The prefix sum, also known as the cumulative sum, is a technique commonly used in computer science and mathematics
+    to preprocess a list of numbers in order to quickly calculate the sum of elements in any subarray. The idea is to
+    create a new array where each element at index `i` is the sum of the elements from the start of the original
+    array up to index `i`.
+
+    1. Definition
+
+        Given an array ( arr ) of length ( n ), the prefix sum array ( prefix_sum ) is defined as:
+        prefix_sum[i] = arr[0] + arr[1] + ... + arr[i]
+
+
+    2. Steps to Implement the Prefix Sum Pattern
+
+        1. Compute the Prefix Sum Array:
+         - Given an array `arr` of length `n`, create a prefix sum array `prefixSum` where each element at index `i` is
+            the sum of elements from the start of `arr` up to index `i`.
+
+        2. Use the Prefix Sum Array for Fast Range Sum Queries:
+         - Once the prefix sum array is constructed, the sum of any subarray `arr[i:j]` can be computed quickly.
+
+    3. Prefix Sum Array Calculation
+
+        The prefix sum array can be constructed with the following steps:
+        - Initialize an array `prefixSum` of the same length as `arr`.
+        - Set the first element of `prefixSum` to be the same as the first element of `arr`.
+        - For each subsequent element, compute the prefix sum by adding the current element of `arr` to the previous
+            element of `prefixSum`.
+
+    4. Example
+
+        Let's consider an array `arr = [1, 2, 3, 4, 5]`.
+
+        1. Initialize the prefix sum array `prefixSum`.
+        2. Compute the prefix sums:
+         - `prefixSum[0] = arr[0] = 1`
+         - `prefixSum[1] = prefixSum[0] + arr[1] = 1 + 2 = 3`
+         - `prefixSum[2] = prefixSum[1] + arr[2] = 3 + 3 = 6`
+         - `prefixSum[3] = prefixSum[2] + arr[3] = 6 + 4 = 10`
+         - `prefixSum[4] = prefixSum[3] + arr[4] = 10 + 5 = 15`
+
+        So, the prefix sum array is `prefixSum = [1, 3, 6, 10, 15]`.
+
+        Using Prefix Sum for Range Sum Queries:
+
+        To find the sum of elements in the subarray `arr[i:j]`:
+        - If `i` is 0, the sum is simply `prefixSum[j]`.
+        - If `i` is greater than 0, the sum is `prefixSum[j] - prefixSum[i-1]`.
+
+    5. Example Code in Java
+
+        Here's a Java implementation of the prefix sum pattern:
+
+        public class PrefixSum {
+
+          // Function to compute the prefix sum array
+          public static int[] computePrefixSum(int[] arr) {
+              int n = arr.length;
+              int[] prefixSum = new int[n];
+              prefixSum[0] = arr[0];
+
+              for (int i = 1; i < n; i++) {
+                  prefixSum[i] = prefixSum[i - 1] + arr[i];
+              }
+
+              return prefixSum;
+          }
+
+          // Function to compute the sum of elements in the subarray arr[i:j]
+          public static int rangeSum(int[] prefixSum, int i, int j) {
+              if (i == 0) {
+                  return prefixSum[j];
+              } else {
+                  return prefixSum[j] - prefixSum[i - 1];
+              }
+          }
+
+          public static void main(String[] args) {
+              int[] arr = {1, 2, 3, 4, 5};
+              int[] prefixSum = computePrefixSum(arr);
+
+              // Example usage: Compute the sum of elements from index 1 to 3
+              int i = 1;
+              int j = 3;
+              int sum = rangeSum(prefixSum, i, j);
+
+              System.out.println("Sum of elements from index " + i + " to " + j + " is: " + sum);
+          }
+        }
+
+    6. Explanation
+
+        - `computePrefixSum`: This method calculates the prefix sum array.
+        - `rangeSum`: This method uses the prefix sum array to quickly calculate the sum of elements in the subarray
+            from index `i` to `j`.
+        -  In the `main` method, we demonstrate how to use these functions to compute the sum of elements in a specific
+            range.
+
+    7. Applications
+
+        1. Range Sum Queries: After computing the prefix sum array, the sum of any subarray arr[i:j]arr[i:j] can be
+            calculated in constant time O(1)O(1) as:
+
+                sum(arr[i:j])=prefix_sum[j]−prefix_sum[i−1]sum(arr[i:j])=prefix_sum[j]−prefix_sum[i−1]
+
+        2. Algorithms and Data Structures: Prefix sums are used in various algorithms and data structures, such as
+            Fenwick Trees and Segment Trees, to efficiently answer range sum queries.
+
+        3. Dynamic Programming: Many dynamic programming problems utilize prefix sums to optimize the computation of
+            subproblems.
+
+    The prefix sum pattern is a powerful technique used to preprocess an array in such a way that it enables quick
+    computation of the sum of elements in any subarray. This pattern is useful in various scenarios, including solving range
+    sum queries efficiently.
+
+- Prefix Sum Example LeetCode Question:
