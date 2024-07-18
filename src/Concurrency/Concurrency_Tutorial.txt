@@ -1,0 +1,243 @@
+Concurrency
+===========
+
+- Introduction:
+===============
+
+    Concurrency refers to the ability of a program to execute multiple tasks simultaneously or in overlapping time periods.
+    Concurrency is essential for optimizing the performance and efficiency of programs, especially in environments where
+    resources such as CPU, memory, and I/O are shared among multiple tasks. In the context of a coding interview question,
+    concurrency refers to the ability to design and implement solutions that can handle multiple tasks or operations simultaneously.
+    Interviewers might ask candidates to write pseudocode or Java code to solve problems involving concurrent processes,
+    while also considering time and space complexity.
+
+- Key Concepts:
+===============
+
+    1. Concurrency Mechanisms:
+        - Threads: Units of execution within a program.
+        - Synchronization Primitives: Tools such as locks, semaphores, and condition variables used to manage access to
+            shared resources.
+
+    2. Concurrency Patterns:
+        - Producer-Consumer: One set of threads produces data while another set consumes it.
+        - Readers-Writers: Multiple readers can access the resource concurrently, but writers require exclusive access.
+        - Fork-Join: Divide a task into subtasks that can be processed in parallel and then combine the results.
+
+    3. Challenges:
+        - Deadlocks: Situations where threads are stuck waiting for each other indefinitely.
+        - Race Conditions: Occur when multiple threads access shared resources simultaneously leading to inconsistent results.
+        - Starvation: When a thread never gets CPU time or access to resources.
+
+- Example: Producer-Consumer Problem
+=====================================
+
+    * Problem Statement:
+    Implement a thread-safe bounded blocking queue using Java that supports the operations `enqueue` and `dequeue`.
+    The queue should block the enqueuing thread if the queue is full and block the dequeuing thread if the queue is empty.
+
+    * Pseudocode:
+
+    class BoundedBlockingQueue {
+        private Queue<Integer> queue;
+        private int capacity;
+        private Lock lock;
+        private Condition notFull;
+        private Condition notEmpty;
+
+        BoundedBlockingQueue(int capacity) {
+            this.queue = new LinkedList<>();
+            this.capacity = capacity;
+            this.lock = new ReentrantLock();
+            this.notFull = lock.newCondition();
+            this.notEmpty = lock.newCondition();
+        }
+
+        void enqueue(int item) {
+            lock.lock();
+            try {
+                while (queue.size() == capacity) {
+                    notFull.await();
+                }
+                queue.add(item);
+                notEmpty.signalAll();
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        int dequeue() {
+            lock.lock();
+            try {
+                while (queue.isEmpty()) {
+                    notEmpty.await();
+                }
+                int item = queue.remove();
+                notFull.signalAll();
+                return item;
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+
+    * Java Code:
+
+    import java.util.LinkedList;
+    import java.util.Queue;
+    import java.util.concurrent.locks.Condition;
+    import java.util.concurrent.locks.Lock;
+    import java.util.concurrent.locks.ReentrantLock;
+
+    public class BoundedBlockingQueue {
+        private Queue<Integer> queue;
+        private int capacity;
+        private Lock lock;
+        private Condition notFull;
+        private Condition notEmpty;
+
+        public BoundedBlockingQueue(int capacity) {
+            this.queue = new LinkedList<>();
+            this.capacity = capacity;
+            this.lock = new ReentrantLock();
+            this.notFull = lock.newCondition();
+            this.notEmpty = lock.newCondition();
+        }
+
+        public void enqueue(int item) throws InterruptedException {
+            lock.lock();
+            try {
+                while (queue.size() == capacity) {
+                    notFull.await();
+                }
+                queue.add(item);
+                notEmpty.signalAll();
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        public int dequeue() throws InterruptedException {
+            lock.lock();
+            try {
+                while (queue.isEmpty()) {
+                    notEmpty.await();
+                }
+                int item = queue.remove();
+                notFull.signalAll();
+                return item;
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+
+    * Time and Space Complexity:
+
+        Time Complexity:
+        - `enqueue()`: O(1) - Adding an element to the queue is a constant-time operation.
+        - `dequeue()`: O(1) - Removing an element from the queue is a constant-time operation.
+
+        Space Complexity:
+        - The space complexity is O(n) where n is the capacity of the queue. The queue stores up to `n` elements, and
+            additional space is used for locks and condition variables.
+
+    * Considerations for Concurrency in Coding Interviews
+
+        1. Thread Safety: Ensure your code handles concurrent access correctly, avoiding race conditions and deadlocks.
+        2. Synchronization: Use appropriate synchronization primitives to manage access to shared resources. In Java, this
+            typically involves using `synchronized`, `ReentrantLock`, `Condition`, or higher-level constructs from `java.util.concurrent`.
+        3. Performance: Consider the overhead of synchronization and aim to minimize contention between threads. For example,
+            avoid holding locks longer than necessary.
+        4. Correctness: Ensure your solution meets the requirements of the problem, including proper handling of edge cases such as
+            full or empty buffers.
+
+- Example Concurrency Problem: LeetCode Question 1226. The Dining Philosophers
+===============================================================================
+
+    The Dining Philosophers problem is a classic example of synchronization issues in concurrent programming. To solve this problem,
+    we need to ensure that no philosopher starves and that the system avoids deadlocks (ChatGPT coded the solution 🤖).
+
+    * Solution Explanation
+
+    One common approach to solve this problem is to enforce an ordering on the acquisition of forks to prevent circular wait conditions
+    that could lead to a deadlock. Here, we can impose an order by making each philosopher pick up the lower-numbered fork first, and
+    then the higher-numbered fork. This ensures that there is no circular wait.
+
+    * Java Implementation
+
+    Here's the Java implementation of the Dining Philosophers problem using the above strategy:
+
+    import java.util.concurrent.locks.Lock;
+    import java.util.concurrent.locks.ReentrantLock;
+
+    public class DiningPhilosophers {
+
+        private final Lock[] forks = new ReentrantLock[5];
+
+        public DiningPhilosophers() {
+            for (int i = 0; i < 5; i++) {
+                forks[i] = new ReentrantLock();
+            }
+        }
+
+        public void wantsToEat(int philosopher,
+                               Runnable pickLeftFork,
+                               Runnable pickRightFork,
+                               Runnable eat,
+                               Runnable putLeftFork,
+                               Runnable putRightFork) throws InterruptedException {
+            int leftFork = philosopher;
+            int rightFork = (philosopher + 1) % 5;
+
+            // Pick forks in a globally consistent order to avoid deadlocks
+            if (philosopher % 2 == 0) {
+                forks[leftFork].lock();
+                pickLeftFork.run();
+                forks[rightFork].lock();
+                pickRightFork.run();
+            } else {
+                forks[rightFork].lock();
+                pickRightFork.run();
+                forks[leftFork].lock();
+                pickLeftFork.run();
+            }
+
+            // Eat
+            eat.run();
+
+            // Put down forks in the reverse order of picking up
+            if (philosopher % 2 == 0) {
+                putRightFork.run();
+                forks[rightFork].unlock();
+                putLeftFork.run();
+                forks[leftFork].unlock();
+            } else {
+                putLeftFork.run();
+                forks[leftFork].unlock();
+                putRightFork.run();
+                forks[rightFork].unlock();
+            }
+        }
+    }
+    ```
+
+    * Explanation
+
+    1. Lock Array: We use an array of `ReentrantLock` objects to represent the forks. Each fork is shared between two adjacent philosophers.
+    2. Consistent Order: Philosophers pick up forks in a consistent order based on their ID to avoid deadlock:
+       - Even-numbered philosophers pick up the left fork first and then the right fork.
+       - Odd-numbered philosophers pick up the right fork first and then the left fork.
+    3. Locking: The `lock` method ensures that a philosopher can only proceed if both forks are available. This prevents any race conditions.
+    4. Unlocking: After eating, philosophers put down the forks in the reverse order they were picked up to maintain consistency and release
+        the resources properly.
+
+    * Time and Space Complexity
+
+    Time Complexity:
+    - The time complexity for each philosopher to pick up and put down the forks is O(1) because locking and unlocking are constant-time operations.
+
+    Space Complexity:
+    - The space complexity is O(1) for each philosopher since we only store references to the forks and use a constant amount of extra space (five locks).
+
+    This solution ensures that no philosopher will starve and that the system avoids deadlocks, fulfilling the requirements of the problem.
