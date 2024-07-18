@@ -72,6 +72,8 @@ Coding Interview Patterns are classified according to skills level:
 
 [9. Greedy Algorithm ](src/Greedy_Algorithm)
 
+[10. Concurrency ](src/Concurrency)
+
 #### * Advanced:
 
 [1. Monotonic Stack ](src/Monotonic_Stack)
