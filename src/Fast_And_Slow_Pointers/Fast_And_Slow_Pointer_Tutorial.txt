@@ -1,0 +1,140 @@
+Fast & Slow Pointers
+====================
+
+- Introduction:
+===============
+
+    The Fast & Slow Pointers Pattern, also known as the Floyd's Tortoise and Hare algorithm or cycle detection algorithm,
+    is a technique used to solve problems where you need to detect cycles or find a certain position within a sequence or
+    linked list.
+    The basic idea behind this pattern involves using two pointers that move through the data structure at different speeds.
+    One pointer (the "slow" pointer) advances one step at a time, while the other pointer (the "fast" pointer) advances
+    two steps at a time.
+    By moving these pointers through the sequence or linked list, you can identify certain properties of the structure,
+    such as cycle detection or finding a position.
+
+- Here's a simple breakdown of how the Fast & Slow Pointers Pattern works:
+==========================================================================
+
+    1. Initialization: Start with two pointers pointing to the beginning of the sequence or linked list. Let's call them
+        the "slow" pointer and the "fast" pointer.
+
+    2. Move Pointers: Move the "slow" pointer one step forward and the "fast" pointer two steps forward.
+
+    3. Check for Conditions: Depending on the problem you're solving, you might have different conditions to check.
+        Some common scenarios include:
+
+       - Cycle Detection: If the pointers meet or overlap at some point, there's a cycle in the sequence or linked list.
+       - Finding a Position: If the problem requires finding a certain position or element, you might have additional
+        conditions to check based on the problem statement.
+
+    4. Iterate: Repeat steps 2 and 3 until you meet the conditions specified by the problem or reach the end of the
+        sequence or linked list.
+
+    5. Handle Edge Cases: Depending on the problem, you might need to handle edge cases such as null pointers or empty sequences.
+
+    The Fast & Slow Pointers Pattern is particularly useful for solving problems related to cycle detection in linked lists,
+    finding the middle of a linked list, or determining if a sequence has a repeating pattern.
+    This pattern is efficient and often has a time complexity of O(n), where n is the number of elements in the sequence or linked list.
+
+- Pseudocode:
+==============
+
+    This pseudocode demonstrates the basic idea of the Fast & Slow Pointer Pattern for cycle detection in a linked list.
+    The pattern involves moving two pointers through the list at different speeds—one pointer moves one step at a time (slow),
+    and the other pointer moves two steps at a time (fast).
+
+    If there's a cycle in the linked list, the fast pointer will eventually catch up to the slow pointer, indicating the presence of a cycle.
+    If the fast pointer reaches the end of the list (or becomes null) before catching up to the slow pointer, it means there's no cycle.
+
+    function detectCycle(head):
+        // Initialize fast and slow pointers
+        slow = head
+        fast = head
+
+        // Iterate until fast pointer reaches end of list or null
+        while fast is not null and fast.next is not null:
+            // Move slow pointer one step
+            slow = slow.next
+
+            // Move fast pointer two steps
+            fast = fast.next.next
+
+            // Check if fast and slow pointers meet
+            if fast == slow:
+                // Cycle detected
+                return true
+
+        // No cycle found
+        return false
+
+- Fast & Slow Pointers Example LeetCode Question:
+=================================================
+
+    To reorder a singly linked list in the specified way without modifying the values in the list's nodes, you can
+    follow these steps (ChatGPT coded the solution 🤖):
+
+    1. Find the middle of the linked list using the slow and fast pointer technique.
+    2. Reverse the second half of the linked list.
+    3. Merge the two halves by alternating nodes from each half.
+
+    * Here's a Java implementation of this approach:
+
+    class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int x) { val = x; }
+    }
+
+    public class Solution {
+        public void reorderList(ListNode head) {
+            if (head == null || head.next == null) return;
+
+            // Step 1: Find the middle of the linked list
+            ListNode slow = head, fast = head;
+            while (fast != null && fast.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+
+            // Step 2: Reverse the second half of the linked list
+            ListNode prev = null, curr = slow, next;
+            while (curr != null) {
+                next = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+            }
+
+            // Step 3: Merge the two halves
+            ListNode first = head, second = prev;
+            while (second.next != null) {
+                ListNode tmp1 = first.next, tmp2 = second.next;
+                first.next = second;
+                second.next = tmp1;
+                first = tmp1;
+                second = tmp2;
+            }
+        }
+    }
+
+    * Explanation of the Code:
+
+    1. Finding the middle:
+        - `slow` and `fast` pointers are used to find the middle of the list. `slow` moves one step at a time, while
+            `fast` moves two steps. When `fast` reaches the end, `slow` will be at the middle.
+
+    2. Reversing the second half:
+        - Starting from the middle (which is pointed by `slow`), the second half of the list is reversed.
+            This is done using a standard iterative reverse linked list approach.
+
+    3. Merging the two halves:
+        - `first` points to the head of the list and `second` points to the head of the reversed second half.
+        The two halves are then merged by alternating nodes from each half.
+
+    * Time and Space Complexity:
+    - Time Complexity: O(n), where (n) is the number of nodes in the linked list. Each step (finding the middle,
+        reversing the second half, and merging the two halves) takes linear time.
+    - Space Complexity: O(1). No additional space is used except for a few pointers.
+
+    This approach ensures that the reordering is done in-place with constant extra space.
