@@ -1,0 +1,173 @@
+Two Pointers
+============
+
+-Introduction:
+==============
+
+    The Two Pointers Technique is a problem-solving approach used to solve certain types of problems efficiently.
+    It typically involves using two pointers (or indices) that move through the data structure in a way that helps to solve
+    the problem more effectively than using a single pointer or brute force methods.
+
+- Here's how the Two Pointers Technique generally works:
+========================================================
+
+    1. Initialization: Start with two pointers or indices pointing to different positions within the data structure.
+        These pointers can be initialized at the beginning, end, or any suitable positions based on the problem requirements.
+
+    2. Move Pointers: Adjust the positions of the pointers based on certain conditions defined by the problem. The movement
+        of the pointers can be controlled to traverse the data structure in a specific way.
+
+    3. Check Conditions: At each step, check certain conditions defined by the problem statement. These conditions often involve
+        comparing values at the positions pointed to by the pointers or performing certain operations based on those values.
+
+    4. Iterate or Terminate: Continue moving the pointers and checking conditions until the problem is solved or a termination
+        condition is met. This might involve reaching the end of the data structure, finding a specific solution, or meeting certain
+        constraints.
+
+    The Two Pointers Technique is often used to solve problems related to arrays, linked lists, or strings. It can be particularly
+    useful for problems that involve searching, sorting, or manipulating elements within the data structure.
+
+- Some common scenarios where the Two Pointers Technique is applied include:
+============================================================================
+
+     1. Two Sum Problem (Sorted Array):
+          Problem: Given a sorted array, find two numbers that add up to a given target.
+          Approach: Use two pointers, one starting at the beginning (left) and one at the end (right) of the array. Move the left pointer
+          right or the right pointer left depending on the sum of the elements at these pointers until the target sum is found.
+
+     2. Removing Duplicates from Sorted Array:
+          Problem: Remove duplicates from a sorted array in-place.
+          Approach: Use one pointer to iterate through the array (i) and another pointer (j) to track the position of the last unique element.
+          Copy unique elements to the position tracked by (j).
+
+     3. Reversing a String:
+          Problem: Reverse a string in place.
+          Approach: Use two pointers, one at the beginning (left) and one at the end (right). Swap the characters at these pointers and move
+          them towards each other until they meet in the middle.
+
+     4. Linked List Cycle Detection (Floyd’s Tortoise and Hare):
+          Problem: Detect if a linked list has a cycle.
+          Approach: Use two pointers, one moving one step at a time (slow) and the other moving two steps at a time (fast). If there is a cycle,
+          the two pointers will eventually meet.
+
+    The Two Pointers Technique is efficient and often results in solutions with better time complexity compared to brute force approaches.
+    It's particularly effective for problems where the data structure is sorted or can be processed in a specific order.
+
+- Here's a pseudocode example illustrating the Two Pointers Technique:
+======================================================================
+
+    function twoPointersAlgorithm(array):
+        // Initialize pointers
+        leftPointer = 0
+        rightPointer = length(array) - 1
+
+        // Loop until pointers meet
+        while leftPointer < rightPointer:
+            // Condition to check or operation to perform
+
+            // Example: Find pairs with a given sum
+            currentSum = array[leftPointer] + array[rightPointer]
+            if currentSum == targetSum:
+                // Pair found, do something with the pair
+                print("Pair found:", array[leftPointer], array[rightPointer])
+                return("Pair found:", array[leftPointer], array[rightPointer])
+                // Move pointers to explore other pairs
+                leftPointer = leftPointer + 1
+                rightPointer = rightPointer - 1
+            else if currentSum < targetSum:
+                // Move left pointer to increase sum
+                leftPointer = leftPointer + 1
+            else:
+                // Move right pointer to decrease sum
+                rightPointer = rightPointer - 1
+
+        // If no pair found, return null or appropriate value
+        print("No pair found with the target sum.")
+        return ("No pair found with the target sum.",  array[-1], array[-1])
+
+- Two Pointers Example LeetCode Question: 31. Next Permutation
+===============================================================
+
+    To find the next permutation of an array of integers in Java, you can follow these steps. This algorithm works in O(n) time complexity
+    and O(1) space complexity, where \(n\) is the length of the array. The algorithm is described as follows (ChatGPT coded the solution 🤖):
+
+    1. Identify the longest non-increasing suffix: Start from the end of the array and find the first element that is not in descending order.
+        This element is called the pivot.
+    2. Find the rightmost successor to the pivot: Find the smallest element in the suffix that is larger than the pivot.
+    3. Swap the pivot with the rightmost successor: Swap the pivot with this element.
+    4. Reverse the suffix: Reverse the order of the elements in the suffix to get the next lexicographical permutation.
+
+    * Here's a Java implementation of the algorithm:
+
+    public class NextPermutation {
+        public void nextPermutation(int[] nums) {
+            int n = nums.length;
+            if (n < 2) return;
+
+            // Step 1: Identify the pivot
+            int i = n - 2;
+            while (i >= 0 && nums[i] >= nums[i + 1]) {
+                i--;
+            }
+
+            // Step 2: Find the rightmost successor
+            if (i >= 0) {
+                int j = n - 1;
+                while (nums[j] <= nums[i]) {
+                    j--;
+                }
+                // Step 3: Swap the pivot with the rightmost successor
+                swap(nums, i, j);
+            }
+
+            // Step 4: Reverse the suffix
+            reverse(nums, i + 1, n - 1);
+        }
+
+        private void swap(int[] nums, int i, int j) {
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+        }
+
+        private void reverse(int[] nums, int start, int end) {
+            while (start < end) {
+                swap(nums, start, end);
+                start++;
+                end--;
+            }
+        }
+
+        public static void main(String[] args) {
+            NextPermutation np = new NextPermutation();
+            int[] nums = {1, 2, 3};
+            np.nextPermutation(nums);
+            // Output the result
+            for (int num : nums) {
+                System.out.print(num + " ");
+            }
+        }
+    }
+
+    * Explanation:
+
+    1. Identify the pivot:
+       - Traverse the array from the end to the beginning and find the first element that is smaller than its next element. This element is called the pivot.
+       - If no such element is found, it means the array is in descending order, and we simply reverse it to get the smallest permutation.
+
+    2. Find the rightmost successor to the pivot:
+       - Once the pivot is identified, find the smallest element in the suffix (the part of the array after the pivot) that is larger than the pivot.
+         This is the rightmost successor.
+
+    3. Swap the pivot with the rightmost successor:
+       - Swap the pivot with the identified successor to make the permutation larger.
+
+    4. Reverse the suffix:
+       - Reverse the suffix (the part of the array after the pivot) to get the next lexicographical permutation. This ensures that the suffix is in the smallest possible order.
+
+    * Time Complexity:
+    - The algorithm runs in O(n) time, where (n) is the length of the array. This is because each step (finding the pivot, finding the rightmost successor,
+        swapping, and reversing) takes linear time.
+
+    * Space Complexity:
+    - The algorithm uses O(1) extra space because it modifies the array in place without using any additional data structures.
