@@ -1,0 +1,219 @@
+Linked List: In-Place Reversal
+===============================
+
+- Introduction:
+===============
+
+    In-place reversal of a linked list is a pattern used in various algorithm problems that require reversing parts or the
+    entirety of a linked list without using extra space for another list or array. Instead, the reversal is done by
+    rearranging the pointers of the nodes within the list. Here are the key steps and ideas involved in this pattern:
+
+- Steps for In-place Reversal:
+==============================
+
+    * Initialization:
+    - Set up three pointers: previous (initially set to null), current (initially set to the head of the list), and next
+    (used for temporarily storing the next node).
+
+    * Traversal and Reversal:
+    - Traverse the list using the current pointer.
+    - At each node, store the next node using the next pointer.
+    - Reverse the current node's pointer to point to the previous node.
+    - Move the previous and current pointers one step forward (i.e., previous becomes the current node, and current becomes
+    the next node stored earlier).
+
+    * Completion:
+    - Continue the traversal until you reach the end of the list (i.e., current becomes null).
+    - The previous pointer will now point to the new head of the reversed list.
+
+- Example Code: Reversing an Entire Linked List:
+================================================
+
+    class ListNode {
+        int value;
+        ListNode next;
+
+        ListNode(int value) {
+            this.value = value;
+            this.next = null;
+        }
+    }
+
+    public class LinkedListReversal {
+
+        public static ListNode reverseLinkedList(ListNode head) {
+            ListNode previous = null;
+            ListNode current = head;
+            ListNode next = null;
+
+            while (current != null) {
+                next = current.next; // temporarily store the next node
+                current.next = previous; // reverse the current node's pointer
+                previous = current; // move the previous pointer one step forward
+                current = next; // move to the next node in the list
+            }
+
+            return previous; // new head of the reversed list
+        }
+
+        public static void printList(ListNode head) {
+            ListNode current = head;
+            while (current != null) {
+                System.out.print(current.value + " -> ");
+                current = current.next;
+            }
+            System.out.println("null");
+        }
+
+        public static void main(String[] args) {
+            // Creating a linked list: 1 -> 2 -> 3 -> 4 -> 5
+            ListNode head = new ListNode(1);
+            head.next = new ListNode(2);
+            head.next.next = new ListNode(3);
+            head.next.next.next = new ListNode(4);
+            head.next.next.next.next = new ListNode(5);
+
+            System.out.print("Original list: ");
+            printList(head);
+
+            // Reversing the linked list
+            ListNode reversedHead = reverseLinkedList(head);
+
+            System.out.print("Reversed list: ");
+            printList(reversedHead);
+        }
+    }
+
+    Original list: 1 -> 2 -> 3 -> 4 -> 5 -> null
+    Reversed list: 5 -> 4 -> 3 -> 2 -> 1 -> null
+
+
+- Applications:
+===============
+
+    In-place reversal of a linked list pattern is useful in many scenarios, including:
+
+    - Reverse a Sublist: Reverse a specific portion of the list.
+    - K-group Reversal: Reverse nodes in groups of k.
+    - Palindrome Check: Reverse and compare parts of the list to check for a palindrome.
+
+    Variations
+
+    - Reverse a Sublist:
+          Identify the sublist by its start and end positions.
+          Reverse only the nodes within this sublist.
+
+    - Reverse Nodes in k-Group:
+          Reverse the nodes in groups of size k.
+          If the number of nodes is not a multiple of k, the last group can be left as is or also reversed.
+
+- Linked List: In-Place Reversal Example LeetCode Question:  25. Reverse Nodes in k-Group:
+==========================================================================================
+
+    To solve the problem of reversing nodes in k-groups in a linked list, we can follow these steps (ChatGPT coded the
+    solution 🤖):
+
+    1. Identify the groups: Traverse the linked list and reverse every k nodes.
+    2. Reverse nodes: Reverse nodes in each k-sized group.
+    3. Handle remaining nodes: If the number of nodes left is less than k, they should remain as they are.
+
+    The algorithm will have a time complexity of O(n) since we traverse the list a constant number of times (each node
+    is processed a constant number of times). The space complexity will be O(1) because we only use a few extra pointers.
+
+    * Steps:
+
+    1. Traverse the list to identify the k-sized groups: Use a dummy node to simplify edge cases and always keep track
+    of the last node of the previous group.
+    2. Reverse nodes in each k-sized group: Reverse the nodes using a helper function.
+    3. Connect groups properly: Ensure that the end of each reversed group connects correctly to the start of the next group.
+
+    * Java Implementation:
+
+    Here is the Java implementation:
+
+    class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int x) { val = x; }
+    }
+
+    public class ReverseKGroup {
+        public ListNode reverseKGroup(ListNode head, int k) {
+            if (head == null || k == 1) return head;
+
+            // Dummy node to handle edge cases
+            ListNode dummy = new ListNode(0);
+            dummy.next = head;
+
+            ListNode curr = head;
+            ListNode prevGroupEnd = dummy;
+            ListNode nextGroupStart;
+
+            while (true) {
+                // Check if there are at least k nodes left to reverse
+                ListNode kNode = curr;
+                for (int i = 0; i < k; i++) {
+                    if (kNode == null) return dummy.next;
+                    kNode = kNode.next;
+                }
+
+                // Reverse k nodes
+                ListNode prev = null;
+                ListNode temp = curr;
+                for (int i = 0; i < k; i++) {
+                    nextGroupStart = temp.next;
+                    temp.next = prev;
+                    prev = temp;
+                    temp = nextGroupStart;
+                }
+
+                // Connect the end of the previous group to the start of the reversed group
+                prevGroupEnd.next = prev;
+                // Connect the end of the reversed group to the start of the next group
+                curr.next = temp;
+
+                // Move prevGroupEnd to the end of the reversed group
+                prevGroupEnd = curr;
+                // Move curr to the start of the next group
+                curr = temp;
+            }
+        }
+
+        public static void main(String[] args) {
+            ReverseKGroup solution = new ReverseKGroup();
+
+            // Create a linked list: 1 -> 2 -> 3 -> 4 -> 5
+            ListNode head = new ListNode(1);
+            head.next = new ListNode(2);
+            head.next.next = new ListNode(3);
+            head.next.next.next = new ListNode(4);
+            head.next.next.next.next = new ListNode(5);
+
+            // Reverse nodes in k-groups
+            ListNode newHead = solution.reverseKGroup(head, 3);
+
+            // Print the modified list: 3 -> 2 -> 1 -> 4 -> 5
+            while (newHead != null) {
+                System.out.print(newHead.val + " ");
+                newHead = newHead.next;
+            }
+        }
+    }
+
+    * Explanation:
+
+    1. Dummy Node: A dummy node is used to handle the edge case where the head of the list changes.
+    2. Main Loop:
+       - Check if there are at least k nodes left to reverse.
+       - Reverse k nodes by iterating k times and adjusting the pointers.
+       - Update the pointers to connect the reversed group with the rest of the list.
+    3. Helper Function:
+       - `reverseKGroup` function handles the main logic of reversing k nodes and connecting the groups.
+
+    * Time and Space Complexity:
+
+    - Time Complexity: O(n), where n is the number of nodes in the list. Each node is processed a constant number of times.
+    - Space Complexity: O(1), excluding the space used for the input and output. The algorithm only uses a few extra
+        pointers for manipulation.
+
+    This solution ensures that nodes are reversed in groups of k, maintaining the required constraints efficiently.
