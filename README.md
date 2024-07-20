@@ -28,7 +28,25 @@ for FAANGM coding interviews.
 
 Hope you find it useful 😎 
 
-## 2. Outline:
+## 2. Prerequisites:
+
+Before solving Leetcode problems, make sure you are familiar with the following:
+
+    * Fundermentals of programming in Java Language
+    
+    * Collections in Java 
+        
+        L Interfaces: Set, List, Queue, Deque 
+
+        L Classes: ArrayList, Vector, LinkedList, PriorityQueue, HashSet, LinkedHashSet, TreeSet, etc.
+
+    * Data Structures and Algorithms in Java
+
+        L Data Structure: Stack, Queue, Graph, Tree, etc.
+
+        L Algorithms: Sorting, Searching, etc
+
+## 3. Outline:
 
 Coding Interview Patterns are classified according to skills level:
 
@@ -94,11 +112,11 @@ Coding Interview Patterns are classified according to skills level:
 
 [9. Ordered Set ](src/Ordered_Set)
 
-## 3. Resources:
+## 4. Resources:
 
 I acknowledge the use of OpenAI's ChatGPT for topic explanation 🤖, LeetCode and HackerRank for coding interview questions 👨‍💻
 
-## 4. Adapted from: 
+## 5. Adapted from: 
 
 "Grokking the Coding Interview: Patterns for Coding Questions" by Design Gurus (2024).
 

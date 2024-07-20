@@ -1,0 +1,194 @@
+Merge Intervals Pattern:
+========================
+
+- Introduction:
+===============
+
+    The merge interval pattern refers to the process of combining overlapping or adjacent intervals in a list of intervals.
+    This concept is widely used in computer science, particularly in problems involving scheduling, computational geometry,
+    and data compression. The goal of the merge interval pattern is to simplify a list of intervals by merging those that
+    overlap or touch, resulting in a list of disjoint intervals that cover the same range.
+
+- Key Concepts:
+===============
+
+    1. Interval: An interval is defined by two endpoints, usually representing a range [start, end].
+    2. Overlapping Intervals: Two intervals [a, b] and [c, d] overlap if they share any common points, i.e., `a <= d`
+        and `c <= b`.
+    3. Adjacent Intervals: Two intervals [a, b] and [b, c] are adjacent if the end of one interval is exactly the start
+        of the next, i.e., `b == c`.
+
+- Steps to Merge Intervals:
+===========================
+
+    1. Sort Intervals: Start by sorting the intervals based on their starting points. If two intervals have the same
+        starting point, sort them by their ending points.
+    2. Initialize: Create an empty list to store the merged intervals.
+    3. Merge: Iterate through the sorted intervals and merge them if they overlap or are adjacent. If the current interval
+        overlaps with the previous one, merge them by updating the end of the previous interval to the maximum end of
+        both intervals.
+    4. Add Non-overlapping Intervals: If the current interval does not overlap with the previous one, add the previous
+        interval to the merged list and start a new interval.
+
+- Example:
+==========
+
+    Consider the list of intervals: ([[1, 3], [2, 6], [8, 10], [15, 18])
+
+    1. Sort: The intervals are already sorted by their start times.
+    2. Merge:
+       - Start with [1, 3]. The next interval is [2, 6], which overlaps with [1, 3], so merge them to get [1, 6].
+       - The next interval is [8, 10], which does not overlap with [1, 6], so add [1, 6] to the merged list and start
+          a new interval [8, 10].
+       - The next interval is [15, 18], which does not overlap with [8, 10], so add [8, 10] to the merged list and start
+          a new interval [15, 18].
+    3. Result: The merged intervals are [1, 6], [8, 10], [15, 18].
+
+    * Here is a sample implementation in Java:
+
+       import java.util.ArrayList;
+       import java.util.Arrays;
+       import java.util.Collections;
+       import java.util.Comparator;
+       import java.util.List;
+
+       class Interval {
+           int start;
+           int end;
+
+           Interval() {
+               start = 0;
+               end = 0;
+           }
+
+           Interval(int s, int e) {
+               start = s;
+               end = e;
+           }
+       }
+
+       public class MergeIntervals {
+           public static List<Interval> merge(List<Interval> intervals) {
+               if (intervals == null || intervals.size() == 0) {
+                   return new ArrayList<>();
+               }
+
+               // Step 1: Sort the intervals by their start time
+               Collections.sort(intervals, new Comparator<Interval>() {
+                   public int compare(Interval a, Interval b) {
+                       return a.start - b.start;
+                   }
+               });
+
+               // Step 2: Initialize the result list with the first interval
+               List<Interval> merged = new ArrayList<>();
+               Interval last = intervals.get(0);
+               merged.add(last);
+
+               // Step 3: Iterate through the sorted intervals and merge where necessary
+               for (Interval current : intervals) {
+                   if (current.start <= last.end) {
+                       // Merge the intervals
+                       last.end = Math.max(last.end, current.end);
+                   } else {
+                       // No overlap, add the current interval to the result
+                       last = current;
+                       merged.add(last);
+                   }
+               }
+
+               return merged;
+           }
+
+           public static void main(String[] args) {
+               List<Interval> intervals = Arrays.asList(
+                   new Interval(1, 3),
+                   new Interval(2, 6),
+                   new Interval(8, 10),
+                   new Interval(15, 18)
+               );
+
+               List<Interval> result = merge(intervals);
+               for (Interval interval : result) {
+                   System.out.println("[" + interval.start + ", " + interval.end + "]");
+               }
+           }
+       }
+
+- Merge Intervals Example LeetCode Question: 1288. Remove Covered Intervals
+==========================================================================
+
+    To solve the problem of removing covered intervals from a list, we need an efficient approach to determine which
+    intervals are covered by others and then count the remaining intervals. The solution involves sorting the intervals
+    and then using a single pass to filter out covered intervals. Here's a detailed breakdown (ChatGPT coded the solution 🤖):
+
+    * Steps:
+
+    1. Sort the intervals:
+       - First by the starting point (`li`) in ascending order.
+       - If two intervals have the same starting point, sort by the ending point (`ri`) in descending order. This ensures
+       that longer intervals come before shorter ones when they start at the same point.
+    2. Iterate through the sorted intervals:
+       - Keep track of the maximum right endpoint (`max_right`) seen so far.
+       - For each interval, check if it is covered by comparing its right endpoint (`ri`) with `max_right`.
+       - If `ri` is greater than `max_right`, it's not covered, so update `max_right` and count it as a remaining interval.
+
+    * Java Implementation:
+
+    Here is how you can implement this in Java:
+
+    import java.util.Arrays;
+
+    public class RemoveCoveredIntervals {
+        public int removeCoveredIntervals(int[][] intervals) {
+            // Sort intervals. First by the starting point in ascending order,
+            // then by the ending point in descending order if the starting points are the same.
+            Arrays.sort(intervals, (a, b) -> {
+                if (a[0] != b[0]) {
+                    return Integer.compare(a[0], b[0]);
+                } else {
+                    return Integer.compare(b[1], a[1]);
+                }
+            });
+
+            int count = 0;
+            int maxRight = 0;
+
+            for (int[] interval : intervals) {
+                // If the current interval is not covered by the previous ones
+                if (interval[1] > maxRight) {
+                    count++;
+                    maxRight = interval[1];
+                }
+            }
+
+            return count;
+        }
+
+        public static void main(String[] args) {
+            RemoveCoveredIntervals solution = new RemoveCoveredIntervals();
+            int[][] intervals = {{1, 4}, {3, 6}, {2, 8}};
+            System.out.println(solution.removeCoveredIntervals(intervals));  // Output: 2
+        }
+    }
+
+    * Explanation:
+
+    - Sorting:
+      - `Arrays.sort(intervals, (a, b) -> { ... })`: This lambda function sorts the intervals by the specified rules.
+    - Iteration:
+      - Initialize `count` to 0 and `maxRight` to 0.
+      - For each interval, check if its end point (`ri`) is greater than `maxRight`.
+      - If so, increment `count` and update `maxRight` to `ri`.
+
+    * Space and Time Complexity:
+
+        - Time Complexity:
+          - Sorting the intervals takes O(n log n) time.
+          - Iterating through the intervals takes O(n) time.
+          - Overall time complexity is O(n log n).
+        - Space Complexity:
+          - The space complexity is O(1) if we don't consider the input and output, as we only use a few extra
+          variables (`count` and `maxRight`).
+
+    This solution efficiently removes covered intervals and counts the remaining ones, making it optimal for large input sizes.
