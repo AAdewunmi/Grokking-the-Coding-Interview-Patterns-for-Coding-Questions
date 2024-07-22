@@ -1,0 +1,231 @@
+Fibonacci numbers
+=================
+
+- Introduction:
+===============
+
+    Fibonacci numbers are a sequence where each number is the sum of the two preceding ones, usually starting with 0 and 1.
+    The sequence can be defined by the recurrence relation:
+
+
+        F(n) = {
+                    0                 if n = 0
+                    1                 if n = 1
+                    F(n-1) + F(n-2)   if n > 1
+                }
+
+    *** Different Approaches to Compute Fibonacci Numbers:
+    ------------------------------------------------------
+
+        1. Naive Recursive Approach
+        2. Memoization (Top-Down Dynamic Programming)
+        3. Tabulation (Bottom-Up Dynamic Programming)
+        4. Space-Optimized Tabulation
+
+    Let's explore each of these methods in detail.
+
+    1. Naive Recursive Approach:
+    ----------------------------
+
+    This approach directly follows the recurrence relation, but it recalculates the same Fibonacci numbers multiple times,
+    leading to exponential time complexity.
+
+    * Java Implementation:
+
+    public int fibonacci(int n) {
+        if (n <= 1) {
+            return n;
+        }
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+
+    * Time Complexity: O(2^n)
+    * Space Complexity: O(n) (due to recursion stack)
+
+    2. Memoization (Top-Down Dynamic Programming):
+    ----------------------------------------------
+
+    Memoization involves storing the results of subproblems to avoid redundant calculations. This approach uses a hash map
+    or an array to store the results of previously computed Fibonacci numbers.
+
+    * Java Implementation:
+
+    import java.util.HashMap;
+
+    public class Fibonacci {
+        private HashMap<Integer, Integer> memo = new HashMap<>();
+
+        public int fibonacci(int n) {
+            if (n <= 1) {
+                return n;
+            }
+            if (memo.containsKey(n)) {
+                return memo.get(n);
+            }
+            int result = fibonacci(n - 1) + fibonacci(n - 2);
+            memo.put(n, result);
+            return result;
+        }
+
+        public static void main(String[] args) {
+            Fibonacci fib = new Fibonacci();
+            System.out.println(fib.fibonacci(10));  // Output: 55
+        }
+    }
+
+
+    * Time Complexity: O(n)
+    * Space Complexity: O(n) (due to memoization table and recursion stack)
+
+    3. Tabulation (Bottom-Up Dynamic Programming):
+    ----------------------------------------------
+
+    Tabulation involves solving the problem iteratively and storing the results in an array. This approach avoids recursion
+    by building the solution from the ground up.
+
+    * Java Implementation:
+
+    public class Fibonacci {
+
+        public int fibonacci(int n) {
+            if (n <= 1) {
+                return n;
+            }
+            int[] dp = new int[n + 1];
+            dp[0] = 0;
+            dp[1] = 1;
+            for (int i = 2; i <= n; i++) {
+                dp[i] = dp[i - 1] + dp[i - 2];
+            }
+            return dp[n];
+        }
+
+        public static void main(String[] args) {
+            Fibonacci fib = new Fibonacci();
+            System.out.println(fib.fibonacci(10));  // Output: 55
+        }
+    }
+
+    * Time Complexity: O(n)
+    * Space Complexity: O(n) (due to the array)
+
+    4. Space-Optimized Tabulation:
+    ------------------------------
+
+    By keeping track of only the last two Fibonacci numbers, we can reduce the space complexity to O(1).
+
+    * Java Implementation:
+
+    public class Fibonacci {
+
+        public int fibonacci(int n) {
+            if (n <= 1) {
+                return n;
+            }
+            int a = 0, b = 1;
+            for (int i = 2; i <= n; i++) {
+                int c = a + b;
+                a = b;
+                b = c;
+            }
+            return b;
+        }
+
+        public static void main(String[] args) {
+            Fibonacci fib = new Fibonacci();
+            System.out.println(fib.fibonacci(10));  // Output: 55
+        }
+    }
+
+    * Time Complexity: O(n)
+    * Space Complexity: O(1) (constant space)
+
+    * Summary
+
+    - Naive Recursive Approach: Exponential time complexity O(2^n) and linear space complexity O(n).
+    - Memoization: Linear time complexity O(n) and linear space complexity O(n).
+    - Tabulation: Linear time complexity O(n) and linear space complexity O(n).
+    - Space-Optimized Tabulation: Linear time complexity O(n) and constant space complexity O(1).
+
+    Dynamic programming techniques like memoization and tabulation efficiently compute Fibonacci numbers by leveraging
+    overlapping subproblems and optimal substructure, transforming an exponential time complexity problem into a linear one.
+    The space-optimized tabulation method is the most efficient in terms of both time and space, making it suitable for
+    large input sizes.
+
+- Fibonacci numbers Example LeetCode Question: 198. House Robber
+=================================================================
+
+    To solve the problem of determining the maximum amount of money a robber can rob from a street of houses without robbing
+    two adjacent houses, we can use dynamic programming. This problem is commonly known as the "House Robber Problem."
+
+    * Approach:
+    -----------
+
+    The key idea is to use dynamic programming to keep track of the maximum amount of money that can be robbed up to each house.
+    We maintain a state that represents the maximum money that can be robbed without triggering the alarm for
+    each house (ChatGPT coded the solution 🤖).
+
+    * Dynamic Programming Formulation:
+    ----------------------------------
+
+        1. Define a DP array: Let `dp[i]` represent the maximum amount of money that can be robbed from the first `i` houses.
+        2. Base cases:
+           - `dp[0] = nums[0]` (if there's only one house, rob it)
+           - `dp[1] = max(nums[0], nums[1])` (for two houses, rob the one with more money)
+        3. Recurrence relation:
+           - For each house `i` (from 2 to `n-1`), we have two choices:
+             - Do not rob the current house `i`, in which case the maximum amount of money is the same as `dp[i-1]`.
+             - Rob the current house `i`, in which case we add `nums[i]` to `dp[i-2]` (since we cannot rob house `i-1`).
+           - Therefore, the recurrence relation is: `dp[i] = max(dp[i-1], nums[i] + dp[i-2])`
+
+        * Time and Space Complexity
+
+            - Time Complexity: O(n), where n is the number of houses. This is because we compute the maximum money for
+                each house exactly once.
+            - Space Complexity: O(n), for the `dp` array used to store the maximum money that can be robbed up to each house.
+
+        However, we can optimize the space complexity to O(1) by using only two variables to keep track of the previous
+        two maximum values, since the state at each step only depends on the last two states.
+
+    * Implementation:
+    -----------------
+
+    Here’s the Java implementation of the optimized solution:
+
+    public class HouseRobber {
+
+        public int rob(int[] nums) {
+            if (nums.length == 0) return 0;
+            if (nums.length == 1) return nums[0];
+
+            // Initial conditions
+            int prev1 = 0; // dp[i-2]
+            int prev2 = 0; // dp[i-1]
+
+            for (int num : nums) {
+                int current = Math.max(prev2, prev1 + num);
+                prev1 = prev2;
+                prev2 = current;
+            }
+
+            return prev2;
+        }
+
+        public static void main(String[] args) {
+            HouseRobber hr = new HouseRobber();
+            int[] nums = {2, 7, 9, 3, 1};
+            System.out.println(hr.rob(nums));  // Output: 12
+        }
+    }
+
+    * Explanation:
+    --------------
+
+    - Initial Conditions: We start with `prev1` and `prev2` initialized to 0, representing the maximum money robbed from
+        0 houses and 1 house (before the first house).
+    - Iteration: For each house, we calculate the maximum money that can be robbed by either robbing the current house
+        (and adding its money to `prev1`) or not robbing it (taking `prev2`).
+    - Update: We update `prev1` to `prev2` and `prev2` to the current maximum after considering the current house.
+    - Result: Finally, `prev2` holds the maximum money that can be robbed from all houses.
+
+    This implementation ensures that we only use constant space and linear time, making it efficient and scalable for large inputs.
