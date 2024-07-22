@@ -1,0 +1,229 @@
+Stack
+======
+
+- Introduction:
+================
+
+    A Stack is a linear data structure that follows the Last In, First Out (LIFO) principle.
+    This means that the last element added to the stack will be the first one to be removed.
+    Think of it as a stack of plates; you add new plates on top and remove the topmost one when needed.
+
+- Operations of Stack:
+=======================
+
+    1. Push: Adds an element to the top of the stack.
+    2. Pop: Removes and returns the top element of the stack.
+    3. Peek/Top: Returns the top element without removing it.
+    4. isEmpty: Checks if the stack is empty.
+    5. isFull: Checks if the stack is full (if the stack has a fixed size).
+    6. Size: Returns the number of elements in the stack.
+
+- Implementing a Stack using Java:
+==================================
+
+    * Here’s a basic implementation of a stack using an array in Java:
+    ------------------------------------------------------------------
+
+    class Node {
+        int data;
+        Node next;
+
+        public Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    class LinkedListStack {
+        private Node top;
+
+        public LinkedListStack() {
+            this.top = null;
+        }
+
+        // Push operation
+        public void push(int data) {
+            Node newNode = new Node(data);
+            newNode.next = top;
+            top = newNode;
+        }
+
+        // Pop operation
+        public int pop() {
+            if (isEmpty()) {
+                System.out.println("Stack is empty. Cannot pop.");
+                return -1; // Use an exception or a special value to indicate empty stack
+            }
+            int poppedData = top.data;
+            top = top.next;
+            return poppedData;
+        }
+
+        // Peek operation
+        public int peek() {
+            if (isEmpty()) {
+                System.out.println("Stack is empty. Cannot peek.");
+                return -1;
+            }
+            return top.data;
+        }
+
+        // Check if stack is empty
+        public boolean isEmpty() {
+            return top == null;
+        }
+
+        // Size operation
+        public int size() {
+            int count = 0;
+            Node current = top;
+            while (current != null) {
+                count++;
+                current = current.next;
+            }
+            return count;
+        }
+
+        public static void main(String[] args) {
+            LinkedListStack stack = new LinkedListStack();
+
+            stack.push(10);
+            stack.push(20);
+            stack.push(30);
+
+            System.out.println("Top element is: " + stack.peek());
+            System.out.println("Stack size is: " + stack.size());
+
+            stack.pop();
+            System.out.println("Top element after pop is: " + stack.peek());
+
+            stack.pop();
+            stack.pop();
+            stack.pop(); // This will show an empty stack message
+        }
+    }
+
+    * Explanation of the Code:
+    --------------------------
+
+    * Node Class: Represents an element in the linked list. It contains the data and a reference to the next node.
+
+    * LinkedListStack Class: Contains the stack operations and maintains a reference to the top node.
+        push(int data): Creates a new node with the given data and sets it as the new top node.
+        pop(): Removes and returns the data from the top node. If the stack is empty, it prints a message and returns -1.
+        peek(): Returns the data from the top node without removing it. If the stack is empty, it prints a message and returns -1.
+        isEmpty(): Checks if the stack is empty by checking if the top node is null.
+        size(): Counts and returns the number of elements in the stack by traversing the linked list from the top node.
+
+- Applications of Stack:
+========================
+
+    1. Expression Evaluation: Stacks are used to evaluate arithmetic expressions, especially those given in postfix
+        notation (Reverse Polish Notation).
+    2. Expression Conversion: Converting expressions from infix to postfix or prefix notation.
+    3. Syntax Parsing: Stacks are used in compilers for syntax parsing.
+    4. Function Call Management: The call stack in most programming languages is implemented using a stack.
+    5. Undo Mechanisms: Most text editors use a stack to implement undo functionality.
+    6. Backtracking Algorithms: Used in algorithms like maze solvers and puzzles (e.g., the Knight's tour problem, N-queens problem).
+    7. Depth-First Search (DFS): Stacks are used in the DFS algorithm for traversing or searching tree or graph data structures.
+    8. Parenthesis Checking: Stacks are used to check for balanced parentheses in expressions.
+
+    These applications demonstrate the versatility and importance of stacks in various computational tasks and algorithms.
+
+- Stack Example LeetCode Problem: 316. Remove Duplicate Letters
+================================================================
+
+    To solve the problem of removing duplicate letters from a string such that every letter appears once and only once
+    while ensuring the result is the smallest lexicographically, we can use a stack-based approach. This approach efficiently
+    handles the constraints and ensures optimal time and space complexity (ChatGPT coded the solution 🤖).
+
+    * Approach:
+    -----------
+
+    1. Use a Stack: We'll use a stack to build the result string with the smallest lexicographical order.
+    2. Track Character Counts: Use an array to count the occurrences of each character in the input string.
+    3. Track Characters in Stack: Use a boolean array to keep track of which characters are currently in the stack.
+    4. Iterate Through the String: For each character, if it’s already in the stack, skip it. Otherwise, pop characters from
+        the stack that are greater than the current character if they will appear again later in the string.
+    5. Add Current Character to Stack: Push the current character onto the stack and mark it as used.
+
+    * Time Complexity:
+    ------------------
+
+    - The time complexity of this approach is O(n) where (n) is the length of the input string. Each character is pushed
+    and popped from the stack at most once.
+
+    * Space Complexity:
+    -------------------
+
+    - The space complexity is O(1) for the character count and tracking arrays (since they are of fixed size, 26 for
+        the lowercase English alphabet).
+    - The stack may hold at most O(n) characters, making the overall space complexity O(n).
+
+    * Java Implementation:
+    ----------------------
+
+    Here's the Java implementation:
+
+    import java.util.Stack;
+
+    public class RemoveDuplicateLetters {
+        public static String removeDuplicateLetters(String s) {
+            // Character count array
+            int[] count = new int[26];
+            // Boolean array to track characters in the stack
+            boolean[] inStack = new boolean[26];
+
+            // Count the occurrences of each character in the string
+            for (char c : s.toCharArray()) {
+                count[c - 'a']++;
+            }
+
+            Stack<Character> stack = new Stack<>();
+
+            for (char c : s.toCharArray()) {
+                count[c - 'a']--; // Decrement the count of the current character
+
+                // If character is already in the stack, skip it
+                if (inStack[c - 'a']) {
+                    continue;
+                }
+
+                // Maintain the stack to ensure the smallest lexicographical order
+                while (!stack.isEmpty() && stack.peek() > c && count[stack.peek() - 'a'] > 0) {
+                    inStack[stack.pop() - 'a'] = false;
+                }
+
+                stack.push(c);
+                inStack[c - 'a'] = true;
+            }
+
+            // Build the result from the stack
+            StringBuilder result = new StringBuilder();
+            for (char c : stack) {
+                result.append(c);
+            }
+
+            return result.toString();
+        }
+
+        public static void main(String[] args) {
+            String s = "cbacdcbc";
+            System.out.println(removeDuplicateLetters(s)); // Output: "acdb"
+        }
+    }
+
+    * Explanation:
+    --------------
+
+    1. Character Count: We first count the occurrences of each character in the string.
+    2. In-Stack Tracking: We maintain a boolean array to track which characters are in the stack to avoid duplicates.
+    3. Processing Each Character:
+        - For each character, we decrement its count.
+        - If the character is already in the stack, we skip it.
+        - Otherwise, we check the top of the stack. If the top character is greater than the current character and it
+            will appear again later, we pop it from the stack.
+        - Finally, we push the current character onto the stack and mark it as in the stack.
+    4. Result Construction: We build the result string from the characters in the stack.
+
+    This approach ensures that we efficiently remove duplicates and maintain the smallest lexicographical order.
