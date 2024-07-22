@@ -1,9 +1,9 @@
 package Dynamic_Programming.Fibonacci_Numbers;
 
-// Problem Statement: Staircase
+// Problem Statement: Problem_2_Staircase
 // LeetCode Question: 70. Climbing Stairs
 
-public class Staircase {
+public class Problem_2_Staircase {
 
     // Brute Force Approach
     public int countWays(int n) {

@@ -3,7 +3,7 @@ package Dynamic_Programming.Fibonacci_Numbers;
 // Problem Statement: Fibonacci numbers
 // LeetCode Question: 509. Fibonacci Number
 
-public class Fibonacci_Numbers {
+public class Problem_1_Fibonacci_Numbers {
     // Brute Force Approach
     public int calculateFibonacci_1(int n) {
         if(n < 2)
