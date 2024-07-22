@@ -1,20 +1,23 @@
 Prefix Sum
 ==========
 
-- Introduction
+- Introduction:
+===============
 
     The prefix sum, also known as the cumulative sum, is a technique commonly used in computer science and mathematics
     to preprocess a list of numbers in order to quickly calculate the sum of elements in any subarray. The idea is to
     create a new array where each element at index `i` is the sum of the elements from the start of the original
     array up to index `i`.
 
-    1. Definition
+    1. Definition:
+    --------------
 
         Given an array ( arr ) of length ( n ), the prefix sum array ( prefix_sum ) is defined as:
         prefix_sum[i] = arr[0] + arr[1] + ... + arr[i]
 
 
-    2. Steps to Implement the Prefix Sum Pattern
+    2. Steps to Implement the Prefix Sum Pattern:
+    ---------------------------------------------
 
         1. Compute the Prefix Sum Array:
          - Given an array `arr` of length `n`, create a prefix sum array `prefixSum` where each element at index `i` is
@@ -23,7 +26,8 @@ Prefix Sum
         2. Use the Prefix Sum Array for Fast Range Sum Queries:
          - Once the prefix sum array is constructed, the sum of any subarray `arr[i:j]` can be computed quickly.
 
-    3. Prefix Sum Array Calculation
+    3. Prefix Sum Array Calculation:
+    --------------------------------
 
         The prefix sum array can be constructed with the following steps:
         - Initialize an array `prefixSum` of the same length as `arr`.
@@ -31,7 +35,8 @@ Prefix Sum
         - For each subsequent element, compute the prefix sum by adding the current element of `arr` to the previous
             element of `prefixSum`.
 
-    4. Example
+    4. Example:
+    -----------
 
         Let's consider an array `arr = [1, 2, 3, 4, 5]`.
 
@@ -51,7 +56,8 @@ Prefix Sum
         - If `i` is 0, the sum is simply `prefixSum[j]`.
         - If `i` is greater than 0, the sum is `prefixSum[j] - prefixSum[i-1]`.
 
-    5. Example Code in Java
+    5. Example Code in Java:
+    ------------------------
 
         Here's a Java implementation of the prefix sum pattern:
 
@@ -92,7 +98,8 @@ Prefix Sum
           }
         }
 
-    6. Explanation
+    6. Explanation:
+    ---------------
 
         - `computePrefixSum`: This method calculates the prefix sum array.
         - `rangeSum`: This method uses the prefix sum array to quickly calculate the sum of elements in the subarray
@@ -100,7 +107,8 @@ Prefix Sum
         -  In the `main` method, we demonstrate how to use these functions to compute the sum of elements in a specific
             range.
 
-    7. Applications
+    7. Applications:
+    ----------------
 
         1. Range Sum Queries: After computing the prefix sum array, the sum of any subarray arr[i:j]arr[i:j] can be
             calculated in constant time O(1)O(1) as:
@@ -118,12 +126,14 @@ Prefix Sum
     sum queries efficiently.
 
 - Prefix Sum Example LeetCode Question: 325. Maximum Size Subarray Sum Equals k
+=================================================================================
 
     To find the maximum length of a subarray that sums to a target value `k` in a given array `nums`, you can use a
     hashmap to keep track of the cumulative sum at each index. This allows you to efficiently find subarrays that sum to
     the target value (ChatGPT coded the solution 🤖).
 
     1. Here's a step-by-step approach:
+    ----------------------------------
 
         1. Initialize a hashmap to store the cumulative sum and its corresponding index.
         2. Iterate through the array while maintaining a cumulative sum.
@@ -132,6 +142,7 @@ Prefix Sum
         5. Store the cumulative sum in the hashmap if it hasn't been stored before, to maintain the earliest index where this sum occurs.
 
     2. Here is the Java implementation of the algorithm:
+    ----------------------------------------------------
 
     import java.util.HashMap;
 
@@ -180,18 +191,21 @@ Prefix Sum
     }
 
     3. Explanation:
+    ----------------
+
     - sumIndexMap: A hashmap that stores cumulative sums and their earliest indices.
     - cumulativeSum: A variable that keeps track of the cumulative sum as we iterate through the array.
     - maxLength: Tracks the maximum length of a subarray that sums to \( k \).
 
     4. How It Works:
-    1. Initialization: The hashmap is initialized with a cumulative sum of 0 at index -1 to handle the case where the
-        subarray starts from index 0.
-    2. Iteration and Updates: As you iterate through the array, you update the cumulative sum and check
-        if `cumulativeSum - k` exists in the hashmap. If it does, it means a subarray summing to \( k \) is found.
-        You then update the `maxLength` if the current subarray length is greater.
-    3. Storing Cumulative Sum: Only store the cumulative sum in the hashmap if it hasn't been stored before, ensuring
-        the earliest index is recorded.
+    ----------------
+        1. Initialization: The hashmap is initialized with a cumulative sum of 0 at index -1 to handle the case where the
+            subarray starts from index 0.
+        2. Iteration and Updates: As you iterate through the array, you update the cumulative sum and check
+            if `cumulativeSum - k` exists in the hashmap. If it does, it means a subarray summing to `k` is found.
+            You then update the `maxLength` if the current subarray length is greater.
+        3. Storing Cumulative Sum: Only store the cumulative sum in the hashmap if it hasn't been stored before, ensuring
+            the earliest index is recorded.
 
     This approach efficiently finds the maximum length of a subarray summing to `k` with a time complexity of O(n),
         where (n) is the length of the input array.
