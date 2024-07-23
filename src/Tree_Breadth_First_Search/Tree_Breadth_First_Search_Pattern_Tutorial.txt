@@ -2,156 +2,273 @@ Tree: Breadth-First Search (BFS)
 ================================
 
 - Introduction:
+===============
 
-Breadth-First Search (BFS) is a fundamental algorithm used for traversing or searching tree or graph data structures.
-It starts at the root (or any arbitrary node in the case of a graph) and explores all the neighboring nodes at the
-present depth before moving on to nodes at the next depth level. This process continues until all nodes are visited
-or a specific condition is met (e.g., finding a particular node).
+    Breadth-First Search (BFS) is a fundamental algorithm used for traversing or searching tree or graph data structures.
+    It starts at the root (or any arbitrary node in the case of a graph) and explores all the neighboring nodes at the
+    present depth before moving on to nodes at the next depth level. This process continues until all nodes are visited
+    or a specific condition is met (e.g., finding a particular node).
 
-Here is a step-by-step explanation of the BFS algorithm:
+- Here is a step-by-step explanation of the BFS algorithm:
+===========================================================
 
-1. Initialization:
-   - Begin by placing the root node (or the starting node) in a queue.
-   - Mark this node as visited.
+    1. Initialization:
+    ------------------
 
-2. Traversal:
-   - While the queue is not empty:
-     - Remove the front node from the queue.
-     - Process this node (e.g., visit or print the node's value).
-     - Add all unvisited neighboring nodes (or children, in the case of a tree) of the current node to the queue and mark them as visited.
+       - Begin by placing the root node (or the starting node) in a queue.
+       - Mark this node as visited.
 
-3. Termination:
-   - The algorithm terminates when the queue becomes empty, meaning all reachable nodes have been visited.
+    2. Traversal:
+    -------------
 
-Example in a Tree
+       - While the queue is not empty:
+         - Remove the front node from the queue.
+         - Process this node (e.g., visit or print the node's value).
+         - Add all unvisited neighboring nodes (or children, in the case of a tree) of the current node to the queue and mark them as visited.
 
-Let's consider a simple tree:
+    3. Termination:
+    ---------------
 
-        A
-       / \
-      B   C
-     / \   \
-    D   E   F
+       - The algorithm terminates when the queue becomes empty, meaning all reachable nodes have been visited.
 
-BFS Traversal:
-1. Start at the root node `A` and add it to the queue: `Queue = [A]`
-2. Dequeue `A` and visit it, then enqueue its children `B` and `C`: `Queue = [B, C]`
-3. Dequeue `B` and visit it, then enqueue its children `D` and `E`: `Queue = [C, D, E]`
-4. Dequeue `C` and visit it, then enqueue its child `F`: `Queue = [D, E, F]`
-5. Dequeue `D` and visit it: `Queue = [E, F]`
-6. Dequeue `E` and visit it: `Queue = [F]`
-7. Dequeue `F` and visit it: `Queue = []`
+    * Example in a Tree
 
-The BFS traversal order for this tree is: `A -> B -> C -> D -> E -> F`.
+    Let's consider a simple tree:
 
-BFS Algorithm in Pseudocode
+            A
+           / \
+          B   C
+         / \   \
+        D   E   F
 
-Here is the BFS algorithm in pseudocode for a tree:
+    4. BFS Traversal:
+    -----------------
 
-BFS(root):
-    queue = empty queue
-    queue.enqueue(root)
-    visited = set()
-    visited.add(root)
+        1. Start at the root node `A` and add it to the queue: `Queue = [A]`
+        2. Dequeue `A` and visit it, then enqueue its children `B` and `C`: `Queue = [B, C]`
+        3. Dequeue `B` and visit it, then enqueue its children `D` and `E`: `Queue = [C, D, E]`
+        4. Dequeue `C` and visit it, then enqueue its child `F`: `Queue = [D, E, F]`
+        5. Dequeue `D` and visit it: `Queue = [E, F]`
+        6. Dequeue `E` and visit it: `Queue = [F]`
+        7. Dequeue `F` and visit it: `Queue = []`
 
-    while not queue.isEmpty():
-        node = queue.dequeue()
-        visit(node)
+        The BFS traversal order for this tree is: `A -> B -> C -> D -> E -> F`.
 
-        for each child in node.children:
-            if child not in visited:
-                queue.enqueue(child)
-                visited.add(child)
+        * BFS Algorithm in Pseudocode
 
-Characteristics of BFS
+        Here is the BFS algorithm in pseudocode for a tree:
 
-- Complete: BFS will find a solution if one exists.
-- Optimal: BFS will find the shortest path in an unweighted graph or tree.
-- Time Complexity: O(V + E) where V is the number of vertices (nodes) and E is the number of edges.
-- Space Complexity: O(V) because of the queue and the visited set.
+        BFS(root):
+            queue = empty queue
+            queue.enqueue(root)
+            visited = set()
+            visited.add(root)
 
-Applications of BFS
+            while not queue.isEmpty():
+                node = queue.dequeue()
+                visit(node)
 
-- Finding the shortest path in an unweighted graph.
-- Level-order traversal of a tree.
-- Networking (broadcasting and peer-to-peer networks).
-- Finding connected components in a graph.
-- Solving puzzles (like finding the shortest path to a goal state in a puzzle).
+                for each child in node.children:
+                    if child not in visited:
+                        queue.enqueue(child)
+                        visited.add(child)
 
-Tree level-order traversal is a variant of the Breadth-First Search (BFS) algorithm.
+        * Characteristics of BFS
 
-Tree level-order traversal, also known as Breadth-First Search (BFS) traversal, is a method of visiting all the nodes
-in a tree level by level, starting from the root and proceeding to the next level down, visiting nodes from left to right at each level.
+            - Complete: BFS will find a solution if one exists.
+            - Optimal: BFS will find the shortest path in an unweighted graph or tree.
+            - Time Complexity: O(V + E) where V is the number of vertices (nodes) and E is the number of edges.
+            - Space Complexity: O(V) because of the queue and the visited set.
 
-How Level Order Traversal Works
+        * Applications of BFS
 
-1. Initialization:
-   - Start by placing the root node of the tree in a queue.
+            - Finding the shortest path in an unweighted graph.
+            - Level-order traversal of a tree.
+            - Networking (broadcasting and peer-to-peer networks).
+            - Finding connected components in a graph.
+            - Solving puzzles (like finding the shortest path to a goal state in a puzzle).
 
-2. Traversal:
-   - While the queue is not empty:
-     - Dequeue the front node from the queue.
-     - Process the node (e.g., print its value).
-     - Enqueue all the children (or left and right child for binary trees) of the dequeued node.
+    5. Tree level-order traversal is a variant of the Breadth-First Search (BFS) algorithm.
+    ----------------------------------------------------------------------------------------
 
-3. Termination:
-   - The traversal is complete when the queue is empty, meaning all nodes have been visited.
+    Tree level-order traversal, also known as Breadth-First Search (BFS) traversal, is a method of visiting all the nodes
+    in a tree level by level, starting from the root and proceeding to the next level down, visiting nodes from left to right at each level.
 
-Example
+    * How Level Order Traversal Works
 
-Consider the following binary tree:
+        1. Initialization:
+           - Start by placing the root node of the tree in a queue.
 
-        A
-       / \
-      B   C
-     / \   \
-    D   E   F
+        2. Traversal:
+           - While the queue is not empty:
+             - Dequeue the front node from the queue.
+             - Process the node (e.g., print its value).
+             - Enqueue all the children (or left and right child for binary trees) of the dequeued node.
 
-Level Order Traversal steps:
-1. Start at the root node `A` and add it to the queue: `Queue = [A]`
-2. Dequeue `A` and visit it, then enqueue its children `B` and `C`: `Queue = [B, C]`
-3. Dequeue `B` and visit it, then enqueue its children `D` and `E`: `Queue = [C, D, E]`
-4. Dequeue `C` and visit it, then enqueue its child `F`: `Queue = [D, E, F]`
-5. Dequeue `D` and visit it: `Queue = [E, F]`
-6. Dequeue `E` and visit it: `Queue = [F]`
-7. Dequeue `F` and visit it: `Queue = []`
+        3. Termination:
+           - The traversal is complete when the queue is empty, meaning all nodes have been visited.
 
-Level Order Traversal Order: `A -> B -> C -> D -> E -> F`
+    * Example
 
-Pseudocode
+        Consider the following binary tree:
 
-Here is the pseudocode for level-order traversal:
+                A
+               / \
+              B   C
+             / \   \
+            D   E   F
 
-LevelOrderTraversal(root):
-    if root is None:
-        return
+        Level Order Traversal steps:
+        1. Start at the root node `A` and add it to the queue: `Queue = [A]`
+        2. Dequeue `A` and visit it, then enqueue its children `B` and `C`: `Queue = [B, C]`
+        3. Dequeue `B` and visit it, then enqueue its children `D` and `E`: `Queue = [C, D, E]`
+        4. Dequeue `C` and visit it, then enqueue its child `F`: `Queue = [D, E, F]`
+        5. Dequeue `D` and visit it: `Queue = [E, F]`
+        6. Dequeue `E` and visit it: `Queue = [F]`
+        7. Dequeue `F` and visit it: `Queue = []`
 
-    queue = empty queue
-    queue.enqueue(root)
+        Level Order Traversal Order: `A -> B -> C -> D -> E -> F`
 
-    while not queue.isEmpty():
-        node = queue.dequeue()
-        visit(node)  // Process the node, e.g., print its value
+    * Pseudocode
 
-        if node.left is not None:
-            queue.enqueue(node.left)
+        Here is the pseudocode for level-order traversal:
 
-        if node.right is not None:
-            queue.enqueue(node.right)
+        LevelOrderTraversal(root):
+            if root is None:
+                return
 
-Characteristics
+            queue = empty queue
+            queue.enqueue(root)
 
-- Complete: Level-order traversal will visit all nodes in the tree.
-- Optimal: Not applicable for optimization but ensures all nodes are visited in level order.
-- Time Complexity: O(N) where N is the number of nodes in the tree, since each node is enqueued and dequeued exactly once.
-- Space Complexity: O(N) in the worst case, where the last level of the tree might have up to N/2 nodes.
+            while not queue.isEmpty():
+                node = queue.dequeue()
+                visit(node)  // Process the node, e.g., print its value
 
-Applications
+                if node.left is not None:
+                    queue.enqueue(node.left)
 
-- Shortest Path in Unweighted Graphs: BFS can be used to find the shortest path in an unweighted graph.
-- Level-Order Display: Useful for printing the tree level by level.
-- Serialization/Deserialization of Trees: Often used in algorithms that serialize and deserialize trees.
-- Breadth of Trees: Can be used to calculate the breadth (width) of the tree at different levels.
+                if node.right is not None:
+                    queue.enqueue(node.right)
 
-In summary, level-order traversal (BFS) is an important method for tree traversal that processes nodes level by level,
-ensuring that all nodes at a given level are visited before moving on to the next level.
+    * Characteristics
+
+        - Complete: Level-order traversal will visit all nodes in the tree.
+        - Optimal: Not applicable for optimization but ensures all nodes are visited in level order.
+        - Time Complexity: O(N) where N is the number of nodes in the tree, since each node is enqueued and dequeued exactly once.
+        - Space Complexity: O(N) in the worst case, where the last level of the tree might have up to N/2 nodes.
+
+    Applications
+
+        - Shortest Path in Unweighted Graphs: BFS can be used to find the shortest path in an unweighted graph.
+        - Level-Order Display: Useful for printing the tree level by level.
+        - Serialization/Deserialization of Trees: Often used in algorithms that serialize and deserialize trees.
+        - Breadth of Trees: Can be used to calculate the breadth (width) of the tree at different levels.
+
+    In summary, level-order traversal (BFS) is an important method for tree traversal that processes nodes level by level,
+    ensuring that all nodes at a given level are visited before moving on to the next level.
+
+Tree: Breadth-First Search Example LeetCode Question: 109. Convert Sorted List to Binary Search Tree
+=====================================================================================================
+
+    To convert a sorted singly linked list into a height-balanced binary search tree (BST), you can use a divide-and-conquer
+    approach. This method ensures that the tree is balanced by recursively finding the middle element of the linked list to use
+    as the root of the tree (or subtree). Here's how you can implement this in Java, along with the time and space complexity analysis
+    (ChatGPT coded the solution 🤖).
+
+    1. Java Implementation
+
+    * ListNode and TreeNode Definitions:
+    ------------------------------------
+
+    First, define the `ListNode` and `TreeNode` classes:
+
+    class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int x) {
+            val = x;
+            next = null;
+        }
+    }
+
+    class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int x) {
+            val = x;
+            left = null;
+            right = null;
+        }
+    }
+
+    * Conversion Function:
+    ----------------------
+
+    Now, write the function to convert the sorted linked list to a height-balanced BST:
+
+    public class Solution {
+        private ListNode current;
+
+        public TreeNode sortedListToBST(ListNode head) {
+            if (head == null) return null;
+
+            // Get the size of the linked list
+            int size = getSize(head);
+            current = head;
+
+            // Build the BST
+            return sortedListToBSTHelper(size);
+        }
+
+        private int getSize(ListNode head) {
+            int size = 0;
+            while (head != null) {
+                head = head.next;
+                size++;
+            }
+            return size;
+        }
+
+        private TreeNode sortedListToBSTHelper(int size) {
+            if (size <= 0) return null;
+
+            // Recursively form the left half
+            TreeNode left = sortedListToBSTHelper(size / 2);
+
+            // The root node will be the current node
+            TreeNode root = new TreeNode(current.val);
+            root.left = left;
+
+            // Move to the next element
+            current = current.next;
+
+            // Recursively form the right half and link it to the root
+            root.right = sortedListToBSTHelper(size - 1 - size / 2);
+
+            return root;
+        }
+    }
+
+    * Explanation
+
+        1. Get the Size:
+           - First, calculate the size of the linked list.
+        2. Recursive Conversion:
+           - Use a recursive helper function `sortedListToBSTHelper` to convert the list to a BST.
+           - This function constructs the left subtree, then uses the current node as the root, and finally constructs
+           the right subtree.
+
+    * Time and Space Complexity
+
+        - Time Complexity: O(N)
+          - Each node in the list is processed exactly once, and each tree node is created exactly once. Thus, the overall
+            time complexity is O(N), where N is the number of nodes in the linked list.
+
+        - Space Complexity: O(log N)
+          - The space complexity is primarily due to the recursion stack used in the `sortedListToBSTHelper` function.
+            Since the function is building a balanced BST, the height of the tree (and hence the depth of the recursion)
+            will be O(log N). Therefore, the space complexity is O(log N).
+
+    This solution ensures that the resulting binary search tree is height-balanced and that the conversion is performed
+    efficiently.
