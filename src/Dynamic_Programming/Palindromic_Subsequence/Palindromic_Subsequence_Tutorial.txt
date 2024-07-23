@@ -1,0 +1,255 @@
+Palindromic Subsequence
+=======================
+
+- Introduction:
+---------------
+
+    A palindromic subsequence is a sequence of characters within a string that reads the same forward and backward and
+    is derived from the original string by deleting some or none of the characters without changing the order of the
+    remaining characters.
+
+    For example, consider the string "character":
+    - The subsequences "c", "a", "r", "c" are all palindromic subsequences because they read the same forward and backward.
+    - "cac", "ara", "carac" are also palindromic subsequences of "character".
+
+    The longest palindromic subsequence in "character" is "carac", which has a length of 5.
+
+    * Key Points:
+    -------------
+        1. Subsequence: A subsequence is derived from the original string by deleting some or none of the characters without
+            changing the order of the remaining characters.
+        2. Palindrome: A sequence that reads the same forward and backward.
+        3. Palindromic Subsequence: A subsequence that is a palindrome.
+
+    * Example:
+    ----------
+        For the string "abdbca":
+        - Some palindromic subsequences are "a", "b", "d", "b", "c", "a", "bb", "bdb", "aba".
+        - The longest palindromic subsequence is "abdba" with a length of 5.
+
+- Solution Approach to Palindromic Subsequence:
+-----------------------------------------------
+
+    To find the longest palindromic subsequence in a given string, several approaches can be taken, but the most common
+    and efficient method involves dynamic programming. Here's a detailed explanation of this approach:
+
+    * Dynamic Programming Approach:
+    -------------------------------
+
+        1. Define the Problem:
+           - Let `s` be the given string of length `n`.
+           - Define a 2D array `dp` where `dp[i][j]` represents the length of the longest palindromic subsequence within
+           the substring `s[i:j+1]`.
+
+        2. Base Cases:
+           - A single character is always a palindrome, so `dp[i][i] = 1` for all `i`.
+
+        3. Recurrence Relation:
+           - If the characters at the current positions `i` and `j` are the same (`s[i] == s[j]`), then they can contribute
+           to the palindromic subsequence. Thus, `dp[i][j] = dp[i+1][j-1] + 2`.
+           - If the characters at positions `i` and `j` are different (`s[i] != s[j]`), then the length of the longest
+           palindromic subsequence will be the maximum of either ignoring the character at `i` or ignoring the character
+           at `j`. Hence, `dp[i][j] = max(dp[i+1][j], dp[i][j-1])`.
+
+        4. Fill the DP Table:
+           - Fill the table diagonally, starting from the base cases and moving towards larger substrings.
+
+        5. Result:
+           - The length of the longest palindromic subsequence for the entire string will be stored in `dp[0][n-1]`.
+
+    To solve the longest palindromic subsequence problem in Java, we can use a dynamic programming approach similar to
+    the one described earlier. Here’s how you can implement it:
+
+    * Java Implementation:
+    ----------------------
+
+      public class LongestPalindromicSubsequence {
+
+          public int longestPalindromicSubsequence(String s) {
+              int n = s.length();
+              int[][] dp = new int[n][n];
+
+              // Base case: single character substrings
+              for (int i = 0; i < n; i++) {
+                  dp[i][i] = 1;
+              }
+
+              // Fill the table
+              for (int length = 2; length <= n; length++) {  // length of substring
+                  for (int i = 0; i <= n - length; i++) {
+                      int j = i + length - 1;
+                      if (s.charAt(i) == s.charAt(j)) {
+                          dp[i][j] = dp[i + 1][j - 1] + 2;
+                      } else {
+                          dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+                      }
+                  }
+              }
+
+              // The length of the longest palindromic subsequence
+              return dp[0][n - 1];
+          }
+
+          public static void main(String[] args) {
+              LongestPalindromicSubsequence lps = new LongestPalindromicSubsequence();
+              String s = "abdbca";
+              System.out.println(lps.longestPalindromicSubsequence(s));  // Output: 5
+          }
+      }
+
+      * Explanation:
+      --------------
+
+          1. Initialization: The `dp` array is initialized such that each `dp[i][i]` is 1, indicating that each single
+            character is a palindrome of length 1.
+          2. Table Filling: We fill the table for substrings of increasing lengths. For each substring `s[i..j]`,
+            if `s[i] == s[j]`, then we add 2 to the length of the longest palindromic subsequence found within `s[i+1..j-1]`.
+            If they are different, we take the maximum length found by either excluding `s[i]` or `s[j]`.
+          3. Result: The value `dp[0][n-1]` gives the length of the longest palindromic subsequence in the entire string.
+
+      * Time and Space Complexity:
+          - Time Complexity: O(n^2) because we have two nested loops that both run (n) times to fill the `dp` table.
+          - Space Complexity: O(n^2) because we use a 2D array `dp` of size (n * n).
+
+      * Space Optimization:
+      To optimize space, we can notice that to compute `dp[i][j]`, we only need the current row and the previous row.
+      Hence, we can reduce space complexity to \(O(n)\) using two 1D arrays instead of a 2D array.
+
+      Here’s the optimized version:
+
+      public class LongestPalindromicSubsequence {
+
+          public int longestPalindromicSubsequence(String s) {
+              int n = s.length();
+              int[] dp = new int[n];
+              int[] prev = new int[n];
+
+              // Base case: single character substrings
+              for (int i = 0; i < n; i++) {
+                  dp[i] = 1;
+              }
+
+              // Fill the table
+              for (int length = 2; length <= n; length++) {  // length of substring
+                  System.arraycopy(dp, 0, prev, 0, n);
+                  for (int i = 0; i <= n - length; i++) {
+                      int j = i + length - 1;
+                      if (s.charAt(i) == s.charAt(j)) {
+                          dp[j] = prev[j - 1] + 2;
+                      } else {
+                          dp[j] = Math.max(prev[j], dp[j - 1]);
+                      }
+                  }
+              }
+
+              // The length of the longest palindromic subsequence
+              return dp[n - 1];
+          }
+
+          public static void main(String[] args) {
+              LongestPalindromicSubsequence lps = new LongestPalindromicSubsequence();
+              String s = "abdbca";
+              System.out.println(lps.longestPalindromicSubsequence(s));  // Output: 5
+          }
+      }
+
+      * Optimized Space Complexity
+          - Space Complexity: O(n) because we use two 1D arrays instead of a 2D array, reducing the space requirement
+          significantly.
+
+      This optimized version still maintains the same time complexity of O(n^2) while reducing the space complexity to O(n).
+
+- Palindromic Subsequence Example LeetCode Question: 87. Scramble String:
+=========================================================================
+
+    To determine if one string is a scrambled version of another using dynamic programming, we can break down the problem
+    into smaller subproblems and store the results of these subproblems to avoid redundant calculations. Here's a dynamic
+    programming approach to solve this problem in Java along with an analysis of its time and space
+    complexity (ChatGPT coded the solution 🤖).
+
+    * Java Implementation:
+    ----------------------
+
+    public class ScrambleString {
+
+        public boolean isScramble(String s1, String s2) {
+            int n = s1.length();
+            if (n != s2.length()) {
+                return false;
+            }
+            if (s1.equals(s2)) {
+                return true;
+            }
+
+            // dp[i][j][len] will be true if s2 substring from j to j+len is a scrambled string of
+            // s1 substring from i to i+len
+            boolean[][][] dp = new boolean[n][n][n + 1];
+
+            // Initialize the base case: single character substrings
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    dp[i][j][1] = (s1.charAt(i) == s2.charAt(j));
+                }
+            }
+
+            // Fill the DP table
+            for (int len = 2; len <= n; len++) { // length of the current substring
+                for (int i = 0; i <= n - len; i++) { // start index for s1
+                    for (int j = 0; j <= n - len; j++) { // start index for s2
+                        for (int k = 1; k < len; k++) { // split point
+                            if ((dp[i][j][k] && dp[i + k][j + k][len - k]) ||
+                                (dp[i][j + len - k][k] && dp[i + k][j][len - k])) {
+                                dp[i][j][len] = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return dp[0][0][n];
+        }
+
+        public static void main(String[] args) {
+            ScrambleString scrambleString = new ScrambleString();
+            String s1 = "great";
+            String s2 = "rgeat";
+            System.out.println(scrambleString.isScramble(s1, s2)); // Output: true
+
+            s1 = "abcde";
+            s2 = "caebd";
+            System.out.println(scrambleString.isScramble(s1, s2)); // Output: false
+        }
+    }
+
+    * Explanation:
+    --------------
+
+        1. Initialization: We first check if the lengths of `s1` and `s2` are different. If they are, return `false`
+            since scrambled strings must have the same length. If the strings are identical, return `true`.
+        2. Dynamic Programming Table: We use a 3D boolean array `dp` where `dp[i][j][len]` indicates whether the
+            substring of `s1` starting at `i` and having length `len` is a scrambled string of the substring of `s2`
+            starting at `j` and having length `len`.
+        3. Base Case: Initialize the base case where the length of the substring is 1. For each pair of indices `i`
+            and `j`, `dp[i][j][1]` is true if the characters at `s1.charAt(i)` and `s2.charAt(j)` are the same.
+        4. Recursive Case: For each possible length from 2 to `n`, for each possible starting index in `s1` and `s2`,
+            check every possible split point. We update `dp[i][j][len]` based on whether there exists a valid split point `k`
+            that satisfies the scramble condition.
+        5. Result: The value `dp[0][0][n]` will tell us if `s2` is a scrambled string of `s1`.
+
+        * Time and Space Complexity:
+        ----------------------------
+
+            * Time Complexity:
+            - The time complexity is O(n^4). We have three nested loops over `n` for the start indices and the length
+                of the substring, and one more loop over the possible split points `k`.
+
+            * Space Complexity:
+            - The space complexity is O(n^3) due to the 3D DP array that stores the results for each substring length
+                and start indices.
+
+    * Summary
+
+    The dynamic programming solution is efficient and avoids redundant calculations by storing the results of subproblems.
+    It ensures that we check all possible ways of splitting and scrambling the strings, leading to an optimal solution
+    within feasible limits for moderate-sized strings.
