@@ -1,206 +1,299 @@
 Hash Map, also known as a Hash Table
-====================================
+=====================================
 
 - Introduction:
+===============
 
-A hash table, also known as a hash map, is a data structure that provides efficient storage and retrieval of
-data using key-value pairs. It achieves this efficiency through a process called hashing. Here's a detailed explanation
-of its components and how it works:
+    A hash table, also known as a hash map, is a data structure that provides efficient storage and retrieval of
+    data using key-value pairs. It achieves this efficiency through a process called hashing. Here's a detailed explanation
+    of its components and how it works:
 
-Key Components of a Hash Table
+- Key Components of a Hash Table:
+=================================
 
-1. Keys: Unique identifiers used to access values in the hash table.
-2. Values: Data associated with keys. Each key maps to a specific value.
-3. Hash Function: A function that takes a key and computes an index (hash code) that determines where the corresponding
-value should be stored in the array.
-4. Buckets: The array slots where key-value pairs are stored. Each bucket can hold multiple key-value pairs in case of
-hash collisions.
-5. Collision Resolution: A strategy to handle situations where multiple keys hash to the same index. Common methods
-include chaining and open addressing.
+    1. Keys: Unique identifiers used to access values in the hash table.
+    2. Values: Data associated with keys. Each key maps to a specific value.
+    3. Hash Function: A function that takes a key and computes an index (hash code) that determines where the corresponding
+    value should be stored in the array.
+    4. Buckets: The array slots where key-value pairs are stored. Each bucket can hold multiple key-value pairs in case of
+    hash collisions.
+    5. Collision Resolution: A strategy to handle situations where multiple keys hash to the same index. Common methods
+    include chaining and open addressing.
 
-How a Hash Table Works
+- How a Hash Table Works:
+=========================
 
-1. Insertion:
-   - The key is passed through the hash function to compute an index.
-   - The value associated with the key is stored in the bucket at that index.
-   - If the bucket is already occupied (collision), a collision resolution method is used to store the key-value pair.
+    1. Insertion:
+       - The key is passed through the hash function to compute an index.
+       - The value associated with the key is stored in the bucket at that index.
+       - If the bucket is already occupied (collision), a collision resolution method is used to store the key-value pair.
 
-2. Search:
-   - The key is hashed to find the index.
-   - The bucket at that index is checked.
-   - If the key is found, the associated value is returned.
-   - If not, the collision resolution method is used to continue the search.
+    2. Search:
+       - The key is hashed to find the index.
+       - The bucket at that index is checked.
+       - If the key is found, the associated value is returned.
+       - If not, the collision resolution method is used to continue the search.
 
-3. Deletion:
-   - The key is hashed to find the index.
-   - The bucket at that index is checked to find the key.
-   - If found, the key-value pair is removed.
-   - If not, the collision resolution method is used to continue the search and remove the key-value pair.
+    3. Deletion:
+       - The key is hashed to find the index.
+       - The bucket at that index is checked to find the key.
+       - If found, the key-value pair is removed.
+       - If not, the collision resolution method is used to continue the search and remove the key-value pair.
 
-Implementation of the hash table:
+- Implementation of the hash table:
+===================================
 
-import java.util.ArrayList;
-import java.util.List;
+    import java.util.ArrayList;
+    import java.util.List;
 
-class Record {
-    int Key;
-    String Title;
-    String PlacementInfo;
+    class Record {
+        int Key;
+        String Title;
+        String PlacementInfo;
 
-    public Record(int key, String title, String placement_info) {
-        Key = key;
-        Title = title;
-        PlacementInfo = placement_info;
-    }
-}
-
-class HashTable {
-    private List<List<Record>> buckets; // List of lists to store the chains
-    private int max_length; // To store the maximum number of elements a Hash table can store
-
-    public HashTable(int size) {
-        max_length = size;
-        buckets = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            buckets.add(new ArrayList<>());
+        public Record(int key, String title, String placement_info) {
+            Key = key;
+            Title = title;
+            PlacementInfo = placement_info;
         }
     }
 
-    private int H(int key) {
-        return key % max_length;
-    }
+    class HashTable {
+        private List<List<Record>> buckets; // List of lists to store the chains
+        private int max_length; // To store the maximum number of elements a Hash table can store
 
-    public boolean Insert(Record item) {
-        int index = H(item.Key);
-
-        // Traverse the chain at the index
-        for (Record record : buckets.get(index)) {
-            if (record.Key == item.Key) {
-                return false; // Key already exists in the chain, cannot insert
+        public HashTable(int size) {
+            max_length = size;
+            buckets = new ArrayList<>(size);
+            for (int i = 0; i < size; i++) {
+                buckets.add(new ArrayList<>());
             }
         }
 
-        buckets.get(index).add(item);
-        return true;
-    }
-
-    public boolean Search(int key, Record returnedItem) {
-        int index = H(key);
-
-        // Traverse the chain at the index
-        for (Record record : buckets.get(index)) {
-            if (record.Key == key) {
-                returnedItem.Key = record.Key;
-                returnedItem.Title = record.Title;
-                returnedItem.PlacementInfo = record.PlacementInfo;
-                return true; // Return true to indicate the record was found
-            }
+        private int H(int key) {
+            return key % max_length;
         }
 
-        return false; // Record not found
-    }
+        public boolean Insert(Record item) {
+            int index = H(item.Key);
 
-    public boolean Delete(int key) {
-        int index = H(key);
-
-        // Traverse the chain at the index
-        List<Record> chain = buckets.get(index);
-        for (int i = 0; i < chain.size(); i++) {
-            Record record = chain.get(i);
-            if (record.Key == key) {
-                chain.remove(i);
-                return true;
-            }
-        }
-
-        return false; // The key is not found in the chain
-    }
-
-    public void ShowTable() {
-        System.out.println("Index\tValue (Key, Title, PlacementInfo)");
-        for (int i = 0; i < max_length; i++) {
-            System.out.print(i + "\t");
-            List<Record> chain = buckets.get(i);
-            if (chain.isEmpty()) {
-                System.out.println("[EMPTY BUCKET]");
-            } else {
-                for (int j = 0; j < chain.size(); j++) {
-                    Record record = chain.get(j);
-                    if (j > 0) {
-                        System.out.print("--> ");
-                    }
-                    System.out.print("(" + record.Key + ", " + record.Title + ", " + record.PlacementInfo + ")");
+            // Traverse the chain at the index
+            for (Record record : buckets.get(index)) {
+                if (record.Key == item.Key) {
+                    return false; // Key already exists in the chain, cannot insert
                 }
-                System.out.println();
+            }
+
+            buckets.get(index).add(item);
+            return true;
+        }
+
+        public boolean Search(int key, Record returnedItem) {
+            int index = H(key);
+
+            // Traverse the chain at the index
+            for (Record record : buckets.get(index)) {
+                if (record.Key == key) {
+                    returnedItem.Key = record.Key;
+                    returnedItem.Title = record.Title;
+                    returnedItem.PlacementInfo = record.PlacementInfo;
+                    return true; // Return true to indicate the record was found
+                }
+            }
+
+            return false; // Record not found
+        }
+
+        public boolean Delete(int key) {
+            int index = H(key);
+
+            // Traverse the chain at the index
+            List<Record> chain = buckets.get(index);
+            for (int i = 0; i < chain.size(); i++) {
+                Record record = chain.get(i);
+                if (record.Key == key) {
+                    chain.remove(i);
+                    return true;
+                }
+            }
+
+            return false; // The key is not found in the chain
+        }
+
+        public void ShowTable() {
+            System.out.println("Index\tValue (Key, Title, PlacementInfo)");
+            for (int i = 0; i < max_length; i++) {
+                System.out.print(i + "\t");
+                List<Record> chain = buckets.get(i);
+                if (chain.isEmpty()) {
+                    System.out.println("[EMPTY BUCKET]");
+                } else {
+                    for (int j = 0; j < chain.size(); j++) {
+                        Record record = chain.get(j);
+                        if (j > 0) {
+                            System.out.print("--> ");
+                        }
+                        System.out.print("(" + record.Key + ", " + record.Title + ", " + record.PlacementInfo + ")");
+                    }
+                    System.out.println();
+                }
             }
         }
     }
-}
 
-class Solution {
-    public static void main(String[] args) {
-        int tableSize = 11;
-        HashTable hashTable = new HashTable(tableSize);
+    class Solution {
+        public static void main(String[] args) {
+            int tableSize = 11;
+            HashTable hashTable = new HashTable(tableSize);
 
-        // Insert initial book information
-        hashTable.Insert(new Record(1701, "Internet of Things", "G1 Shelf"));
-        hashTable.Insert(new Record(1712, "Statistical Analysis", "G1 Shelf"));
-        hashTable.Insert(new Record(1718, "Grid Computing", "H2 Shelf"));
-        hashTable.Insert(new Record(1735, "UML Modeling", "G1 Shelf"));
-        hashTable.Insert(new Record(1752, "Professional Practices", "G2 Shelf"));
+            // Insert initial book information
+            hashTable.Insert(new Record(1701, "Internet of Things", "G1 Shelf"));
+            hashTable.Insert(new Record(1712, "Statistical Analysis", "G1 Shelf"));
+            hashTable.Insert(new Record(1718, "Grid Computing", "H2 Shelf"));
+            hashTable.Insert(new Record(1735, "UML Modeling", "G1 Shelf"));
+            hashTable.Insert(new Record(1752, "Professional Practices", "G2 Shelf"));
 
-        // Display the hash table after initial insertions
-        System.out.println("\nHash Table after initial insertions:");
-        hashTable.ShowTable();
+            // Display the hash table after initial insertions
+            System.out.println("\nHash Table after initial insertions:");
+            hashTable.ShowTable();
 
-        // Insert the following record
-        hashTable.Insert(new Record(1725, "Deep Learning with Python", "C3 Shelf"));
+            // Insert the following record
+            hashTable.Insert(new Record(1725, "Deep Learning with Python", "C3 Shelf"));
 
-        // Display the hash table after the last insertion
-        System.out.println("\nHash Table inserting Book Key 1725:");
-        hashTable.ShowTable();
+            // Display the hash table after the last insertion
+            System.out.println("\nHash Table inserting Book Key 1725:");
+            hashTable.ShowTable();
 
-        // Delete two records
-        hashTable.Delete(1701);
-        hashTable.Delete(1718);
+            // Delete two records
+            hashTable.Delete(1701);
+            hashTable.Delete(1718);
 
-        // Display the hash table after deletions
-        System.out.println("\nHash Table after deleting 1701 and 1718:");
-        hashTable.ShowTable();
+            // Display the hash table after deletions
+            System.out.println("\nHash Table after deleting 1701 and 1718:");
+            hashTable.ShowTable();
+        }
     }
-}
 
-Frequently Occurring Issues:
+- Frequently Occurring Issues:
+==============================
 
-Collisions
-A collision in a Hash Table occurs when an insert operation tries to insert an item at a table slot already occupied by
-another item.
+    * Collisions
+    -------------
+    A collision in a Hash Table occurs when an insert operation tries to insert an item at a table slot already occupied by
+    another item.
 
-Collision Resolution Methods
-1. Chaining: Each bucket contains a linked list of key-value pairs. When a collision occurs,
-the new pair is added to the list.
-   - Pros: Simple and easy to implement.
-   - Cons: Can degrade performance if many collisions occur, leading to long lists.
+    * Collision Resolution Methods
+    ------------------------------
+        1. Chaining: Each bucket contains a linked list of key-value pairs. When a collision occurs,
+        the new pair is added to the list.
+           - Pros: Simple and easy to implement.
+           - Cons: Can degrade performance if many collisions occur, leading to long lists.
 
-2. Open Addressing: All key-value pairs are stored in the array itself. When a collision occurs, the algorithm
-probes the array for the next available slot using techniques such as linear probing, quadratic probing, or
-double hashing.
-   - Pros: Avoids the use of extra space for linked lists.
-   - Cons: Can lead to clustering and reduced performance as the table fills up.
+        2. Open Addressing: All key-value pairs are stored in the array itself. When a collision occurs, the algorithm
+        probes the array for the next available slot using techniques such as linear probing, quadratic probing, or
+        double hashing.
+           - Pros: Avoids the use of extra space for linked lists.
+           - Cons: Can lead to clustering and reduced performance as the table fills up.
 
-Advantages of Hash Tables
-- Fast Data Access: Average time complexity for search, insert, and delete operations is \(O(1)\).
-- Dynamic Size: Can handle a dynamic number of elements by resizing the array when it becomes too full.
+    * Advantages of Hash Tables
+    ----------------------------
+        - Fast Data Access: Average time complexity for search, insert, and delete operations is \(O(1)\).
+        - Dynamic Size: Can handle a dynamic number of elements by resizing the array when it becomes too full.
 
-Disadvantages of Hash Tables
-- Hash Collisions: Can affect performance if not managed properly.
-- Memory Overhead: May require more memory to maintain efficient performance.
-- Non-Sequential Access: Unlike arrays or linked lists, hash tables do not support ordered traversal of elements.
+    * Disadvantages of Hash Tables
+    -------------------------------
+        - Hash Collisions: Can affect performance if not managed properly.
+        - Memory Overhead: May require more memory to maintain efficient performance.
+        - Non-Sequential Access: Unlike arrays or linked lists, hash tables do not support ordered traversal of elements.
 
-Use Cases
-- Database Indexing: Efficiently retrieves records based on key attributes.
-- Caches: Stores recently accessed data for quick retrieval.
-- Symbol Tables in Compilers: Maps variable names to information about them.
+    * Use Cases
+    -----------
+        - Database Indexing: Efficiently retrieves records based on key attributes.
+        - Caches: Stores recently accessed data for quick retrieval.
+        - Symbol Tables in Compilers: Maps variable names to information about them.
 
-In summary, hash tables are a powerful and efficient data structure for fast data retrieval based on keys.
-However, the choice of hash function and collision resolution strategy significantly impacts their performance.
+    In summary, hash tables are a powerful and efficient data structure for fast data retrieval based on keys.
+    However, the choice of hash function and collision resolution strategy significantly impacts their performance.
+
+- Hash Map Example LeetCode Question: 347. Top K Frequent Elements
+===================================================================
+
+      To solve the problem of finding the k most frequent elements in an array, we can use a combination of a hash map
+      and a priority queue (min-heap). This approach ensures efficient time complexity and manageable space complexity
+      (ChatGPT coded the solution 🤖).
+
+      * Here is a step-by-step explanation of the solution:
+        ---------------------------------------------------
+
+          1. Count Frequencies: Use a hash map to count the frequencies of each element in the array.
+          2. Use a Min-Heap: Maintain a min-heap of size ( k ) to keep track of the top ( k ) most frequent elements.
+          By using a min-heap, we can efficiently remove the least frequent element whenever the size of the heap exceeds ( k ).
+
+      * Time and Space Complexity:
+      ----------------------------
+
+          - Time Complexity: O(n log k)
+            - Counting frequencies takes O(n) time.
+            - Inserting into the heap takes O(log k) time, and this operation is performed ( n ) times in the worst case.
+          - Space Complexity: O(n)
+            - The hash map requires O(n) space.
+            - The heap requires O(k) space.
+
+      * Here is the Java implementation of the solution:
+      --------------------------------------------------
+
+      import java.util.*;
+
+      public class Solution {
+          public int[] topKFrequent(int[] nums, int k) {
+              // Step 1: Count the frequency of each element
+              Map<Integer, Integer> frequencyMap = new HashMap<>();
+              for (int num : nums) {
+                  frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+              }
+
+              // Step 2: Use a min-heap to keep track of the top k frequent elements
+              PriorityQueue<Map.Entry<Integer, Integer>> minHeap =
+                  new PriorityQueue<>(Comparator.comparingInt(Map.Entry::getValue));
+
+              for (Map.Entry<Integer, Integer> entry : frequencyMap.entrySet()) {
+                  minHeap.offer(entry);
+                  if (minHeap.size() > k) {
+                      minHeap.poll(); // Remove the least frequent element
+                  }
+              }
+
+              // Step 3: Extract the elements from the heap
+              int[] result = new int[k];
+              for (int i = k - 1; i >= 0; i--) {
+                  result[i] = minHeap.poll().getKey();
+              }
+
+              return result;
+          }
+
+          public static void main(String[] args) {
+              Solution sol = new Solution();
+              int[] nums = {1, 1, 1, 2, 2, 3};
+              int k = 2;
+              System.out.println(Arrays.toString(sol.topKFrequent(nums, k))); // Output: [1, 2]
+          }
+      }
+
+      * Explanation:
+      --------------
+
+          1. Counting Frequencies:
+              - We use a `HashMap` to store the frequency of each element.
+              - Iterate through the array and populate the `HashMap`.
+
+          2. Maintaining a Min-Heap:
+              - We use a `PriorityQueue` to act as a min-heap based on the frequency of elements.
+              - For each entry in the frequency map, we add it to the heap.
+              - If the heap size exceeds ( k ), we remove the least frequent element.
+
+          3. **Extracting the Results**:
+              - After processing all elements, the heap contains the ( k ) most frequent elements.
+              - We extract these elements into the result array.
+
+      This approach ensures that we efficiently find the ( k ) most frequent elements with optimal time and space complexity.
