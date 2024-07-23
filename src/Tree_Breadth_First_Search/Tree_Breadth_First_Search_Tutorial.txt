@@ -167,108 +167,109 @@ Tree: Breadth-First Search (BFS)
     In summary, level-order traversal (BFS) is an important method for tree traversal that processes nodes level by level,
     ensuring that all nodes at a given level are visited before moving on to the next level.
 
-Tree: Breadth-First Search Example LeetCode Question: 109. Convert Sorted List to Binary Search Tree
-=====================================================================================================
+Tree: Breadth-First Search Example LeetCode Question: 301. Remove Invalid Parentheses
+=====================================================================================
 
-    To convert a sorted singly linked list into a height-balanced binary search tree (BST), you can use a divide-and-conquer
-    approach. This method ensures that the tree is balanced by recursively finding the middle element of the linked list to use
-    as the root of the tree (or subtree). Here's how you can implement this in Java, along with the time and space complexity analysis
+    To solve the problem of removing the minimum number of invalid parentheses to make the input string valid, you can use a
+    breadth-first search (BFS) approach. This approach systematically tries to remove each parenthesis and checks if the resulting
+    string is valid. BFS ensures that the first valid string(s) found will have the minimum number of removals
     (ChatGPT coded the solution 🤖).
 
-    1. Java Implementation
+    * Here's a Java implementation of this approach:
+    -----------------------------------------------
 
-    * ListNode and TreeNode Definitions:
-    ------------------------------------
-
-    First, define the `ListNode` and `TreeNode` classes:
-
-    class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) {
-            val = x;
-            next = null;
-        }
-    }
-
-    class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) {
-            val = x;
-            left = null;
-            right = null;
-        }
-    }
-
-    * Conversion Function:
-    ----------------------
-
-    Now, write the function to convert the sorted linked list to a height-balanced BST:
+    import java.util.*;
 
     public class Solution {
-        private ListNode current;
+        public List<String> removeInvalidParentheses(String s) {
+            List<String> result = new ArrayList<>();
+            if (s == null) return result;
 
-        public TreeNode sortedListToBST(ListNode head) {
-            if (head == null) return null;
+            Set<String> visited = new HashSet<>();
+            Queue<String> queue = new LinkedList<>();
 
-            // Get the size of the linked list
-            int size = getSize(head);
-            current = head;
+            // Initialize
+            queue.add(s);
+            visited.add(s);
+            boolean found = false;
 
-            // Build the BST
-            return sortedListToBSTHelper(size);
-        }
+            while (!queue.isEmpty()) {
+                String str = queue.poll();
 
-        private int getSize(ListNode head) {
-            int size = 0;
-            while (head != null) {
-                head = head.next;
-                size++;
+                if (isValid(str)) {
+                    result.add(str);
+                    found = true;
+                }
+
+                if (found) continue;
+
+                for (int i = 0; i < str.length(); i++) {
+                    if (str.charAt(i) != '(' && str.charAt(i) != ')') continue;
+                    String t = str.substring(0, i) + str.substring(i + 1);
+
+                    if (!visited.contains(t)) {
+                        queue.add(t);
+                        visited.add(t);
+                    }
+                }
             }
-            return size;
+
+            return result;
         }
 
-        private TreeNode sortedListToBSTHelper(int size) {
-            if (size <= 0) return null;
+        private boolean isValid(String s) {
+            int count = 0;
+            for (char c : s.toCharArray()) {
+                if (c == '(') count++;
+                if (c == ')') {
+                    if (count == 0) return false;
+                    count--;
+                }
+            }
+            return count == 0;
+        }
 
-            // Recursively form the left half
-            TreeNode left = sortedListToBSTHelper(size / 2);
-
-            // The root node will be the current node
-            TreeNode root = new TreeNode(current.val);
-            root.left = left;
-
-            // Move to the next element
-            current = current.next;
-
-            // Recursively form the right half and link it to the root
-            root.right = sortedListToBSTHelper(size - 1 - size / 2);
-
-            return root;
+        public static void main(String[] args) {
+            Solution solution = new Solution();
+            String input = "()())()";
+            List<String> result = solution.removeInvalidParentheses(input);
+            for (String str : result) {
+                System.out.println(str);
+            }
         }
     }
 
-    * Explanation
+    * Explanation:
+    --------------
 
-        1. Get the Size:
-           - First, calculate the size of the linked list.
-        2. Recursive Conversion:
-           - Use a recursive helper function `sortedListToBSTHelper` to convert the list to a BST.
-           - This function constructs the left subtree, then uses the current node as the root, and finally constructs
-           the right subtree.
+        1. Initialization:
+           - Use a queue to facilitate BFS.
+           - Use a set to keep track of visited strings to avoid processing the same string multiple times.
+
+        2. BFS:
+           - Start with the original string in the queue.
+           - For each string, if it's valid (checked by `isValid` function), add it to the result list and set the
+            `found` flag to `true`.
+           - If not found yet, generate all possible strings by removing one parenthesis at each position and add them
+             to the queue if they haven't been visited.
+
+        3. Validity Check:
+           - The `isValid` function checks if a given string has balanced parentheses by counting the number of open
+            and close parentheses.
+
+        4. Termination:
+           - The BFS ensures that the first valid string(s) found will have the minimum number of removals. Once a valid
+            string is found, only process strings of the same level to ensure minimum removals.
 
     * Time and Space Complexity
 
-        - Time Complexity: O(N)
-          - Each node in the list is processed exactly once, and each tree node is created exactly once. Thus, the overall
-            time complexity is O(N), where N is the number of nodes in the linked list.
+        - Time Complexity: O(N * 2^N)
+          - Each level of BFS can have up to 2^N strings, where N is the length of the string. Each validity check
+            takes O(N). Therefore, in the worst case, the time complexity is O(N * 2^N).
 
-        - Space Complexity: O(log N)
-          - The space complexity is primarily due to the recursion stack used in the `sortedListToBSTHelper` function.
-            Since the function is building a balanced BST, the height of the tree (and hence the depth of the recursion)
-            will be O(log N). Therefore, the space complexity is O(log N).
+        - Space Complexity: O(2^N)
+          - The space complexity is dominated by the queue and the visited set, both of which can grow up to 2^N in size,
+            where N is the length of the string.
 
-    This solution ensures that the resulting binary search tree is height-balanced and that the conversion is performed
-    efficiently.
+    This BFS-based solution is efficient for finding all valid strings with the minimum number of invalid parentheses removed,
+    ensuring all unique solutions are returned.
