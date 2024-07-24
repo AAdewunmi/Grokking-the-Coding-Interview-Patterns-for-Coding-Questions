@@ -1,0 +1,295 @@
+Modified Binary Search
+======================
+
+- Introduction:
+===============
+
+    Binary Search is the most popular Searching Algorithm which is most asked in coding interviews.
+    Its popularity is because of it’s time complexity, where the linear search algorithm takes O(N) time, the Binary Search
+    takes O(log N) time. The only condition in Binary Search is that the array should be sorted.
+    However, there’s a modified version of binary search that comes in handy when we’re dealing with specific situations.
+    (Ref: Ashutosh Kumar, Modified Binary Search Algorithm to Solve Tricky Problems. Medium (Sept, 22, 2020))
+
+    - Here are some common scenarios where modified binary search is employed:
+    --------------------------------------------------------------------------
+
+          Modified binary search algorithms can be applied to a variety of problems beyond simply finding an element in a
+          sorted array. Here are a few examples of how binary search can be modified to solve different types of problems
+          in Java:
+
+          - 1. Finding the First or Last Occurrence of an Element:
+          ---------------------------------------------------------
+
+          When an array contains duplicate elements, you may want to find the first or last occurrence of a target element.
+          In a sorted array, instead of finding just any occurrence of a target value, you may need to find the first or last
+          occurrence of that value. This can be done by adjusting the conditions for updating the search boundaries.
+
+          *** Finding the First Occurrence
+
+          public class BinarySearchModified {
+              public int findFirstOccurrence(int[] nums, int target) {
+                  int left = 0, right = nums.length - 1;
+                  int result = -1;
+
+                  while (left <= right) {
+                      int mid = left + (right - left) / 2;
+
+                      if (nums[mid] == target) {
+                          result = mid;
+                          right = mid - 1; // Continue searching in the left half
+                      } else if (nums[mid] < target) {
+                          left = mid + 1;
+                      } else {
+                          right = mid - 1;
+                      }
+                  }
+
+                  return result;
+              }
+
+              public static void main(String[] args) {
+                  BinarySearchModified search = new BinarySearchModified();
+                  int[] nums = {1, 2, 2, 2, 3, 4, 5};
+                  int target = 2;
+                  System.out.println("First occurrence of " + target + " is at index: " + search.findFirstOccurrence(nums, target));
+              }
+          }
+
+          *** Finding the Last Occurrence
+
+          public class BinarySearchModified {
+              public int findLastOccurrence(int[] nums, int target) {
+                  int left = 0, right = nums.length - 1;
+                  int result = -1;
+
+                  while (left <= right) {
+                      int mid = left + (right - left) / 2;
+
+                      if (nums[mid] == target) {
+                          result = mid;
+                          left = mid + 1; // Continue searching in the right half
+                      } else if (nums[mid] < target) {
+                          left = mid + 1;
+                      } else {
+                          right = mid - 1;
+                      }
+                  }
+
+                  return result;
+              }
+
+              public static void main(String[] args) {
+                  BinarySearchModified search = new BinarySearchModified();
+                  int[] nums = {1, 2, 2, 2, 3, 4, 5};
+                  int target = 2;
+                  System.out.println("Last occurrence of " + target + " is at index: " +
+                                   search.findLastOccurrence(nums, target));
+              }
+          }
+
+          - 2. Finding the Peak Element in an Array:
+          ------------------------------------------
+
+          A peak element is an element that is greater than its neighbors. The problem can be solved using a binary search
+          approach to achieve O( log n) complexity. In an array where elements first increase and then decrease, a modified
+          binary search can be used to find the peak element.
+
+          public class PeakElementFinder {
+              public int findPeakElement(int[] nums) {
+                  int left = 0, right = nums.length - 1;
+
+                  while (left < right) {
+                      int mid = left + (right - left) / 2;
+
+                      if (nums[mid] > nums[mid + 1]) {
+                          right = mid; // Peak must be on the left side or at mid
+                      } else {
+                          left = mid + 1; // Peak must be on the right side
+                      }
+                  }
+
+                  return left; // or return right; both are the same at this point
+              }
+
+              public static void main(String[] args) {
+                  PeakElementFinder finder = new PeakElementFinder();
+                  int[] nums = {1, 2, 3, 1};
+                  System.out.println("Peak element is at index: " + finder.findPeakElement(nums));
+              }
+          }
+
+          - 3. Finding the Square Root of a Number:
+          -----------------------------------------
+
+          Binary search can be used to find the integer part of the square root of a number.
+
+          public class SquareRootFinder {
+              public int findSquareRoot(int x) {
+                  if (x < 2) {
+                      return x;
+                  }
+
+                  int left = 1, right = x / 2;
+                  int result = 0;
+
+                  while (left <= right) {
+                      int mid = left + (right - left) / 2;
+                      long square = (long) mid * mid;
+
+                      if (square == x) {
+                          return mid;
+                      } else if (square < x) {
+                          result = mid;
+                          left = mid + 1;
+                      } else {
+                          right = mid - 1;
+                      }
+                  }
+
+                  return result;
+              }
+
+              public static void main(String[] args) {
+                  SquareRootFinder finder = new SquareRootFinder();
+                  int x = 8;
+                  System.out.println("Square root of " + x + " is: " + finder.findSquareRoot(x));
+              }
+          }
+
+          - 4. Finding the Smallest Element in a Rotated Sorted Array:
+          ------------------------------------------------------------
+
+          Given a rotated sorted array, find the smallest element. When an array is sorted and then rotated, a modified
+          binary search can efficiently find a target value. The search algorithm must determine which portion of the array
+          is sorted to decide how to update the search boundaries.
+
+          public class RotatedArrayFinder {
+              public int findMin(int[] nums) {
+                  int left = 0, right = nums.length - 1;
+
+                  while (left < right) {
+                      int mid = left + (right - left) / 2;
+
+                      if (nums[mid] > nums[right]) {
+                          left = mid + 1; // Minimum is in the right half
+                      } else {
+                          right = mid; // Minimum is in the left half including mid
+                      }
+                  }
+
+                  return nums[left]; // or return nums[right]; both are the same at this point
+              }
+
+              public static void main(String[] args) {
+                  RotatedArrayFinder finder = new RotatedArrayFinder();
+                  int[] nums = {4, 5, 6, 7, 0, 1, 2};
+                  System.out.println("The minimum element in the rotated array is: " + finder.findMin(nums));
+              }
+          }
+
+          - 5. Explanation of Modified Binary Search
+
+              1. Finding the First/Last Occurrence:
+                 - Adjust the search space based on whether you are looking for the first or last occurrence.
+                 - Move left/right boundary based on comparisons and whether you found the target.
+
+              2. Finding the Peak Element:
+                 - Compare the mid element with its neighbor to decide the direction.
+                 - Shrink the search space towards the peak.
+
+              3. Finding the Square Root:
+                 - Binary search on the number range from 1 to (x / 2).
+                 - Adjust the range based on whether the mid value squared is less or more than the target.
+
+              4. Finding the Smallest Element in a Rotated Sorted Array:
+                 - Compare the mid element with the rightmost element.
+                 - Adjust the search space to find the pivot point which is the smallest element.
+
+              Each of these problems modifies the binary search technique to suit the specific requirements of the problem, demonstrating the versatility of binary search beyond simple element lookup.
+
+- Modified Binary Search Example LeetCode Question: 33. Search in Rotated Sorted Array
+=======================================================================================
+
+    There is an integer array nums sorted in ascending order (with distinct values).
+
+    Prior to being passed to your function, nums is possibly rotated at an unknown pivot index k (1 <= k < nums.length)
+    such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed).
+    For example, [0,1,2,4,5,6,7] might be rotated at pivot index 3 and become [4,5,6,7,0,1,2].
+
+    Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums,
+    or -1 if it is not in nums.
+
+    You must write an algorithm with O(log n) runtime complexity.
+
+    - Solution (ChatGPT coded the solution 🤖)
+    -------------------------------------------
+
+    public class RotatedSortedArraySearch {
+
+        public int search(int[] nums, int target) {
+            int low = 0, high = nums.length - 1;
+
+            while (low <= high) {
+                int mid = low + (high - low) / 2;
+
+                if (nums[mid] == target) {
+                    return mid;
+                }
+
+                // Check if the left side is sorted
+                if (nums[low] <= nums[mid]) {
+                    // Target is in the left half
+                    if (nums[low] <= target && target < nums[mid]) {
+                        high = mid - 1;
+                    } else {
+                        low = mid + 1;
+                    }
+                }
+                // Right side must be sorted
+                else {
+                    // Target is in the right half
+                    if (nums[mid] < target && target <= nums[high]) {
+                        low = mid + 1;
+                    } else {
+                        high = mid - 1;
+                    }
+                }
+            }
+
+            // Target not found
+            return -1;
+        }
+
+        public static void main(String[] args) {
+            RotatedSortedArraySearch searcher = new RotatedSortedArraySearch();
+            int[] nums = {4, 5, 6, 7, 0, 1, 2};
+            int target = 0;
+            int result = searcher.search(nums, target);
+            System.out.println("Index of target: " + result); // Output: 4
+        }
+    }
+
+    - Explanation:
+    --------------
+
+        Initial Setup:
+            Initialize two pointers, low and high, to the start and end of the array.
+
+        Binary Search Loop:
+            While low is less than or equal to high:
+                Compute the middle index mid.
+                If nums[mid] is the target, return mid.
+
+        Determine Sorted Half:
+            If the left half (nums[low] to nums[mid]) is sorted:
+                Check if the target is within the range of the sorted half. If it is, adjust the high pointer to mid - 1.
+                Otherwise, adjust the low pointer to mid + 1.
+            If the right half (nums[mid] to nums[high]) is sorted:
+                Check if the target is within the range of the sorted half. If it is, adjust the low pointer to mid + 1.
+                Otherwise, adjust the high pointer to mid - 1.
+
+        Target Not Found:
+            If the loop exits, it means the target is not in the array. Return -1.
+
+    This algorithm ensures O(log n) runtime complexity by effectively narrowing down the search space by half during each
+    iteration of the loop.
