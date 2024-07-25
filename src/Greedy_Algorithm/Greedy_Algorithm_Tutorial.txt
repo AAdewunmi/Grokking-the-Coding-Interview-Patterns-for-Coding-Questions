@@ -1,190 +1,197 @@
 Greedy Algorithm:
 =================
 
-*** Introduction:
+- Introduction:
+================
 
-A greedy algorithm is a problem-solving approach that builds up a solution piece by piece, always choosing the next
-piece that offers the most immediate benefit. This means the algorithm makes a series of choices, each of which looks the
-best at the moment, without considering the larger problem.
+    A greedy algorithm is a problem-solving approach that builds up a solution piece by piece, always choosing the next
+    piece that offers the most immediate benefit. This means the algorithm makes a series of choices, each of which looks the
+    best at the moment, without considering the larger problem.
 
-Key characteristics of greedy algorithms include:
+    * Key characteristics of greedy algorithms include:
+    ---------------------------------------------------
 
-1. Local Optimization: Greedy algorithms make a series of decisions by considering only the current state and the immediate
-benefit of each choice, rather than evaluating the entire problem space.
+        1. Local Optimization: Greedy algorithms make a series of decisions by considering only the current state and the immediate
+        benefit of each choice, rather than evaluating the entire problem space.
 
-2. Feasibility: The algorithm makes sure each choice it makes is feasible and fits within the constraints of the problem.
+        2. Feasibility: The algorithm makes sure each choice it makes is feasible and fits within the constraints of the problem.
 
-3. Greedy Choice Property: At every step, the algorithm chooses the option that seems the best at that moment, hoping to
-find the global optimum by following these local optima.
+        3. Greedy Choice Property: At every step, the algorithm chooses the option that seems the best at that moment, hoping to
+        find the global optimum by following these local optima.
 
-4. Optimal Substructure: The problem can be broken down into smaller problems, and the solution to the overall problem
-can be constructed from the solutions to the sub-problems.
+        4. Optimal Substructure: The problem can be broken down into smaller problems, and the solution to the overall problem
+        can be constructed from the solutions to the sub-problems.
 
-Greedy algorithms are typically used for optimization problems and often provide efficient solutions. However, they do
-not always yield the optimal solution. The success of a greedy algorithm depends on the problem having the greedy-choice
-property and optimal substructure.
+    Greedy algorithms are typically used for optimization problems and often provide efficient solutions. However, they do
+    not always yield the optimal solution. The success of a greedy algorithm depends on the problem having the greedy-choice
+    property and optimal substructure.
 
-- Examples of Greedy Algorithms
+    * Examples of Greedy Algorithms:
+    --------------------------------
+        1. Coin Change Problem: To find the minimum number of coins needed to make a certain amount, the algorithm always picks
+        the largest denomination coin that is less than or equal to the remaining amount.
 
-1. Coin Change Problem: To find the minimum number of coins needed to make a certain amount, the algorithm always picks
-the largest denomination coin that is less than or equal to the remaining amount.
+        2. Kruskal’s Algorithm for Minimum Spanning Tree: This algorithm builds the minimum spanning tree of a graph by always
+        picking the smallest edge that doesn’t form a cycle with the already chosen edges.
 
-2. Kruskal’s Algorithm for Minimum Spanning Tree: This algorithm builds the minimum spanning tree of a graph by always
-picking the smallest edge that doesn’t form a cycle with the already chosen edges.
+        3. Prim’s Algorithm for Minimum Spanning Tree: Similar to Kruskal’s, but it grows the spanning tree from a starting
+        vertex by repeatedly adding the smallest edge that connects the tree to a vertex not yet in the tree.
 
-3. Prim’s Algorithm for Minimum Spanning Tree: Similar to Kruskal’s, but it grows the spanning tree from a starting
-vertex by repeatedly adding the smallest edge that connects the tree to a vertex not yet in the tree.
+        4. Huffman Coding: Used for lossless data compression, it builds a prefix tree (Huffman tree) to encode data efficiently
+        by always merging the two least frequent nodes.
 
-4. Huffman Coding: Used for lossless data compression, it builds a prefix tree (Huffman tree) to encode data efficiently
-by always merging the two least frequent nodes.
+        5. Activity Selection Problem: It schedules the maximum number of activities that don’t overlap, always choosing the
+    next activity that finishes the earliest.
 
-5. Activity Selection Problem: It schedules the maximum number of activities that don’t overlap, always choosing the
-next activity that finishes the earliest.
+    * Limitations:
+    --------------
 
-- Limitations
+    Greedy algorithms can fail to find the optimal solution in some cases because they don’t look ahead to consider the
+    overall structure of the problem. For example:
 
-Greedy algorithms can fail to find the optimal solution in some cases because they don’t look ahead to consider the
-overall structure of the problem. For example:
+        1. Traveling Salesman Problem: A greedy algorithm might choose the nearest unvisited city, which doesn't guarantee the
+        shortest possible route.
+        2. Knapsack Problem: A greedy approach might select items based on the highest value-to-weight ratio, which does not
+        always yield the optimal total value for the given weight capacity.
 
-1. Traveling Salesman Problem: A greedy algorithm might choose the nearest unvisited city, which doesn't guarantee the
-shortest possible route.
-2. Knapsack Problem: A greedy approach might select items based on the highest value-to-weight ratio, which does not
-always yield the optimal total value for the given weight capacity.
+    In summary, greedy algorithms are powerful and efficient for certain types of problems, but their success depends on the
+    problem meeting specific properties that ensure a locally optimal choice leads to a globally optimal solution.
 
-In summary, greedy algorithms are powerful and efficient for certain types of problems, but their success depends on the
-problem meeting specific properties that ensure a locally optimal choice leads to a globally optimal solution.
+    * Pseudocode:
+    -------------
 
-*** Pseudocode:
+    Here's a general pseudocode template for a greedy algorithm. This template can be adapted for various problems by
+    customizing the selection of the best candidate and the feasibility check.
 
-Here's a general pseudocode template for a greedy algorithm. This template can be adapted for various problems by
-customizing the selection of the best candidate and the feasibility check.
+        function GreedyAlgorithm(problem):
+            Initialize solution to an empty set or a suitable starting value
+            while problem is not solved:
+                candidate = SelectBestCandidate(problem)
+                if Feasible(solution, candidate):
+                    solution = solution + candidate
+                problem = UpdateProblem(problem, candidate)
+            return solution
 
-function GreedyAlgorithm(problem):
-    Initialize solution to an empty set or a suitable starting value
-    while problem is not solved:
-        candidate = SelectBestCandidate(problem)
-        if Feasible(solution, candidate):
-            solution = solution + candidate
-        problem = UpdateProblem(problem, candidate)
-    return solution
+        function SelectBestCandidate(problem):
+            // Implementation depends on the specific problem
+            // This function should return the most promising candidate at the current step
 
-function SelectBestCandidate(problem):
-    // Implementation depends on the specific problem
-    // This function should return the most promising candidate at the current step
+        function Feasible(solution, candidate):
+            // Implementation depends on the specific problem
+            // This function should check if adding the candidate to the solution is feasible
 
-function Feasible(solution, candidate):
-    // Implementation depends on the specific problem
-    // This function should check if adding the candidate to the solution is feasible
+        function UpdateProblem(problem, candidate):
+            // Implementation depends on the specific problem
+            // This function should update the problem state after a candidate has been chosen
 
-function UpdateProblem(problem, candidate):
-    // Implementation depends on the specific problem
-    // This function should update the problem state after a candidate has been chosen
+    1. Pseudocode Example: Coin Change Problem:
+    -------------------------------------------
 
-1. Pseudocode Example: Coin Change Problem
+    Here is the pseudocode for the Coin Change Problem, where the goal is to make a given amount using the fewest number
+    of coins of specified denominations.
 
-Here is the pseudocode for the Coin Change Problem, where the goal is to make a given amount using the fewest number
-of coins of specified denominations.
+        function CoinChangeGreedy(amount, denominations):
+            // Sort the denominations in descending order
+            Sort(denominations in descending order)
+            Initialize coins_used to an empty list
+            Initialize remaining_amount to amount
 
-function CoinChangeGreedy(amount, denominations):
-    // Sort the denominations in descending order
-    Sort(denominations in descending order)
-    Initialize coins_used to an empty list
-    Initialize remaining_amount to amount
+            for each coin in denominations:
+                while coin <= remaining_amount:
+                    Add coin to coins_used
+                    remaining_amount = remaining_amount - coin
 
-    for each coin in denominations:
-        while coin <= remaining_amount:
-            Add coin to coins_used
-            remaining_amount = remaining_amount - coin
+            if remaining_amount > 0:
+                return "Change cannot be made with the given denominations"
+            else:
+                return coins_used
 
-    if remaining_amount > 0:
-        return "Change cannot be made with the given denominations"
-    else:
-        return coins_used
+    2. Pseudocode Example: Activity Selection Problem:
+    --------------------------------------------------
+    Here is the pseudocode for the Activity Selection Problem, where the goal is to select the maximum number of
+    non-overlapping activities from a given set.
 
-2. Pseudocode Example: Activity Selection Problem
+        function ActivitySelection(activities):
+            // Sort activities by their finishing times
+            Sort(activities by finishing time)
+            Initialize selected_activities to an empty list
+            Initialize last_finish_time to 0
 
-Here is the pseudocode for the Activity Selection Problem, where the goal is to select the maximum number of
-non-overlapping activities from a given set.
+            for each activity in activities:
+                if activity.start_time >= last_finish_time:
+                    Add activity to selected_activities
+                    last_finish_time = activity.finish_time
 
-function ActivitySelection(activities):
-    // Sort activities by their finishing times
-    Sort(activities by finishing time)
-    Initialize selected_activities to an empty list
-    Initialize last_finish_time to 0
+            return selected_activities
 
-    for each activity in activities:
-        if activity.start_time >= last_finish_time:
-            Add activity to selected_activities
-            last_finish_time = activity.finish_time
+    In these examples:
 
-    return selected_activities
+        - `SelectBestCandidate` corresponds to choosing the next largest denomination in the Coin Change Problem or the next
+            activity with the earliest finish time in the Activity Selection Problem.
+        - `Feasible` corresponds to checking if adding the candidate is within the remaining amount or doesn't overlap with
+            previously selected activities.
+        - `UpdateProblem` adjusts the remaining amount or updates the list of activities to reflect the inclusion of the
+            selected candidate.
 
-In these examples:
+Greedy Algorithm Example LeetCode Problem: 881. Boats to Save People
+====================================================================
 
-- `SelectBestCandidate` corresponds to choosing the next largest denomination in the Coin Change Problem or the next
-    activity with the earliest finish time in the Activity Selection Problem.
-- `Feasible` corresponds to checking if adding the candidate is within the remaining amount or doesn't overlap with
-    previously selected activities.
-- `UpdateProblem` adjusts the remaining amount or updates the list of activities to reflect the inclusion of the
-    selected candidate.
+    To solve the problem of finding the minimum number of boats required to carry all the people given their weights and
+    the boat weight limit, you can use a greedy algorithm. The key idea is to try to pair the heaviest person who can be
+    paired with the lightest person, and if not possible, place the heaviest person alone in a boat (ChatGPT coded the solution 🤖).
 
-*** Example LeetCode Problem: "881. Boats to Save People"
+    Here's a step-by-step approach to implement this algorithm in Java:
 
-To solve the problem of finding the minimum number of boats required to carry all the people given their weights and
-the boat weight limit, you can use a greedy algorithm. The key idea is to try to pair the heaviest person who can be
-paired with the lightest person, and if not possible, place the heaviest person alone in a boat.
+        1. Sort the array: Sorting helps in efficiently pairing the heaviest and the lightest person.
+        2. Use two pointers: One starting from the beginning (lightest) and one from the end (heaviest) of the sorted array.
+        3. Pairing decision: Try to pair the heaviest and the lightest person. If their combined weight is within the limit, use one boat for both; otherwise, use one boat for the heaviest person alone.
+        4. Move the pointers accordingly: If paired, move both pointers inward; if not, move only the pointer for the heaviest person.
 
-Here's a step-by-step approach to implement this algorithm in Java:
+    - Here's the Java code implementing this approach:
+    ---------------------------------------------------
 
-1. Sort the array: Sorting helps in efficiently pairing the heaviest and the lightest person.
-2. Use two pointers: One starting from the beginning (lightest) and one from the end (heaviest) of the sorted array.
-3. Pairing decision: Try to pair the heaviest and the lightest person. If their combined weight is within the limit, use one boat for both; otherwise, use one boat for the heaviest person alone.
-4. Move the pointers accordingly: If paired, move both pointers inward; if not, move only the pointer for the heaviest person.
+        import java.util.Arrays;
 
-Here's the Java code implementing this approach:
+        public class BoatRescue {
+            public int numRescueBoats(int[] people, int limit) {
+                Arrays.sort(people);
+                int left = 0;
+                int right = people.length - 1;
+                int boats = 0;
 
-import java.util.Arrays;
+                while (left <= right) {
+                    // If the lightest and the heaviest person can share a boat
+                    if (people[left] + people[right] <= limit) {
+                        left++;
+                    }
+                    // Always move the pointer for the heaviest person
+                    right--;
+                    // In both cases, a new boat is used
+                    boats++;
+                }
 
-public class BoatRescue {
-    public int numRescueBoats(int[] people, int limit) {
-        Arrays.sort(people);
-        int left = 0;
-        int right = people.length - 1;
-        int boats = 0;
-
-        while (left <= right) {
-            // If the lightest and the heaviest person can share a boat
-            if (people[left] + people[right] <= limit) {
-                left++;
+                return boats;
             }
-            // Always move the pointer for the heaviest person
-            right--;
-            // In both cases, a new boat is used
-            boats++;
+
+            public static void main(String[] args) {
+                BoatRescue br = new BoatRescue();
+                int[] people = {3, 2, 2, 1};
+                int limit = 3;
+                System.out.println(br.numRescueBoats(people, limit)); // Output: 3
+            }
         }
 
-        return boats;
-    }
+    - Explanation:
+    ---------------
 
-    public static void main(String[] args) {
-        BoatRescue br = new BoatRescue();
-        int[] people = {3, 2, 2, 1};
-        int limit = 3;
-        System.out.println(br.numRescueBoats(people, limit)); // Output: 3
-    }
-}
+        1. Sorting: The array `people` is sorted in ascending order to facilitate pairing.
+        2. Two Pointers: `left` starts at the beginning (lightest person) and `right` starts at the end (heaviest person).
+        3. Pairing Decision:
+           - If the sum of weights of the people at `left` and `right` is less than or equal to `limit`, they can share a boat.
+           Move `left` rightward.
+           - Always move `right` leftward after placing the heaviest person in a boat, either paired or alone.
+        4. Boat Count: Increment the boat count for every iteration of the loop.
 
-- Explanation:
-
-1. Sorting: The array `people` is sorted in ascending order to facilitate pairing.
-2. Two Pointers: `left` starts at the beginning (lightest person) and `right` starts at the end (heaviest person).
-3. Pairing Decision:
-   - If the sum of weights of the people at `left` and `right` is less than or equal to `limit`, they can share a boat.
-   Move `left` rightward.
-   - Always move `right` leftward after placing the heaviest person in a boat, either paired or alone.
-4. Boat Count: Increment the boat count for every iteration of the loop.
-
-This algorithm ensures that you use the minimum number of boats by always trying to pair the heaviest person with the
-lightest possible person. The time complexity of this solution is O(n log n) due to the sorting step, and the space
-complexity is O(1) since no additional space proportional to input size is used.
-
+    This algorithm ensures that you use the minimum number of boats by always trying to pair the heaviest person with the
+    lightest possible person. The time complexity of this solution is O(n log n) due to the sorting step, and the space
+    complexity is O(1) since no additional space proportional to input size is used.
