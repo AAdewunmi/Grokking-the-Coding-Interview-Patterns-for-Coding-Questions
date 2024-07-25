@@ -1,0 +1,265 @@
+K-Way Merge
+============
+
+- Introduction:
+===============
+
+    A k-way merge is a fundamental algorithmic technique used to merge k sorted lists into a single sorted list.
+    This technique is especially useful in scenarios where multiple sorted sequences need to be combined, such as in external
+    sorting and multi-way merge sort. Here's a detailed explanation:
+
+    - Key Concepts:
+    ---------------
+        1. Input:
+           - k sorted lists (or arrays).
+           - The goal is to merge these lists into a single sorted list.
+
+        2. Output:
+           - One merged list that maintains the sorted order.
+
+    - Algorithm:
+    ------------
+
+        1. Initialization:
+           - Create a min-heap (or priority queue) that helps efficiently retrieve the smallest element among the current heads of the k lists.
+           - Insert the first element of each list into the heap, along with the index of the list and the index of the element within the list.
+
+        2. Merging Process:
+           - Extract the smallest element from the heap (this is the next element in the merged list).
+           - Insert this smallest element into the result list.
+           - If the extracted element’s list still has remaining elements, insert the next element from that list into the heap.
+           - Repeat the extraction and insertion process until the heap is empty.
+
+        3. Termination:
+           - The process continues until all elements from all lists have been merged and the heap is empty.
+
+    - Time Complexity:
+    ------------------
+
+        - Initialization:  O(k)  time to build the initial heap.
+        - Merging: Each insertion and extraction operation from the heap takes O(log k)  time.
+            Since there are a total of n elements to be processed where n is the sum of the lengths of all k lists,
+            the overall time complexity is O (n log k).
+
+    - Example:
+    ----------
+
+        Consider the following 3 sorted lists:
+        - List 1: [1, 4, 7]
+        - List 2: [2, 5, 8]
+        - List 3: [3, 6, 9]
+
+        - The steps would be:
+        1. Initialize the heap with the first elements of each list: \[ (1, 0, 0), (2, 1, 0), (3, 2, 0) \].
+        2. Extract 1 from the heap and add to the merged list. Insert the next element from List 1 (4) into the heap.
+        3. Extract 2, add to the merged list, and insert 5 from List 2.
+        4. Extract 3, add to the merged list, and insert 6 from List 3.
+        5. Continue this process until all elements are merged.
+
+    - Applications:
+    ---------------
+
+        - External Sorting: Used in scenarios where data doesn't fit into memory and must be sorted using disk storage.
+        - Multi-way Merge Sort: An extension of merge sort for dividing data into multiple partitions.
+        - Database Query Processing: Efficient merging of sorted query results from different sources.
+
+    - Pseudocode:
+    -------------
+
+        Here is a high-level pseudocode for the k-way merge:
+
+        function kWayMerge(lists):
+            minHeap = new MinHeap()
+            mergedList = []
+
+            for i from 0 to k-1:
+                if lists[i] is not empty:
+                    minHeap.insert((lists[i][0], i, 0))
+
+            while not minHeap.isEmpty():
+                (val, listIndex, elementIndex) = minHeap.extractMin()
+                mergedList.append(val)
+
+                if elementIndex + 1 < length(lists[listIndex]):
+                    nextElement = lists[listIndex][elementIndex + 1]
+                    minHeap.insert((nextElement, listIndex, elementIndex + 1))
+
+            return mergedList
+
+        In this pseudocode, the min-heap stores tuples of the form `(value, list index, element index)`,
+        allowing it to keep track of which element from which list is being processed.
+
+    - Implementation:
+    -----------------
+
+    Here is an example of a k-way merge implementation in Java. This example merges multiple sorted arrays into a single
+    sorted array using a priority queue (min-heap).
+
+        import java.util.PriorityQueue;
+        import java.util.List;
+        import java.util.ArrayList;
+        import java.util.Comparator;
+
+        class Element {
+            int value;
+            int arrayIndex;
+            int elementIndex;
+
+            public Element(int value, int arrayIndex, int elementIndex) {
+                this.value = value;
+                this.arrayIndex = arrayIndex;
+                this.elementIndex = elementIndex;
+            }
+        }
+
+        public class KWayMerge {
+
+            public static List<Integer> mergeKSortedArrays(List<List<Integer>> lists) {
+                List<Integer> mergedList = new ArrayList<>();
+
+                // Min-heap to store the elements along with their indices
+                PriorityQueue<Element> minHeap = new PriorityQueue<>(new Comparator<Element>() {
+                    @Override
+                    public int compare(Element e1, Element e2) {
+                        return Integer.compare(e1.value, e2.value);
+                    }
+                });
+
+                // Initialize the heap with the first element of each list
+                for (int i = 0; i < lists.size(); i++) {
+                    if (lists.get(i).size() > 0) {
+                        minHeap.add(new Element(lists.get(i).get(0), i, 0));
+                    }
+                }
+
+                // Merge process
+                while (!minHeap.isEmpty()) {
+                    Element current = minHeap.poll();
+                    mergedList.add(current.value);
+
+                    int nextElementIndex = current.elementIndex + 1;
+                    if (nextElementIndex < lists.get(current.arrayIndex).size()) {
+                        minHeap.add(new Element(lists.get(current.arrayIndex).get(nextElementIndex), current.arrayIndex, nextElementIndex));
+                    }
+                }
+
+                return mergedList;
+            }
+
+            public static void main(String[] args) {
+                List<List<Integer>> lists = new ArrayList<>();
+                lists.add(List.of(1, 4, 7));
+                lists.add(List.of(2, 5, 8));
+                lists.add(List.of(3, 6, 9));
+
+                List<Integer> result = mergeKSortedArrays(lists);
+                System.out.println(result);  // Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            }
+        }
+
+    - Explanation:
+    --------------
+
+        1. Element Class:
+           - A helper class to store the value along with its array index and element index.
+
+        2. mergeKSortedArrays Method:
+           - This method takes a list of lists of integers (each list is sorted) and merges them into a single sorted list.
+           - A `PriorityQueue` (min-heap) is used to efficiently get the smallest element from the current heads of the lists.
+
+        3. Initialization:
+           - The first element of each list is added to the heap, along with the indices to track its position.
+
+        4. Merging Process:
+           - The smallest element is extracted from the heap and added to the result list.
+           - The next element from the same list is then added to the heap.
+           - This process continues until the heap is empty.
+
+        5. Main Method:
+           - Creates a sample input of 3 sorted lists.
+           - Calls the `mergeKSortedArrays` method and prints the merged result.
+
+    This implementation ensures efficient merging with a time complexity of O(n log k), where n is the total
+    number of elements and k is the number of lists.
+
+- K-Way Merge Example LeetCode Question: 1669. Merge In Between Linked Lists
+=============================================================================
+
+    To solve this problem, we need to manipulate linked lists by removing a specified range of nodes from one list and
+    inserting another list in their place. This operation can be broken down into several steps
+    (ChatGPT coded the solution 🤖):
+
+        1. Traverse `list1` to the node just before the `a`th node (let's call this node `prev_a`).
+        2. Traverse `list1` to the `b`th node (let's call this node `b_node`).
+        3. Connect `prev_a` to the head of `list2`.
+        4. Traverse to the end of `list2` and connect its last node to the node right after `b_node`.
+
+    Here's how you can implement this in Java:
+
+    - Java Implementation:
+    -----------------------
+
+    * First, define the `ListNode` class if it's not already provided:
+
+        class ListNode {
+            int val;
+            ListNode next;
+            ListNode(int val) { this.val = val; }
+        }
+
+    * Next, write the function to merge the lists as described:
+
+        public ListNode mergeInBetween(ListNode list1, int a, int b, ListNode list2) {
+            // Find the node just before the `a`th node
+            ListNode prev_a = list1;
+            for (int i = 1; i < a; i++) {
+                prev_a = prev_a.next;
+            }
+
+            // Find the `b`th node
+            ListNode b_node = prev_a;
+            for (int i = 0; i <= b - a + 1; i++) {
+                b_node = b_node.next;
+            }
+
+            // Connect prev_a to the head of list2
+            prev_a.next = list2;
+
+            // Traverse to the end of list2
+            ListNode tail2 = list2;
+            while (tail2.next != null) {
+                tail2 = tail2.next;
+            }
+
+            // Connect the end of list2 to the node right after b_node
+            tail2.next = b_node;
+
+            return list1;
+        }
+
+    - Explanation:
+    --------------
+
+        1. Finding `prev_a` Node: We traverse `list1` until we reach the node just before the `a`th node. This is
+            achieved by looping `a-1` times.
+        2. Finding `b_node`: We continue from `prev_a` and traverse `b-a+1` times to reach the `b`th node.
+        3. Connecting `prev_a` to `list2`:** We change the `next` pointer of `prev_a` to point to the head of `list2`.
+        4. Connecting the End of `list2` to the Remainder of `list1`:** We find the tail of `list2` and change its `next`
+            pointer to the node following `b_node`.
+
+    - Time Complexity:
+    -------------------
+
+        The time complexity of this operation is O(n + m), where n is the length of the segment to be skipped
+            in `list1` and m is the length of `list2`. This is because:
+        - Traversing to the `a`th node takes O(a) time.
+        - Traversing from `a` to `b` takes O(b - a) time.
+        - Traversing through `list2` to find its end takes O(m) time.
+
+    - Space Complexity:
+    -------------------
+
+        The space complexity is O(1) as we are using a constant amount of extra space for pointer manipulation,
+        regardless of the input sizes.
+
+    This approach ensures that the linked lists are manipulated efficiently with minimal overhead, making it suitable for large lists.
