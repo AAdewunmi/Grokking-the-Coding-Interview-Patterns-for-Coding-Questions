@@ -1,0 +1,424 @@
+Longest Common Substring
+========================
+
+- Introduction:
+===============
+
+    In computer science, the longest common substring problem is a classic problem in string matching. The task is to
+    find the longest string (or substring) that is a contiguous part of two or more strings.
+
+    - Definition:
+    -------------
+    Given two strings, SS and TT, the longest common substring is the longest sequence of characters that appears as a
+    contiguous block in both strings.
+
+    - Example:
+    ----------
+        For instance, consider the strings:
+
+            S="ABABC"S="ABABC"
+            T="BABCAB"T="BABCAB"
+
+        The longest common substring between these two strings is "BABC""BABC".
+
+    - Difference between a longest common substring and a longest common subsequence:
+    ---------------------------------------------------------------------------------
+
+    The difference between a longest common substring and a longest common subsequence is the criterion of contiguity.
+    The symbols that make up a longest common substring must appear in both strings as a contiguous string.
+    The symbols that make up a longest common subsequence need only appear in the same order in each string;
+    there may be intervening symbols in between. Given the strings "hippopotamus" and "rhinoceros", the longest common
+    substring is "hi", while the longest common subsequence is "hioos".
+
+- Algorithms to Find the Longest Common Substring:
+==================================================
+
+    Several algorithms can be used to find the longest common substring, including:
+
+    1. Brute Force Approach:
+    -------------------------
+
+        This involves comparing all substrings of one string with all substrings of the other string.
+        This approach is not efficient as it has a time complexity of O(n3)O(n3).
+
+        *Time Complexity: \(O(n^3)\)
+
+        *Space Complexity: \(O(1)\)
+
+        *Java Implementation:
+
+            public class BruteForceLCS {
+                public static String findLCS(String S, String T) {
+                    int maxLength = 0;
+                    int startIndex = 0;
+
+                    int n = S.length();
+                    int m = T.length();
+
+                    for (int i = 0; i < n; i++) {
+                        for (int j = 0; j < m; j++) {
+                            int length = 0;
+                            while (i + length < n && j + length < m && S.charAt(i + length) == T.charAt(j + length)) {
+                                length++;
+                            }
+                            if (length > maxLength) {
+                                maxLength = length;
+                                startIndex = i;
+                            }
+                        }
+                    }
+
+                    return S.substring(startIndex, startIndex + maxLength);
+                }
+
+                public static void main(String[] args) {
+                    String S = "ABABC";
+                    String T = "BABCAB";
+                    System.out.println("Longest Common Substring: " + findLCS(S, T));
+                }
+            }
+
+    2. Dynamic Programming:
+    ------------------------
+
+        This approach uses a 2D table to store the lengths of longest common suffixes of substrings.
+        The time complexity is O(n×m)O(n×m) and space complexity is O(n×m)O(n×m), where nn and mm are the lengths of the
+        two strings.
+
+        Here is a brief outline of the dynamic programming approach:
+            1. Create a 2D array dp where dp[i][j] represents the length of the longest common substring ending at S[i-1] and T[j-1].
+            2. Initialize the array with zeros.
+            3. Traverse the array, and for each pair of indices i,ji,j:
+                If S[i−1]==T[j−1]S[i−1]==T[j−1], then set dp[i][j] = dp[i-1][j-1] + 1.
+                Keep track of the maximum length and the position where this length occurs.
+            4. The maximum value in the dp array will be the length of the longest common substring.
+
+        *Time Complexity: O(n * m)
+
+        *Space Complexity: O(n * m)
+
+        *Java Implementation:
+
+            public class DynamicProgrammingLCS {
+                public static String findLCS(String S, String T) {
+                    int n = S.length();
+                    int m = T.length();
+                    int[][] dp = new int[n + 1][m + 1];
+
+                    int maxLength = 0;
+                    int endIndex = 0;
+
+                    for (int i = 1; i <= n; i++) {
+                        for (int j = 1; j <= m; j++) {
+                            if (S.charAt(i - 1) == T.charAt(j - 1)) {
+                                dp[i][j] = dp[i - 1][j - 1] + 1;
+                                if (dp[i][j] > maxLength) {
+                                    maxLength = dp[i][j];
+                                    endIndex = i;
+                                }
+                            }
+                        }
+                    }
+
+                    return S.substring(endIndex - maxLength, endIndex);
+                }
+
+                public static void main(String[] args) {
+                    String S = "ABABC";
+                    String T = "BABCAB";
+                    System.out.println("Longest Common Substring: " + findLCS(S, T));
+                }
+            }
+
+    3. Suffix Trees:
+    ---------------
+
+        This approach builds a suffix tree for both strings and then finds the longest common substring by traversing the tree.
+        This method can be more efficient, with a time complexity of O(n+m)O(n+m), but it requires more complex data structures
+        and implementation.
+
+        *Time Complexity: O(n + m) for construction and finding the LCS.
+
+        *Space Complexity: O(n + m)
+
+        *Java Implementation:
+
+            import java.util.*;
+
+            class SuffixTreeNode {
+                Map<Character, SuffixTreeNode> children = new HashMap<>();
+                int start;
+                int end;
+                SuffixTreeNode suffixLink;
+
+                public SuffixTreeNode(int start, int end) {
+                    this.start = start;
+                    this.end = end;
+                }
+            }
+
+            class SuffixTree {
+                private String text;
+                private SuffixTreeNode root;
+                private SuffixTreeNode activeNode;
+                private int activeEdge;
+                private int activeLength;
+                private int remainingSuffixCount;
+                private int leafEnd;
+                private int[] suffixIndex;
+
+                public SuffixTree(String text) {
+                    this.text = text;
+                    this.suffixIndex = new int[text.length()];
+                    buildSuffixTree();
+                }
+
+                private void buildSuffixTree() {
+                    root = new SuffixTreeNode(-1, -1);
+                    activeNode = root;
+
+                    for (int i = 0; i < text.length(); i++) {
+                        extendSuffixTree(i);
+                    }
+                    setSuffixIndex(root, 0, text.length());
+                }
+
+                private void extendSuffixTree(int pos) {
+                    // Implementation of Ukkonen's algorithm
+                    // Please refer to Ukkonen's paper or detailed implementation
+                    // as the full implementation is lengthy and complex
+                }
+
+                private void setSuffixIndex(SuffixTreeNode node, int labelHeight, int size) {
+                    if (node == null) return;
+                    boolean isLeaf = true;
+                    for (SuffixTreeNode child : node.children.values()) {
+                        isLeaf = false;
+                        setSuffixIndex(child, labelHeight + child.end - child.start, size);
+                    }
+                    if (isLeaf) {
+                        node.suffixIndex = size - labelHeight;
+                    }
+                }
+
+                public String findLCS(String s1, String s2) {
+                    String combined = s1 + "#" + s2 + "$";
+                    SuffixTree suffixTree = new SuffixTree(combined);
+                    return suffixTree.lcs(root, s1.length(), s2.length());
+                }
+
+                private String lcs(SuffixTreeNode node, int len1, int len2) {
+                    if (node == null) return "";
+                    String result = "";
+                    for (SuffixTreeNode child : node.children.values()) {
+                        String candidate = lcs(child, len1, len2);
+                        if (candidate.length() > result.length()) {
+                            result = candidate;
+                        }
+                    }
+                    if (node.suffixIndex != -1 && ((node.suffixIndex < len1 && node.suffixIndex > len1) ||
+                        (node.suffixIndex > len1 && node.suffixIndex < len1 + len2))) {
+                        int start = node.start;
+                        int end = Math.min(node.end, len1 + len2);
+                        String common = text.substring(start, end);
+                        if (common.length() > result.length()) {
+                            result = common;
+                        }
+                    }
+                    return result;
+                }
+            }
+
+            public class SuffixTreeLCS {
+                public static void main(String[] args) {
+                    String s1 = "ABABC";
+                    String s2 = "BABCAB";
+                    SuffixTree suffixTree = new SuffixTree(s1 + "#" + s2 + "$");
+                    System.out.println("Longest Common Substring: " + suffixTree.findLCS(s1, s2));
+                }
+            }
+
+        **Note**: The implementation of a suffix tree is complex and involves sophisticated algorithms like Ukkonen's algorithm.
+        The example here provides a skeleton of the implementation and might not be fully functional. To get a complete working
+        implementation, refer to comprehensive resources or libraries specifically designed for suffix trees.
+
+        * Summary of Complexity
+        _______________________
+
+        | Approach           | Time Complexity | Space Complexity |
+        |--------------------|-----------------|------------------|
+        | Brute Force        |      O(n^3)     |     O(1)         |
+        | Dynamic Programming| O(n * m)        | O(n * m)         |
+        | Suffix Trees       | O(n + m)        | O(n + m)         |
+
+- Longest Common Substring Example LeetCode Question: 5. Longest Palindromic Substring (ChatGPT coded the solution 🤖)
+=======================================================================================================================
+
+    * Longest Palindromic Substring using Dynamic Programming
+    =========================================================
+
+    To find the longest palindromic substring in a given string `s` using dynamic programming, we can use a 2D table to
+    keep track of palindromic substrings. This approach has a time complexity of O(n^2) and a space complexity of O(n^2).
+
+    - Dynamic Programming Approach:
+    -------------------------------
+
+        1. Define the DP Table:
+           - Let `dp[i][j]` be `true` if the substring `s[i..j]` is a palindrome, otherwise `false`.
+
+        2. Initialization:
+           - All substrings of length 1 are palindromes (`dp[i][i] = true`).
+           - Check all substrings of length 2 and initialize `dp[i][i+1]` accordingly.
+
+        3. Filling the DP Table:
+           - For substrings longer than 2 characters, check if the characters at the start and end of the substring are
+           the same and if the substring without these characters is a palindrome (`dp[i][j] = dp[i+1][j-1] &&
+           s.charAt(i) == s.charAt(j)`).
+
+        4. Track the Longest Palindrome:
+           - Keep track of the start and end indices of the longest palindromic substring found during the DP table
+            filling process.
+
+    - Java Implementation:
+    ----------------------
+
+        public class LongestPalindromicSubstring {
+
+            public static String longestPalindrome(String s) {
+                int n = s.length();
+                if (n == 0) return "";
+
+                // dp[i][j] will be true if s[i..j] is a palindrome
+                boolean[][] dp = new boolean[n][n];
+
+                int start = 0;
+                int maxLength = 1;
+
+                // All substrings of length 1 are palindromes
+                for (int i = 0; i < n; i++) {
+                    dp[i][i] = true;
+                }
+
+                // Check for substrings of length 2
+                for (int i = 0; i < n - 1; i++) {
+                    if (s.charAt(i) == s.charAt(i + 1)) {
+                        dp[i][i + 1] = true;
+                        start = i;
+                        maxLength = 2;
+                    }
+                }
+
+                // Check for substrings longer than 2
+                for (int length = 3; length <= n; length++) {
+                    for (int i = 0; i < n - length + 1; i++) {
+                        int j = i + length - 1;  // Ending index of the current substring
+
+                        // Check if s[i..j] is a palindrome
+                        if (dp[i + 1][j - 1] && s.charAt(i) == s.charAt(j)) {
+                            dp[i][j] = true;
+
+                            if (length > maxLength) {
+                                start = i;
+                                maxLength = length;
+                            }
+                        }
+                    }
+                }
+
+                // Return the longest palindromic substring
+                return s.substring(start, start + maxLength);
+            }
+
+            public static void main(String[] args) {
+                String s = "babad";
+                System.out.println("Longest Palindromic Substring: " + longestPalindrome(s));
+
+                s = "cbbd";
+                System.out.println("Longest Palindromic Substring: " + longestPalindrome(s));
+            }
+        }
+
+
+    - Time and Space Complexity Analysis:
+    -------------------------------------
+
+        - *Time Complexity: O(n^2)
+          - We have two nested loops for filling the DP table, which leads to O(n^2) operations.
+
+        - Space Complexity: (O(n^2)
+          - We use a 2D array `dp` of size (n * n) to store boolean values indicating whether substrings are palindromes.
+
+    This approach efficiently finds the longest palindromic substring in a given string using dynamic programming.
+
+    * Longest Palindromic Substring using Expand From Centers Approach
+    ====================================================================
+
+    To find the longest palindromic substring in a given string `s`, we can use the dynamic programming approach for a
+    time complexity of O(n^2) and space complexity of O(n^2). Another efficient approach is to expand around the center
+    for a time complexity of O(n^2) and space complexity of O(1).
+
+    Here is a Java implementation using the expand around center approach:
+
+    - Java Implementation:
+    ----------------------
+
+        public class LongestPalindromicSubstring {
+
+            public static String longestPalindrome(String s) {
+                if (s == null || s.length() < 1) {
+                    return "";
+                }
+
+                int start = 0, end = 0;
+
+                for (int i = 0; i < s.length(); i++) {
+                    int len1 = expandAroundCenter(s, i, i);     // odd length palindrome
+                    int len2 = expandAroundCenter(s, i, i + 1); // even length palindrome
+                    int len = Math.max(len1, len2);
+
+                    if (len > end - start) {
+                        start = i - (len - 1) / 2;
+                        end = i + len / 2;
+                    }
+                }
+
+                return s.substring(start, end + 1);
+            }
+
+            private static int expandAroundCenter(String s, int left, int right) {
+                while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+                    left--;
+                    right++;
+                }
+                return right - left - 1;
+            }
+
+            public static void main(String[] args) {
+                String s = "babad";
+                System.out.println("Longest Palindromic Substring: " + longestPalindrome(s));
+            }
+        }
+
+    - Explanation:
+    --------------
+
+        1. Expand Around Center:
+            - For each character in the string, consider it as the center of a palindrome.
+            - There are two cases to consider:
+                1. Odd length palindromes (single center character).
+                2. Even length palindromes (two center characters).
+            - For each center, expand outwards as long as the characters on both sides are equal.
+            - Track the longest palindrome found during this expansion.
+
+        2. Time Complexity: O(n^2)
+            - We have two nested loops: one for the center position and another for the expansion, each taking O(n) time.
+            - Hence, the total time complexity is O(n * n) = O(n^2).
+
+        3. Space Complexity: O(1)
+            - We use a constant amount of extra space (variables to track the current longest palindrome).
+
+    - Summary:
+    ----------
+
+        - The provided solution is efficient in terms of space and has a reasonable time complexity for practical purposes.
+        - This approach is preferred over the dynamic programming approach when considering space efficiency.
