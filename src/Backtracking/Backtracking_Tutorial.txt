@@ -1,13 +1,15 @@
 Backtracking
 ============
 
-- Introduction
+- Introduction:
+===============
 
     Backtracking is a general algorithmic technique for solving problems incrementally by trying partial solutions and then
     abandoning them if they do not lead to a complete solution. It is particularly useful for solving combinatorial problems,
     such as puzzles, games, and constraint satisfaction problems, where the goal is to find a feasible solution that meets certain criteria.
 
-    *** Key Concepts of Backtracking
+    * Key Concepts of Backtracking:
+    -------------------------------
 
         1. Incremental Construction:
            - Solutions are built step-by-step, one component at a time.
@@ -18,159 +20,190 @@ Backtracking
         3. Abandonment and Backtrack:
            - If the current partial solution violates constraints or cannot lead to a complete solution, the algorithm abandons this partial solution and backtracks to the previous step to try a different option.
 
-    *** How Backtracking Works
+    * How Backtracking Works:
+    -------------------------
 
         1. Start from an initial partial solution.
-        2. Extend the partial solution** by adding a new component.
+
+        2. Extend the partial solution by adding a new component.
+
         3. Check if the extended partial solution is valid:
            - If valid, recursively extend this solution.
            - If invalid, abandon this partial solution and backtrack to the previous step.
+
         4. Repeat the process until a complete solution is found or all possible partial solutions are exhausted.
 
-    *** Examples of Problems Solved by Backtracking
+    * Examples of Problems Solved by Backtracking:
+    ----------------------------------------------
 
-    1. N-Queens Problem:
-       - Place N queens on an N×N chessboard so that no two queens attack each other.
+        1. N-Queens Problem:
+           - Place N queens on an N×N chessboard so that no two queens attack each other.
 
-    2. Sudoku:
-       - Fill a 9×9 grid with digits so that each column, each row, and each of the nine 3×3 subgrids contain all digits from 1 to 9.
+        2. Sudoku:
+           - Fill a 9×9 grid with digits so that each column, each row, and each of the nine 3×3 subgrids contain all digits from 1 to 9.
 
-    3. Knapsack Problem:
-       - Select items with given weights and values to maximize the total value without exceeding the weight capacity.
+        3. Knapsack Problem:
+           - Select items with given weights and values to maximize the total value without exceeding the weight capacity.
 
-    4. Graph Coloring:
-       - Assign colors to the vertices of a graph so that no two adjacent vertices share the same color using the minimum number of colors.
+        4. Graph Coloring:
+           - Assign colors to the vertices of a graph so that no two adjacent vertices share the same color using the minimum number of colors.
 
-    *** Advantages and Disadvantages
+    * Advantages and Disadvantages:
+    -------------------------------
 
-    1. Advantages:
-    - Simple and easy to implement for many problems.
-    - Often finds a solution quickly for problems with a small search space.
+        1. Advantages:
 
-    2. Disadvantages:
-    - Can be inefficient for large problems due to its exhaustive nature.
-    - May require optimization techniques like pruning to be practical for larger problems.
+        - Simple and easy to implement for many problems.
+        - Often finds a solution quickly for problems with a small search space.
 
-    Backtracking is a powerful technique, especially when combined with strategies like constraint propagation and
-    heuristics to reduce the search space and improve efficiency.
+        2. Disadvantages:
 
-- Backtracking Algorithm Pseudocode
+        - Can be inefficient for large problems due to its exhaustive nature.
+        - May require optimization techniques like pruning to be practical for larger problems.
 
-    Below is a pseudocode template for a generic backtracking algorithm:
+        Backtracking is a powerful technique, especially when combined with strategies like constraint propagation and
+        heuristics to reduce the search space and improve efficiency.
 
-    procedure Backtrack(partial_solution)
-        if is_a_solution(partial_solution) then
-            process_solution(partial_solution)
-        else
-            candidates = generate_candidates(partial_solution)
-            for each candidate in candidates do
-                partial_solution.add(candidate)
-                if is_valid(partial_solution) then
-                    Backtrack(partial_solution)
-                partial_solution.remove(candidate)
+- Backtracking Algorithm Pseudocode:
+====================================
 
-    procedure SolveProblem()
-        initial_partial_solution = create_initial_solution()
-        Backtrack(initial_partial_solution)
+    * Below is a pseudocode template for a generic backtracking algorithm:
+    ----------------------------------------------------------------------
 
-    *** Explanation of the Pseudocode
+        procedure Backtrack(partial_solution)
+            if is_a_solution(partial_solution) then
+                process_solution(partial_solution)
+            else
+                candidates = generate_candidates(partial_solution)
+                for each candidate in candidates do
+                    partial_solution.add(candidate)
+                    if is_valid(partial_solution) then
+                        Backtrack(partial_solution)
+                    partial_solution.remove(candidate)
 
-    1. SolveProblem Procedure:
-       - This is the entry point of the algorithm.
-       - It initializes the initial partial solution and starts the backtracking process.
+        procedure SolveProblem()
+            initial_partial_solution = create_initial_solution()
+            Backtrack(initial_partial_solution)
 
-    2. Backtrack Procedure:
-       - This is the recursive function that explores the solution space.
+    * Explanation of the Pseudocode:
+    --------------------------------
 
-    3. is_a_solution(partial_solution):
-       - This function checks if the current partial solution meets the criteria for being a complete solution.
+        1. SolveProblem Procedure:
+           - This is the entry point of the algorithm.
+           - It initializes the initial partial solution and starts the backtracking process.
 
-    4. process_solution(partial_solution):
-       - This function processes the complete solution, such as printing it or storing it in a list of solutions.
+        2. Backtrack Procedure:
+           - This is the recursive function that explores the solution space.
 
-    5. generate_candidates(partial_solution):
-       - This function generates a list of possible candidates that can be added to the current partial solution.
+        3. is_a_solution(partial_solution):
+           - This function checks if the current partial solution meets the criteria for being a complete solution.
 
-    6. is_valid(partial_solution):
-       - This function checks if the current partial solution is still valid under the problem's constraints after adding a candidate.
+        4. process_solution(partial_solution):
+           - This function processes the complete solution, such as printing it or storing it in a list of solutions.
 
-    7. partial_solution.add(candidate):
-       - This step adds the candidate to the partial solution.
+        5. generate_candidates(partial_solution):
+           - This function generates a list of possible candidates that can be added to the current partial solution.
 
-    8. partial_solution.remove(candidate):
-       - This step removes the candidate from the partial solution to backtrack and try other candidates.
+        6. is_valid(partial_solution):
+           - This function checks if the current partial solution is still valid under the problem's constraints after adding a candidate.
+
+        7. partial_solution.add(candidate):
+           - This step adds the candidate to the partial solution.
+
+        8. partial_solution.remove(candidate):
+           - This step removes the candidate from the partial solution to backtrack and try other candidates.
 
 
-- Example: LeetCode Problem 39. Combination Sum
+- Backtracking Example LeetCode Problem: 39. Combination Sum
+=============================================================
 
-    *** Below is a Java implementation of a solution to the problem using a backtracking approach:
+    Here is the step-by-step approach to solve this problem (ChatGPT coded the solution 🤖):
 
-    import java.util.ArrayList;
-    import java.util.List;
+        1. Backtracking: We use a backtracking approach to explore all possible combinations.
+        2. Sorting: To facilitate pruning the search tree (early termination), we sort the input list.
+        3. Avoid duplicates: By iterating over the sorted list and always continuing from the current position,
+            we avoid using the same element combination in a different order.
 
-    public class CombinationSum {
+    - Steps:
+    --------
 
-        public List<List<Integer>> combinationSum(int[] candidates, int target) {
-            List<List<Integer>> result = new ArrayList<>();
-            backtrack(candidates, target, 0, new ArrayList<>(), result);
-            return result;
-        }
+        1. Sort the candidates: Sorting helps to stop early in the recursion if the current candidate exceeds the target.
+        2. Backtracking function: Define a recursive function that tries to build combinations.
+        3. Base cases:
+           - If the current sum equals the target, add the current combination to the result list.
+           - If the current sum exceeds the target, terminate the current path (prune).
+        4. Recursive exploration: For each candidate, try including it in the current combination and recursively try to
+        complete the combination by considering the same candidate again (since each candidate can be used multiple times).
 
-        private void backtrack(int[] candidates, int target, int start, List<Integer> current, List<List<Integer>> result) {
-            if (target == 0) {
-                result.add(new ArrayList<>(current));
-                return;
+    - Implementation in Java:
+    -------------------------
+
+    Here's how the solution can be implemented in Java:
+
+            import java.util.ArrayList;
+            import java.util.Arrays;
+            import java.util.List;
+
+            public class Solution {
+                public List<List<Integer>> combinationSum(int[] candidates, int target) {
+                    List<List<Integer>> result = new ArrayList<>();
+                    Arrays.sort(candidates); // Sort the candidates to facilitate the pruning
+                    backtrack(result, new ArrayList<>(), candidates, target, 0);
+                    return result;
+                }
+
+                private void backtrack(List<List<Integer>> result, List<Integer> tempList, int[] candidates, int remain, int start) {
+                    if (remain < 0) return; // If remain is less than 0, no need to proceed
+                    else if (remain == 0) result.add(new ArrayList<>(tempList)); // Found a valid combination
+                    else {
+                        for (int i = start; i < candidates.length; i++) {
+                            tempList.add(candidates[i]);
+                            // Since the same element can be reused, we pass i instead of i + 1
+                            backtrack(result, tempList, candidates, remain - candidates[i], i);
+                            tempList.remove(tempList.size() - 1); // Backtrack, remove the last element
+                        }
+                    }
+                }
+
+                public static void main(String[] args) {
+                    Solution sol = new Solution();
+                    int[] candidates = {2, 3, 6, 7};
+                    int target = 7;
+                    List<List<Integer>> result = sol.combinationSum(candidates, target);
+                    for (List<Integer> combination : result) {
+                        System.out.println(combination);
+                    }
+                }
             }
 
-            if (target < 0) {
-                return;
-            }
+    - Explanation:
+    --------------
 
-            for (int i = start; i < candidates.length; i++) {
-                current.add(candidates[i]);
-                backtrack(candidates, target - candidates[i], i, current, result);
-                current.remove(current.size() - 1);
-            }
-        }
+        - Sorting: We sort the `candidates` array to ensure that we can stop early during our search if the current number
+            exceeds the remaining target (`remain`).
+        - Backtracking function (`backtrack`):
+          - `result`: List to store all valid combinations.
+          - `tempList`: Temporary list to store the current combination.
+          - `remain`: The remaining sum we need to achieve with the current combination.
+          - `start`: The starting index for the current recursive call, ensuring we don't reuse previous candidates.
+        - Base conditions:
+          - If `remain < 0`, it means the current combination exceeds the target, and we should stop exploring this path.
+          - If `remain == 0`, it means we found a valid combination, and we add it to the `result`.
+        - Recursion:
+          - For each candidate starting from `start`, add the candidate to `tempList`, and recursively call `backtrack`
+            with the updated remaining sum and the same `start` index to allow reuse of the same element.
+          - After the recursive call, remove the last element from `tempList` to backtrack and try the next candidate.
 
-        public static void main(String[] args) {
-            CombinationSum solution = new CombinationSum();
-            int[] candidates = {2, 3, 6, 7};
-            int target = 7;
-            List<List<Integer>> combinations = solution.combinationSum(candidates, target);
-            for (List<Integer> combination : combinations) {
-                System.out.println(combination);
-            }
-        }
-    }
+    This method efficiently finds all unique combinations that sum to the target by exploring all potential combinations
+        using a backtracking approach.
 
-    *** Explanation
+    - Time and Space Complexity:
+    ----------------------------
 
-    1. Main Method:
-       - The `main` method creates an instance of the `CombinationSum` class and tests it with an example.
-       - The `combinationSum` method is called with the candidates array and the target value.
+        - Time Complexity:
+        The time complexity of this solution is O(2^t), where t is the target. In the worst case, we explore 2^t combinations
+            because at each step we can either include the current candidate or not.
 
-    2. combinationSum Method:
-       - This method initializes the `result` list which will hold all the unique combinations.
-       - It calls the `backtrack` method to find all possible combinations.
-
-    3. backtrack Method:
-       - The `backtrack` method is a recursive function that tries to build the solution step-by-step.
-       - It takes the `candidates` array, the remaining `target` value, the `start` index to avoid duplicate combinations, the current combination `current`, and the final `result` list as parameters.
-
-    4. Base Cases:
-       - If `target` is 0, it means the current combination adds up to the target, so it is added to the `result`.
-       - If `target` is less than 0, it means the current combination exceeds the target, so the function returns without doing anything.
-
-    5. Recursive Case:
-       - For each candidate starting from the `start` index, it tries to add the candidate to the current combination and calls `backtrack` recursively with the updated target and current combination.
-       - After the recursive call, it removes the last added element (backtracks) and tries the next candidate.
-
-    *** Key Points
-        - The same number can be used multiple times, hence the call to `backtrack` does not increase the start index (`i` remains the same).
-        - Using a `List<Integer>` for the current combination ensures that combinations are mutable and can be backtracked by removing the
-        last element added.
-        - `ArrayList<>(current)` is used to create a copy of the current combination when a valid combination is found to avoid mutation issues.
-
-    This solution ensures all unique combinations summing up to the target are found efficiently using the backtracking technique.
-
+        - Space Complexity:
+        The space complexity is O(t) for the recursion stack, where t is the target value. Additionally, we use space for
+            storing the combinations, but this space is not counted in the auxiliary space complexity typically.
