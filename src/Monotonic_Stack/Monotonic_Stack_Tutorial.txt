@@ -2,131 +2,486 @@ Monotonic Stack
 ===============
 
 - Introduction:
+===============
+    A Monotonic Stack is a common data structure in computer science that maintains its elements in a specific order.
+    Unlike traditional stacks, Monotonic Stacks ensure that elements inside the stack are arranged in an increasing or
+    decreasing order based on their arrival time. In order to achieve the monotonic stacks, we have to enforce the push
+    and pop operation depending on whether we want a monotonic increasing stack or monotonic decreasing stack.
+    Let’s understand the term Monotonic Stacks by breaking it down.
+    Monotonic: It is a word for mathematics functions. A function y = f(x) is monotonically increasing or decreasing
+    when it follows the below conditions:
 
-A monotonic stack is a stack data structure that maintains its elements in a specific order, either strictly increasing or strictly decreasing.
-The term "monotonic" refers to this consistent order.
+        As x increases, y also increases always, then it’s a monotonically increasing function.
+        As x increases, y decreases always, then it’s a monotonically decreasing function.
 
-There are two main types of monotonic stacks:
+    See the below examples:
 
-- Monotonic Increasing Stack: In this stack, each new element pushed onto the stack is greater than or equal to the element before it.
-Thus, as you go from the bottom to the top of the stack, the values are in non-decreasing order.
+        y = 2x +5, it’s a monotonically increasing function.
+        y = -(2x), it’s a monotonically decreasing function.
 
-- Monotonic Decreasing Stack: In this stack, each new element pushed onto the stack is less than or equal to the element before it.
-Therefore, as you go from the bottom to the top of the stack, the values are in non-increasing order.
+    Similarly, A stack is called a monotonic stack if all the elements starting from the bottom of the stack is either
+    in increasing or in decreasing order.
 
-Applications
+- Types of Monotonic Stack:
+===========================
 
-Monotonic stacks are useful for various algorithms, particularly those involving finding the next greater or smaller element in an array.
-Some common applications include:
+    Monotonic Stacks can be broadly classified into two types:
 
-- Next Greater Element: Finding the next greater element for each element in an array.
-- Largest Rectangle in Histogram: Calculating the largest rectangle that can be formed in a histogram.
-- Sliding Window Maximum: Finding the maximum value in each sliding window of a given size in an array.
+        - Monotonic Increasing Stack
+        - Monotonic Decreasing Stack
 
-Example: Next Greater Element
+- Monotonic Increasing Stack:
+=============================
 
-Here’s an example of how a monotonic decreasing stack can be used to find the next greater element for each element in an array:
+    A Monotonically Increasing Stack is a stack where elements are placed in increasing order from the bottom to the top.
+    Each new element added to the stack is greater than or equal to the one below it. If a new element is smaller,
+    we remove elements from the top of the stack until we find one that is smaller or equal to the new element, or until
+    the stack is empty. This ensures that the stack always stays in increasing order.
 
-Implementing the "Next Greater Element" problem using a linked list in Java involves creating a custom stack with a linked list instead of
-using Java's built-in stack. Below is the Java implementation of this approach:
+    Example: 1, 3, 10, 15, 17
 
-### Linked List Node Definition
+    * How to achieve Monotonic Increasing Stack?
+    --------------------------------------------
 
-First, we need a class for the nodes in our linked list:
+    To achieve a monotonic increasing stack, you would typically push elements onto the stack while ensuring that the
+    stack maintains a increasing order from bottom to top. When pushing a new element, you would pop elements from the
+    stack that are smaller than the new element until the stack maintains the desired monotonic increasing property.
 
-class ListNode {
-    int value;
-    int index;
-    ListNode next;
+    To achieve a monotonic increasing stack, you can follow these step-by-step approaches:
 
-    ListNode(int value, int index) {
-        this.value = value;
-        this.index = index;
-        this.next = null;
-    }
-}
+            Initialize an empty stack.
+            Iterate through the elements and for each element:
+                while stack is not empty AND top of stack is more than the current element
+                    pop element from the stack
+                Push the current element onto the stack.
+            At the end of the iteration, the stack will contain the monotonic increasing order of elements.
 
-Linked List Stack Implementation
+    Let’s illustrate the example for a monotonic increasing stack using the array Arr[] = {1, 7, 9, 5}:
 
-Next, we'll implement a custom stack using this `ListNode` class:
+    * Below is the implementation of the above approach:
+    ----------------------------------------------------
 
-class LinkedListStack {
-    private ListNode top;
+        import java.util.ArrayDeque;
+        import java.util.Deque;
 
-    public LinkedListStack() {
-        this.top = null;
-    }
+        public class MonotonicIncreasingStack {
+            // Function to implement monotonic increasing stack
+            public static int[] monotonicIncreasing(int[] nums) {
+                Deque<Integer> stack = new ArrayDeque<>();
 
-    public void push(int value, int index) {
-        ListNode newNode = new ListNode(value, index);
-        newNode.next = top;
-        top = newNode;
-    }
+                // Traverse the array
+                for (int num : nums) {
+                    // While stack is not empty AND top of stack is more than the current element
+                    while (!stack.isEmpty() && stack.peekLast() > num) {
+                        // Pop the top element from the stack
+                        stack.pollLast();
+                    }
+                    // Push the current element into the stack
+                    stack.offerLast(num);
+                }
 
-    public ListNode pop() {
-        if (top == null) {
-            return null;
-        }
-        ListNode node = top;
-        top = top.next;
-        return node;
-    }
+                // Construct the result array from the stack
+                int[] result = new int[stack.size()];
+                int index = stack.size() - 1;
+                while (!stack.isEmpty()) {
+                    result[index--] = stack.pollLast();
+                }
 
-    public ListNode peek() {
-        return top;
-    }
-
-    public boolean isEmpty() {
-        return top == null;
-    }
-}
-
-Next Greater Element Function
-
-Now we use this custom stack to implement the "Next Greater Element" functionality:
-
-import java.util.Arrays;
-
-public class NextGreaterElementLinkedList {
-
-    public static int[] nextGreaterElements(int[] nums) {
-        int[] result = new int[nums.length];
-        Arrays.fill(result, -1);  // Initialize the result array with -1
-        LinkedListStack stack = new LinkedListStack();  // Custom stack using linked list
-
-        for (int i = 0; i < nums.length; i++) {
-            // Check if the current element is greater than the element at the index stored at the top of the stack
-            while (!stack.isEmpty() && stack.peek().value < nums[i]) {
-                ListNode node = stack.pop();
-                result[node.index] = nums[i];  // Set the next greater element for the popped index
+                return result;
             }
-            stack.push(nums[i], i);  // Push the current value and index onto the stack
+
+            // Main method for example usage
+            public static void main(String[] args) {
+                // Example usage:
+                int[] nums = {3, 1, 4, 1, 5, 9, 2, 6};
+                int[] result = monotonicIncreasing(nums);
+                System.out.print("Monotonic increasing stack: [");
+                for (int i = 0; i < result.length; i++) {
+                    System.out.print(result[i]);
+                    if (i != result.length - 1) {
+                        System.out.print(", ");
+                    }
+                }
+                System.out.println("]");
+            }
         }
 
-        return result;
-    }
+    Output:
 
-    public static void main(String[] args) {
-        int[] nums = {2, 1, 2, 4, 3};
-        int[] result = nextGreaterElements(nums);
-        System.out.println(Arrays.toString(result));  // Output: [4, 2, 4, -1, -1]
-    }
-}
+    Monotonic increasing stack: 1 1 2 6
 
-Explanation
+    * Complexity Analysis:
+    ----------------------
 
-1. ListNode Class:
-    - This class represents a node in the linked list, containing a value, an index, and a reference to the next node.
+        - Time Complexity: O(N), each element from the input array is pushed and popped from the stack exactly once. Therefore,
+            even though there is a loop inside a loop, no element is processed more than twice.
+        - Auxiliary Space: O(N)
 
-2. LinkedListStack Class:
-    - This class implements a stack using the `ListNode` class. It provides methods for pushing a node onto the stack, popping a node from the stack, peeking at the top node, and checking if the stack is empty.
+- Monotonic Decreasing Stack:
+=============================
 
-3. Next Greater Elements Function:
-    - Similar to the earlier implementation, we initialize the result array with `-1`.
-    - We create an instance of `LinkedListStack` to use as our stack.
-    - We iterate through the `nums` array, and for each element:
-        - While the stack is not empty and the current element is greater than the value of the node at the top of the stack, we pop the node and set the corresponding index in the result array to the current element.
-        - We push the current value and its index onto the stack.
-    - Finally, we return the result array containing the next greater elements.
+    A Monotonically Decreasing Stack is a stack where elements are placed in decreasing order from the bottom to the top.
+    Each new element added to the stack must be smaller than or equal to the one below it. If a new element is greater
+    than top of stack then we remove elements from the top of the stack until we find one that is greater or equal to
+    the new element, or until the stack is empty. This ensures that the stack always stays in decreasing order.
 
-This implementation leverages a custom linked list stack to manage the indices and values, achieving the same functionality as a monotonic stack.
+    Example: 17, 14, 10, 5, 1
+
+    - How to achieve Monotonic Decreasing Stack?
+    --------------------------------------------
+
+    To achieve a monotonic decreasing stack, you would typically push elements onto the stack while ensuring that the
+    stack maintains a decreasing order from bottom to top. When pushing a new element, you would pop elements from the
+    stack that are greater than the new element until the stack maintains the desired monotonic decreasing property.
+
+    To achieve a monotonic decreasing stack, you can follow these step-by-step approaches:
+
+            Start with an empty stack.
+            Iterate through the elements of the input array.
+                While stack is not empty AND top of stack is less than the current element:
+                    pop element from the stack
+                Push the current element onto the stack.
+            After iterating through all the elements, the stack will contain the elements in monotonic decreasing order.
+
+    Let’s illustrate the example for a monotonic decreasing stack using the array Arr[] = {7, 5, 9, 4}:
+
+        import java.util.ArrayList;
+        import java.util.List;
+        import java.util.Stack;
+
+        public class MonotonicDecreasing {
+            public static List<Integer> monotonicDecreasing(int[] nums) {
+                Stack<Integer> stack = new Stack<>();
+                List<Integer> result = new ArrayList<>();
+
+                // Traverse the array
+                for (int num : nums) {
+                    // While stack is not empty AND top of stack is less than the current element
+                    while (!stack.isEmpty() && stack.peek() < num) {
+                        // Pop the top element from the stack
+                        stack.pop();
+                    }
+
+                    // Construct the result array
+                    if (!stack.isEmpty()) {
+                        result.add(stack.peek());
+                    } else {
+                        result.add(-1);
+                    }
+
+                    // Push the current element into the stack
+                    stack.push(num);
+                }
+
+                return result;
+            }
+
+            public static void main(String[] args) {
+                int[] nums = {3, 1, 4, 1, 5, 9, 2, 6};
+                List<Integer> result = monotonicDecreasing(nums);
+                System.out.println("Monotonic decreasing stack: " + result);
+            }
+        }
+
+     * Below is the implementation of the above approach:
+     ----------------------------------------------------
+
+         import java.util.ArrayList;
+         import java.util.List;
+         import java.util.Stack;
+
+         public class MonotonicDecreasing {
+             public static List<Integer> monotonicDecreasing(int[] nums) {
+                 Stack<Integer> stack = new Stack<>();
+                 List<Integer> result = new ArrayList<>();
+
+                 // Traverse the array
+                 for (int num : nums) {
+                     // While stack is not empty AND top of stack is less than the current element
+                     while (!stack.isEmpty() && stack.peek() < num) {
+                         // Pop the top element from the stack
+                         stack.pop();
+                     }
+
+                     // Construct the result array
+                     if (!stack.isEmpty()) {
+                         result.add(stack.peek());
+                     } else {
+                         result.add(-1);
+                     }
+
+                     // Push the current element into the stack
+                     stack.push(num);
+                 }
+
+                 return result;
+             }
+
+             public static void main(String[] args) {
+                 int[] nums = {3, 1, 4, 1, 5, 9, 2, 6};
+                 List<Integer> result = monotonicDecreasing(nums);
+                 System.out.println("Monotonic decreasing stack: " + result);
+             }
+         }
+
+    Output
+
+    Monotonic decreasing stack: -1 3 -1 4 -1 -1 9 9
+
+    * Complexity Analysis:
+    ----------------------
+        - Time Complexity: O(N), each element is processed only twice, once for the push operation and once for the pop
+        operation.
+        - Auxiliary Space: O(N)
+
+- Applications:
+===============
+
+    Monotonic stacks are useful for various algorithms, particularly those involving finding the next greater or smaller
+    element in an array.
+
+    Some common applications include:
+
+        Here are some applications of monotonic stacks:
+
+            * Finding Next Greater Element: Monotonic stacks are often used to find the next greater element for each
+                element in an array. This is a common problem in competitive programming and has applications in various algorithms.
+            * Finding Previous Greater Element: Similarly, monotonic stacks can be used to find the previous greater element
+                for each element in an array.
+            * Finding Maximum Area Histogram: Monotonic stacks can be applied to find the maximum area of a histogram.
+                This problem involves finding the largest rectangular area possible in a given histogram.
+            * Finding Maximum Area in Binary Matrix: Monotonic stacks can also be used to find the maximum area of a rectangle
+                in a binary matrix. This is a variation of the maximum area histogram problem.
+            * Finding Sliding Window Maximum/Minimum: Monotonic stacks can be used to efficiently find the maximum or minimum
+                elements within a sliding window of a given array.
+            * Expression Evaluation: Monotonic stacks can be used to evaluate expressions involving parentheses, such as
+                checking for balanced parentheses or evaluating the value of an arithmetic expression.
+
+    * Advantages of Monotonic Stack:
+    --------------------------------
+
+        - Efficient for finding the next greater or smaller element in an array.
+        - Useful for solving a variety of problems, such as finding the nearest smaller element or calculating the maximum
+            area of histograms.
+        - In many cases, the time complexity of algorithms using monotonic stacks is linear, making them efficient for
+            processing large datasets.
+
+    * Disadvantages of Monotonic Stack:
+    -----------------------------------
+
+        - Requires extra space to store the stack.
+        - May not be intuitive for beginners to understand and implement.
+
+- Example: Next Greater Element
+================================
+
+    Here’s an example of how a monotonic decreasing stack can be used to find the next greater element for each element in an array:
+
+    Implementing the "Next Greater Element" problem using a linked list in Java involves creating a custom stack with a linked list instead of
+    using Java's built-in stack. Below is the Java implementation of this approach:
+
+    * Linked List Node Definition:
+    ------------------------------
+
+    First, we need a class for the nodes in our linked list:
+
+        class ListNode {
+            int value;
+            int index;
+            ListNode next;
+
+            ListNode(int value, int index) {
+                this.value = value;
+                this.index = index;
+                this.next = null;
+            }
+        }
+
+    * Linked List Stack Implementation:
+    -----------------------------------
+
+    Next, we'll implement a custom stack using this `ListNode` class:
+
+        class LinkedListStack {
+            private ListNode top;
+
+            public LinkedListStack() {
+                this.top = null;
+            }
+
+            public void push(int value, int index) {
+                ListNode newNode = new ListNode(value, index);
+                newNode.next = top;
+                top = newNode;
+            }
+
+            public ListNode pop() {
+                if (top == null) {
+                    return null;
+                }
+                ListNode node = top;
+                top = top.next;
+                return node;
+            }
+
+            public ListNode peek() {
+                return top;
+            }
+
+            public boolean isEmpty() {
+                return top == null;
+            }
+        }
+
+    * Next Greater Element Function:
+    --------------------------------
+
+    Now we use this custom stack to implement the "Next Greater Element" functionality:
+
+        import java.util.Arrays;
+
+        public class NextGreaterElementLinkedList {
+
+            public static int[] nextGreaterElements(int[] nums) {
+                int[] result = new int[nums.length];
+                Arrays.fill(result, -1);  // Initialize the result array with -1
+                LinkedListStack stack = new LinkedListStack();  // Custom stack using linked list
+
+                for (int i = 0; i < nums.length; i++) {
+                    // Check if the current element is greater than the element at the index stored at the top of the stack
+                    while (!stack.isEmpty() && stack.peek().value < nums[i]) {
+                        ListNode node = stack.pop();
+                        result[node.index] = nums[i];  // Set the next greater element for the popped index
+                    }
+                    stack.push(nums[i], i);  // Push the current value and index onto the stack
+                }
+
+                return result;
+            }
+
+            public static void main(String[] args) {
+                int[] nums = {2, 1, 2, 4, 3};
+                int[] result = nextGreaterElements(nums);
+                System.out.println(Arrays.toString(result));  // Output: [4, 2, 4, -1, -1]
+            }
+        }
+
+    * Explanation:
+    --------------
+
+        1. ListNode Class:
+            - This class represents a node in the linked list, containing a value, an index, and a reference to the next node.
+
+        2. LinkedListStack Class:
+            - This class implements a stack using the `ListNode` class. It provides methods for pushing a node onto the stack,
+            popping a node from the stack, peeking at the top node, and checking if the stack is empty.
+
+        3. Next Greater Elements Function:
+            - Similar to the earlier implementation, we initialize the result array with `-1`.
+            - We create an instance of `LinkedListStack` to use as our stack.
+            - We iterate through the `nums` array, and for each element:
+                - While the stack is not empty and the current element is greater than the value of the node at the top of the stack,
+                we pop the node and set the corresponding index in the result array to the current element.
+                - We push the current value and its index onto the stack.
+            - Finally, we return the result array containing the next greater elements.
+
+    This implementation leverages a custom linked list stack to manage the indices and values, achieving the same functionality
+        as a monotonic stack.
+
+Monotonic Stack Example LeetCode Question: 1019. Next Greater Node In Linked List
+==================================================================================
+
+    To solve the problem of finding the next greater node in a linked list, we can use a monotonic stack approach. Here's a
+    Java implementation of the solution along with an explanation of the time and space complexity:
+
+    * Node and LinkedList Definition
+    --------------------------------
+
+    First, define the node class and a method to create the linked list:
+
+        class ListNode {
+            int val;
+            ListNode next;
+            ListNode(int x) { val = x; }
+        }
+
+    * Solution using Monotonic Stack:
+    ---------------------------------
+
+    We will traverse the linked list and use a stack to keep track of the nodes for which we haven't found the next
+    greater node yet.
+
+        import java.util.*;
+
+        public class NextGreaterNodeInLinkedList {
+
+            public static int[] nextLargerNodes(ListNode head) {
+                // Convert linked list to an array to use indices easily
+                List<Integer> values = new ArrayList<>();
+                ListNode current = head;
+                while (current != null) {
+                    values.add(current.val);
+                    current = current.next;
+                }
+
+                // Result array to store the answer
+                int[] result = new int[values.size()];
+
+                // Stack to keep track of indices in the values list
+                Stack<Integer> stack = new Stack<>();
+
+                // Traverse the values array
+                for (int i = 0; i < values.size(); i++) {
+                    // While stack is not empty and the current value is greater than the value at the index stored in the stack
+                    while (!stack.isEmpty() && values.get(stack.peek()) < values.get(i)) {
+                        result[stack.pop()] = values.get(i);
+                    }
+                    stack.push(i);
+                }
+
+                // Elements left in the stack do not have a next greater element, so they remain 0 (default value in the array)
+
+                return result;
+            }
+
+            public static void main(String[] args) {
+                // Example usage
+                ListNode head = new ListNode(2);
+                head.next = new ListNode(1);
+                head.next.next = new ListNode(5);
+
+                int[] result = nextLargerNodes(head);
+                System.out.println(Arrays.toString(result));  // Output: [5, 5, 0]
+            }
+        }
+
+    * Explanation:
+    --------------
+
+        1. Convert Linked List to Array:
+           - Traverse the linked list and store the node values in a list. This helps in using indices for easier manipulation.
+
+        2. Initialize Result Array:
+           - Create an integer array `result` of the same length as the values list. By default, all elements are initialized to `0`.
+
+        3. Monotonic Stack:
+           - Use a stack to keep track of the indices of nodes for which we are yet to find the next greater node.
+           - As we iterate through the values list, for each element:
+             - While the stack is not empty and the current element is greater than the element at the index stored at the top of the stack:
+               - Pop the index from the stack and set the corresponding position in the result array to the current element.
+             - Push the current index onto the stack.
+           - After the loop, any indices left in the stack correspond to nodes that do not have a next greater node, and their
+           result values remain `0`.
+
+    * Time and Space Complexity:
+
+        - Time Complexity: O(n)
+          - We traverse the linked list once to convert it to an array, which takes O(n) time.
+          - We then traverse the array once more, and each element is pushed and popped from the stack at most once, resulting
+                in O(n) time complexity for this part as well.
+
+        - Space Complexity: O(n)
+          - The space required for the `values` list and `result` array is O(n).
+          - The stack also takes up O(n) space in the worst case if no elements are ever popped until the end.
+
+    This solution efficiently finds the next greater node values using a monotonic stack approach, leveraging both time and space optimally.
