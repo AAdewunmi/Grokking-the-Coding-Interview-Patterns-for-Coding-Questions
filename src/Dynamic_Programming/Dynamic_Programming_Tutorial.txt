@@ -11,7 +11,8 @@ Dynamic Programming
     The main idea behind dynamic programming is to store the results of subproblems to avoid redundant computations.
     This technique is known as "memoization" when done top-down (recursively) and "tabulation" when done bottom-up (iteratively).
 
-    1. Key Concepts in Dynamic Programming
+    1. Key Concepts in Dynamic Programming:
+    ---------------------------------------
 
         1. Optimal Substructure:
            - A problem exhibits optimal substructure if an optimal solution to the problem can be constructed from optimal solutions
@@ -21,7 +22,8 @@ Dynamic Programming
            - A problem has overlapping subproblems if the same subproblems are solved multiple times during the computation of the
             overall problem.
 
-    2. Steps to Apply Dynamic Programming
+    2. Steps to Apply Dynamic Programming:
+    --------------------------------------
 
         1. Characterize the Structure of an Optimal Solution:
            - Understand how to construct the optimal solution using solutions to subproblems.
@@ -36,7 +38,8 @@ Dynamic Programming
         4. Construct the Optimal Solution (if needed):
            - Trace back the stored results to construct the actual solution.
 
-    3. Examples of Dynamic Programming
+    3. Examples of Dynamic Programming:
+    -----------------------------------
 
         1. Fibonacci Sequence:
            - The Fibonacci sequence can be defined as F(n) = F(n-1) + F(n-2) with base cases F(0) = 0 and F(1) = 1.
@@ -53,15 +56,17 @@ Dynamic Programming
            - Dynamic programming can be used to fill a table where each entry L[i][j] represents the length of the LCS of the
             first i elements of one sequence and the first j elements of the other.
 
-    4. Advantages of Dynamic Programming
+    4. Advantages of Dynamic Programming:
+    -------------------------------------
 
         - Efficiency: By storing the results of subproblems, dynamic programming reduces the time complexity of solving complex problems.
         - Optimization: It guarantees finding the optimal solution if the problem has optimal substructure and overlapping subproblems.
 
-    5. Disadvantages of Dynamic Programming
+    5. Disadvantages of Dynamic Programming:
+    ----------------------------------------
 
-    - Space Complexity: Storing all subproblem results can require significant memory.
-    - Complexity in Implementation: Understanding and correctly applying dynamic programming can be challenging.
+        - Space Complexity: Storing all subproblem results can require significant memory.
+        - Complexity in Implementation: Understanding and correctly applying dynamic programming can be challenging.
 
     Dynamic programming is a powerful tool for solving a wide range of problems, particularly those involving optimization and
     recursive substructure.
@@ -73,114 +78,118 @@ Dynamic Programming
     Both approaches aim to solve complex problems by breaking them down into simpler subproblems, but they differ in how they handle
     the subproblems and store intermediate results.
 
-    1. Top-Down Approach (Memoization)
+    1. Top-Down Approach (Memoization):
+    -----------------------------------
 
     The top-down approach involves solving the problem recursively and storing the results of subproblems to avoid redundant computations.
     This is known as memoization.
 
-    * Steps in Top-Down Approach:
+        * Steps in Top-Down Approach:
+        -----------------------------
 
-        1. Recursive Formulation:
-           - Define the problem recursively in terms of smaller subproblems.
+            1. Recursive Formulation:
+               - Define the problem recursively in terms of smaller subproblems.
 
-        2. Memoization:
-           - Use a data structure (usually a dictionary or an array) to store the results of subproblems.
+            2. Memoization:
+               - Use a data structure (usually a dictionary or an array) to store the results of subproblems.
 
-        3. Check and Reuse:
-           - Before solving a subproblem, check if its result is already computed and stored. If so, reuse the stored result.
+            3. Check and Reuse:
+               - Before solving a subproblem, check if its result is already computed and stored. If so, reuse the stored result.
 
-        4. Base Cases:
-           - Define the base cases to stop the recursion.
+            4. Base Cases:
+               - Define the base cases to stop the recursion.
 
-    * Example (Fibonacci Sequence):
+        * Example (Fibonacci Sequence):
+        -------------------------------
 
-    In the top-down approach, we use recursion and store the results of subproblems to avoid redundant computations.
-    This involves using a data structure like an array or a HashMap to store intermediate results.
+        In the top-down approach, we use recursion and store the results of subproblems to avoid redundant computations.
+        This involves using a data structure like an array or a HashMap to store intermediate results.
 
-    import java.util.HashMap;
-    import java.util.Map;
+            import java.util.HashMap;
+            import java.util.Map;
 
-    public class FibonacciTopDown {
-        private Map<Integer, Integer> memo = new HashMap<>();
+            public class FibonacciTopDown {
+                private Map<Integer, Integer> memo = new HashMap<>();
 
-        public int fib(int n) {
-            if (memo.containsKey(n)) {
-                return memo.get(n);
+                public int fib(int n) {
+                    if (memo.containsKey(n)) {
+                        return memo.get(n);
+                    }
+                    if (n <= 1) {
+                        return n;
+                    }
+                    int result = fib(n - 1) + fib(n - 2);
+                    memo.put(n, result);
+                    return result;
+                }
+
+                public static void main(String[] args) {
+                    FibonacciTopDown fibonacci = new FibonacciTopDown();
+                    System.out.println(fibonacci.fib(10));  // Output: 55
+                }
             }
-            if (n <= 1) {
-                return n;
-            }
-            int result = fib(n - 1) + fib(n - 2);
-            memo.put(n, result);
-            return result;
-        }
 
-        public static void main(String[] args) {
-            FibonacciTopDown fibonacci = new FibonacciTopDown();
-            System.out.println(fibonacci.fib(10));  // Output: 55
-        }
-    }
-
-
-    2. Bottom-Up Approach (Tabulation)
+    2. Bottom-Up Approach (Tabulation):
+    -----------------------------------
 
     The bottom-up approach involves solving the problem iteratively, starting from the smallest subproblems and building
     up to the solution of the original problem. This is known as tabulation.
 
-    * Steps in Bottom-Up Approach:
+        * Steps in Bottom-Up Approach:
+        ------------------------------
 
-        1. Iterative Formulation:
-           - Define the problem iteratively, starting from the smallest subproblems.
+            1. Iterative Formulation:
+               - Define the problem iteratively, starting from the smallest subproblems.
 
-        2. Table Initialization:
-           - Use a data structure (usually an array) to store the results of subproblems.
+            2. Table Initialization:
+               - Use a data structure (usually an array) to store the results of subproblems.
 
-        3. Iterative Computation:
-           - Compute the results of subproblems in a specific order, usually from the smallest to the largest.
+            3. Iterative Computation:
+               - Compute the results of subproblems in a specific order, usually from the smallest to the largest.
 
-        4. Final Solution:
-           - The final solution to the original problem is obtained from the last computed value in the table.
+            4. Final Solution:
+               - The final solution to the original problem is obtained from the last computed value in the table.
 
-    * Example (Fibonacci Sequence):
+        * Example (Fibonacci Sequence):
+        -------------------------------
 
-    In the bottom-up approach, we iteratively solve the problem from the smallest subproblems up to the original problem,
-    storing intermediate results in a data structure like an array.
+        In the bottom-up approach, we iteratively solve the problem from the smallest subproblems up to the original problem,
+        storing intermediate results in a data structure like an array.
 
-    public class FibonacciBottomUp {
-        public int fib(int n) {
-            if (n <= 1) {
-                return n;
+            public class FibonacciBottomUp {
+                public int fib(int n) {
+                    if (n <= 1) {
+                        return n;
+                    }
+                    int[] dp = new int[n + 1];
+                    dp[0] = 0;
+                    dp[1] = 1;
+                    for (int i = 2; i <= n; i++) {
+                        dp[i] = dp[i - 1] + dp[i - 2];
+                    }
+                    return dp[n];
+                }
+
+                public static void main(String[] args) {
+                    FibonacciBottomUp fibonacci = new FibonacciBottomUp();
+                    System.out.println(fibonacci.fib(10));  // Output: 55
+                }
             }
-            int[] dp = new int[n + 1];
-            dp[0] = 0;
-            dp[1] = 1;
-            for (int i = 2; i <= n; i++) {
-                dp[i] = dp[i - 1] + dp[i - 2];
-            }
-            return dp[n];
-        }
-
-        public static void main(String[] args) {
-            FibonacciBottomUp fibonacci = new FibonacciBottomUp();
-            System.out.println(fibonacci.fib(10));  // Output: 55
-        }
-    }
-
 
     * Comparison of Top-Down and Bottom-Up Approaches
 
-    - Top-Down (Memoization):
-      - Uses recursion and stores intermediate results.
-      - More intuitive for problems naturally expressed in recursive form.
-      - May lead to high recursion depth and potential stack overflow for very large problems.
-      - Can be easier to implement if the recursive solution is straightforward.
+        - Top-Down (Memoization):
+          - Uses recursion and stores intermediate results.
+          - More intuitive for problems naturally expressed in recursive form.
+          - May lead to high recursion depth and potential stack overflow for very large problems.
+          - Can be easier to implement if the recursive solution is straightforward.
 
-    - Bottom-Up (Tabulation):
-      - Uses iteration and builds up solutions from smaller subproblems.
-      - Typically more space-efficient because it can often be optimized to use a fixed amount of space (e.g., only
-        storing the last two values for Fibonacci).
-      - Avoids recursion depth issues.
-      - Can be more complex to implement if the iterative solution is not obvious.
+        - Bottom-Up (Tabulation):
+          - Uses iteration and builds up solutions from smaller subproblems.
+          - Typically more space-efficient because it can often be optimized to use a fixed amount of space (e.g., only
+            storing the last two values for Fibonacci).
+          - Avoids recursion depth issues.
+          - Can be more complex to implement if the iterative solution is not obvious.
 
     Both approaches ultimately achieve the same goal: solving the problem efficiently by leveraging the solutions to subproblems.
     The choice between top-down and bottom-up depends on the specific problem and the programmer's preference or constraints.

@@ -16,67 +16,73 @@ Unbounded Knapsack
 
     * 0/1 Knapsack Problem:
      ----------------------
-    + Description:
-    - Decision: Each item can be included in the knapsack at most once.
-    - Objective: Maximize the total value without exceeding the knapsack's weight capacity.
-    - Constraints: Each item is either taken or not taken (binary choice).
 
-    + Dynamic Programming Approach:
+        + Description:
 
-    - DP Table: Typically uses a 2D array `dp[i][w]` where `i` is the number of items considered and `w` is the current
-        weight capacity.
-    - Transition:
+            - Decision: Each item can be included in the knapsack at most once.
+            - Objective: Maximize the total value without exceeding the knapsack's weight capacity.
+            - Constraints: Each item is either taken or not taken (binary choice).
 
-            dp[i][w] = max(dp[i-1][w], dp[i-1][w-w_i] + v_i)
+        + Dynamic Programming Approach:
 
-      if w_i < w, otherwise
+            - DP Table: Typically uses a 2D array `dp[i][w]` where `i` is the number of items considered and `w` is the current
+                weight capacity.
 
-            dp[i][w] = dp[i-1][w]
+        + Transition:
 
-    - Time Complexity: O(n . W)
-    - Space Complexity: O(n . W) (can be optimized to (O(W) with a 1D array)
+                dp[i][w] = max(dp[i-1][w], dp[i-1][w-w_i] + v_i)
+
+          if w_i < w, otherwise
+
+                dp[i][w] = dp[i-1][w]
+
+        + Time Complexity: O(n . W)
+        + Space Complexity: O(n . W) (can be optimized to (O(W) with a 1D array)
 
     * Unbounded Knapsack Problem:
      ----------------------------
-    + Description
-    - Decision: Each item can be included in the knapsack any number of times.
-    - Objective: Maximize the total value without exceeding the knapsack's weight capacity.
-    - Constraints: There is no limit to the number of each item that can be taken.
 
-    + Dynamic Programming Approach
-    - DP Table: Typically uses a 1D array `dp[w]` where `w` is the current weight capacity.
-    - Transition:
+        + Description:
 
-            dp[w] = max(dp[w], dp[w-w_i] + v_i)
+            - Decision: Each item can be included in the knapsack any number of times.
+            - Objective: Maximize the total value without exceeding the knapsack's weight capacity.
+            - Constraints: There is no limit to the number of each item that can be taken.
 
-      if w_i < w
-    - Time Complexity: O(n . W)
-    - Space Complexity: O(W)
+        + Dynamic Programming Approach:
 
-    * Key Differences
+            - DP Table: Typically uses a 1D array `dp[w]` where `w` is the current weight capacity.
+            - Transition:
 
-        * Inclusion of Items
-        - 0/1 Knapsack: Each item can either be included once or not at all.
-        - Unbounded Knapsack: Each item can be included multiple times.
+                    dp[w] = max(dp[w], dp[w-w_i] + v_i)
 
-        * DP Array Structure
-        - 0/1 Knapsack: Typically uses a 2D DP array (though it can be optimized to 1D).
-        - Unbounded Knapsack: Uses a 1D DP array because the decision to include an item can be revisited multiple times.
+              if w_i < w
+            - Time Complexity: O(n . W)
+            - Space Complexity: O(W)
 
-        * DP Transition Formula
-        - 0/1 Knapsack:
+        + Key Differences:
 
-            dp[i][w] = max(dp[i-1][w], dp[i-1][w-w_i] + v_i)
+            * Inclusion of Items:
+                - 0/1 Knapsack: Each item can either be included once or not at all.
+                - Unbounded Knapsack: Each item can be included multiple times.
 
-          The decision depends on whether to include the item or not.
+            * DP Array Structure:
+                - 0/1 Knapsack: Typically uses a 2D DP array (though it can be optimized to 1D).
+                - Unbounded Knapsack: Uses a 1D DP array because the decision to include an item can be revisited multiple times.
 
-        - Unbounded Knapsack:
+            * DP Transition Formula:
+                - 0/1 Knapsack:
 
-            dp[w] = max(dp[w], dp[w-w_i] + v_i)
+                    dp[i][w] = max(dp[i-1][w], dp[i-1][w-w_i] + v_i)
 
-          The decision allows for the repeated inclusion of the same item.
+                  The decision depends on whether to include the item or not.
 
-    * Summary
+            - Unbounded Knapsack:
+
+                dp[w] = max(dp[w], dp[w-w_i] + v_i)
+
+              The decision allows for the repeated inclusion of the same item.
+
+    * Summary:
     - 0/1 Knapsack: Each item can be taken at most once; uses a 2D DP array.
     - Unbounded Knapsack: Each item can be taken multiple times; uses a 1D DP array.
 
@@ -86,234 +92,268 @@ Unbounded Knapsack
     1. Recursive Approach for Unbounded Knapsack:
     ---------------------------------------------
 
-    * Description
-    In the recursive approach, we consider each item and explore two possibilities:
-    1. Include the item and reduce the capacity of the knapsack.
-    2. Exclude the item and move to the next item.
+        * Description:
+        --------------
 
-    This approach explores all possible combinations of items to find the maximum value.
+            In the recursive approach, we consider each item and explore two possibilities:
+            1. Include the item and reduce the capacity of the knapsack.
+            2. Exclude the item and move to the next item.
 
-    * Recursive Algorithm
+            This approach explores all possible combinations of items to find the maximum value.
 
-    public class UnboundedKnapsackRecursive {
+        * Recursive Algorithm:
+        ----------------------
 
-        public static int unboundedKnapsack(int W, int[] weights, int[] values, int n) {
-            // Base case: no capacity or no items left
-            if (W == 0 || n == 0) {
-                return 0;
+            public class UnboundedKnapsackRecursive {
+
+                public static int unboundedKnapsack(int W, int[] weights, int[] values, int n) {
+                    // Base case: no capacity or no items left
+                    if (W == 0 || n == 0) {
+                        return 0;
+                    }
+
+                    // If the weight of the nth item is more than knapsack capacity W, then
+                    // this item cannot be included in the optimal solution
+                    if (weights[n - 1] > W) {
+                        return unboundedKnapsack(W, weights, values, n - 1);
+                    } else {
+                        // Return the maximum of two cases:
+                        // 1. nth item included (since we can include the same item multiple times)
+                        // 2. not included
+                        return Math.max(
+                            values[n - 1] + unboundedKnapsack(W - weights[n - 1], weights, values, n),
+                            unboundedKnapsack(W, weights, values, n - 1)
+                        );
+                    }
+                }
+
+                public static void main(String[] args) {
+                    int W = 8;
+                    int[] weights = {2, 3, 4};
+                    int[] values = {4, 5, 6};
+                    int n = weights.length;
+
+                    int maxValue = unboundedKnapsack(W, weights, values, n);
+                    System.out.println("Maximum value obtained: " + maxValue); // Output: 16
+                }
             }
 
-            // If the weight of the nth item is more than knapsack capacity W, then
-            // this item cannot be included in the optimal solution
-            if (weights[n - 1] > W) {
-                return unboundedKnapsack(W, weights, values, n - 1);
-            } else {
-                // Return the maximum of two cases:
-                // 1. nth item included (since we can include the same item multiple times)
-                // 2. not included
-                return Math.max(
-                    values[n - 1] + unboundedKnapsack(W - weights[n - 1], weights, values, n),
-                    unboundedKnapsack(W, weights, values, n - 1)
-                );
-            }
-        }
+        * Time Complexity:
+        ------------------
 
-        public static void main(String[] args) {
-            int W = 8;
-            int[] weights = {2, 3, 4};
-            int[] values = {4, 5, 6};
-            int n = weights.length;
+            - Exponential: O(2^n) because it explores all possible combinations.
 
-            int maxValue = unboundedKnapsack(W, weights, values, n);
-            System.out.println("Maximum value obtained: " + maxValue); // Output: 16
-        }
-    }
+        * Space Complexity:
+        -------------------
 
-    * Time Complexity
-    - Exponential: O(2^n) because it explores all possible combinations.
-    * Space Complexity
-    - Linear: O(n) due to the recursion stack depth.
+            - Linear: O(n) due to the recursion stack depth.
 
     2. Dynamic Programming: Top-down Approach for Unbounded Knapsack:
     -----------------------------------------------------------------
 
-    Description
-    The top-down approach uses memoization to store the results of subproblems to avoid redundant calculations.
+        Description:
+        ------------
 
-    * Top-down Algorithm
+        The top-down approach uses memoization to store the results of subproblems to avoid redundant calculations.
 
-    import java.util.Arrays;
+        * Top-down Algorithm
+        --------------------
 
-    public class UnboundedKnapsackTopDown {
+        import java.util.Arrays;
 
-        public static int unboundedKnapsack(int W, int[] weights, int[] values, int n, int[] dp) {
-            if (W == 0 || n == 0) {
-                return 0;
-            }
+        public class UnboundedKnapsackTopDown {
 
-            if (dp[W] != -1) {
+            public static int unboundedKnapsack(int W, int[] weights, int[] values, int n, int[] dp) {
+                if (W == 0 || n == 0) {
+                    return 0;
+                }
+
+                if (dp[W] != -1) {
+                    return dp[W];
+                }
+
+                if (weights[n - 1] > W) {
+                    dp[W] = unboundedKnapsack(W, weights, values, n - 1, dp);
+                } else {
+                    dp[W] = Math.max(
+                        values[n - 1] + unboundedKnapsack(W - weights[n - 1], weights, values, n, dp),
+                        unboundedKnapsack(W, weights, values, n - 1, dp)
+                    );
+                }
+
                 return dp[W];
             }
 
-            if (weights[n - 1] > W) {
-                dp[W] = unboundedKnapsack(W, weights, values, n - 1, dp);
-            } else {
-                dp[W] = Math.max(
-                    values[n - 1] + unboundedKnapsack(W - weights[n - 1], weights, values, n, dp),
-                    unboundedKnapsack(W, weights, values, n - 1, dp)
-                );
+            public static void main(String[] args) {
+                int W = 8;
+                int[] weights = {2, 3, 4};
+                int[] values = {4, 5, 6};
+                int n = weights.length;
+                int[] dp = new int[W + 1];
+                Arrays.fill(dp, -1);
+
+                int maxValue = unboundedKnapsack(W, weights, values, n, dp);
+                System.out.println("Maximum value obtained: " + maxValue); // Output: 16
             }
-
-            return dp[W];
         }
 
-        public static void main(String[] args) {
-            int W = 8;
-            int[] weights = {2, 3, 4};
-            int[] values = {4, 5, 6};
-            int n = weights.length;
-            int[] dp = new int[W + 1];
-            Arrays.fill(dp, -1);
-
-            int maxValue = unboundedKnapsack(W, weights, values, n, dp);
-            System.out.println("Maximum value obtained: " + maxValue); // Output: 16
-        }
-    }
-
-    * Time Complexity
-        - Polynomial: O(n . W) due to memoization reducing redundant calculations.
-    * Space Complexity
-        - Linear: O(W) for the memoization array, plus O(n) for the recursion stack depth.
+        * Time Complexity
+            - Polynomial: O(n . W) due to memoization reducing redundant calculations.
+        * Space Complexity
+            - Linear: O(W) for the memoization array, plus O(n) for the recursion stack depth.
 
     3. Bottom-Up Approach for Unbounded Knapsack:
     ---------------------------------------------
 
-    * Description
-    The bottom-up approach builds the solution iteratively from smaller subproblems to the overall problem.
+        * Description:
+        --------------
 
-    * Bottom-up Algorithm
+            The bottom-up approach builds the solution iteratively from smaller subproblems to the overall problem.
 
-    public class UnboundedKnapsackBottomUp {
+        * Bottom-up Algorithm:
+        ----------------------
 
-        public static int unboundedKnapsack(int W, int[] weights, int[] values) {
-            int n = weights.length;
-            int[] dp = new int[W + 1];
+            public class UnboundedKnapsackBottomUp {
 
-            for (int w = 0; w <= W; w++) {
-                for (int i = 0; i < n; i++) {
-                    if (weights[i] <= w) {
-                        dp[w] = Math.max(dp[w], dp[w - weights[i]] + values[i]);
+                public static int unboundedKnapsack(int W, int[] weights, int[] values) {
+                    int n = weights.length;
+                    int[] dp = new int[W + 1];
+
+                    for (int w = 0; w <= W; w++) {
+                        for (int i = 0; i < n; i++) {
+                            if (weights[i] <= w) {
+                                dp[w] = Math.max(dp[w], dp[w - weights[i]] + values[i]);
+                            }
+                        }
                     }
+
+                    return dp[W];
+                }
+
+                public static void main(String[] args) {
+                    int W = 8;
+                    int[] weights = {2, 3, 4};
+                    int[] values = {4, 5, 6};
+
+                    int maxValue = unboundedKnapsack(W, weights, values);
+                    System.out.println("Maximum value obtained: " + maxValue); // Output: 16
                 }
             }
 
-            return dp[W];
-        }
+            * Time Complexity:
+            ------------------
 
-        public static void main(String[] args) {
-            int W = 8;
-            int[] weights = {2, 3, 4};
-            int[] values = {4, 5, 6};
+                - Polynomial: O(n . W) because it iterates over all capacities and items.
+            * Space Complexity:
+            -------------------
 
-            int maxValue = unboundedKnapsack(W, weights, values);
-            System.out.println("Maximum value obtained: " + maxValue); // Output: 16
-        }
-    }
+                - Linear: O(W) for the DP array.
 
-    * Time Complexity
-        - Polynomial: O(n . W) because it iterates over all capacities and items.
-    * Space Complexity
-        - Linear: O(W) for the DP array.
+            * Summary:
+            ----------
 
-    * Summary
+                - Recursive Approach:
 
-    - Recursive Approach
-      - Time Complexity: O(2^n)
-      - Space Complexity: O(n)
-    - Top-down Dynamic Programming Approach
-      - Time Complexity: O(n . W)
-      - Space Complexity: O(W) for memoization + O(n) recursion stack depth
-    - Bottom-up Dynamic Programming Approach
-      - Time Complexity: O(n . W)
-      - Space Complexity: O(W)
+                  - Time Complexity: O(2^n)
+                  - Space Complexity: O(n)
 
-    The bottom-up approach is generally preferred due to its simplicity and efficiency in both time and space.
+                - Top-down Dynamic Programming Approach
+
+                  - Time Complexity: O(n . W)
+                  - Space Complexity: O(W) for memoization + O(n) recursion stack depth
+
+                - Bottom-up Dynamic Programming Approach
+
+                  - Time Complexity: O(n . W)
+                  - Space Complexity: O(W)
+
+            The bottom-up approach is generally preferred due to its simplicity and efficiency in both time and space.
 
 - Unbounded Knapsack Example LeetCode Question: 322. Coin Change
 =================================================================
 
     To solve the problem of finding the minimum number of coins needed to make up a given amount using an infinite
-        number of each kind of coin, we can use a dynamic programming approach. Here, we will use a bottom-up dynamic
-        programming technique (ChatGPT coded the solution 🤖).
+    number of each kind of coin, we can use a dynamic programming approach. Here, we will use a bottom-up dynamic
+    programming technique (ChatGPT coded the solution 🤖).
 
         * Approach:
         -----------
 
-        1. Define the DP array:
-           - Create a `dp` array where `dp[i]` represents the minimum number of coins needed to make up the amount `i`.
-           - Initialize `dp[0] = 0` since no coins are needed to make up the amount `0`.
-           - Initialize all other values in the `dp` array to a large number (e.g., `amount + 1`) to signify that initially,
-            the amount cannot be made up.
+            1. Define the DP array:
+            -----------------------
+                   - Create a `dp` array where `dp[i]` represents the minimum number of coins needed to make up the amount `i`.
+                   - Initialize `dp[0] = 0` since no coins are needed to make up the amount `0`.
+                   - Initialize all other values in the `dp` array to a large number (e.g., `amount + 1`) to signify that initially,
+                    the amount cannot be made up.
 
-        2. Fill the DP array:
-           - Iterate over each coin and update the `dp` array for all amounts that can be achieved using that coin.
-           - For each coin `c` and each amount `i` from `c` to `amount`, update `dp[i]` as follows:
+            2. Fill the DP array:
+            ---------------------
+                - Iterate over each coin and update the `dp` array for all amounts that can be achieved using that coin.
+                - For each coin `c` and each amount `i` from `c` to `amount`, update `dp[i]` as follows:
 
-                dp[i] = min(dp[i], dp[i - c] + 1)
+                     dp[i] = min(dp[i], dp[i - c] + 1)
 
-        3. Result:
-           - The answer will be in `dp[amount]`. If `dp[amount]` is still `amount + 1`, return `-1` as it signifies that the
-            amount cannot be made up with the given coins.
+            3. Result:
+            ----------
 
-        4. Time Complexity:
-        - The time complexity is O(n . k) where (n) is the `amount` and (k)is the number of coin denominations.
-        This is because we iterate through each coin for each amount.
+                - The answer will be in `dp[amount]`. If `dp[amount]` is still `amount + 1`, return `-1` as it signifies that the
+                    amount cannot be made up with the given coins.
 
-        5. Space Complexity:
-        - The space complexity is O(n) due to the `dp` array of size `amount + 1`.
+            4. Time Complexity:
+            -------------------
 
-        6. Java Implementation:
+                - The time complexity is O(n . k) where (n) is the `amount` and (k)is the number of coin denominations.
+                This is because we iterate through each coin for each amount.
 
-        Here is the Java code implementing this approach:
+            5. Space Complexity:
+            --------------------
 
-        public class CoinChange {
+                - The space complexity is O(n) due to the `dp` array of size `amount + 1`.
 
-            public static int coinChange(int[] coins, int amount) {
-                int[] dp = new int[amount + 1];
-                Arrays.fill(dp, amount + 1);
-                dp[0] = 0;
+            6. Java Implementation:
+            -----------------------
 
-                for (int coin : coins) {
-                    for (int i = coin; i <= amount; i++) {
-                        dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+            Here is the Java code implementing this approach:
+
+                public class CoinChange {
+
+                    public static int coinChange(int[] coins, int amount) {
+                        int[] dp = new int[amount + 1];
+                        Arrays.fill(dp, amount + 1);
+                        dp[0] = 0;
+
+                        for (int coin : coins) {
+                            for (int i = coin; i <= amount; i++) {
+                                dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+                            }
+                        }
+
+                        return dp[amount] > amount ? -1 : dp[amount];
+                    }
+
+                    public static void main(String[] args) {
+                        int[] coins = {1, 2, 5};
+                        int amount = 11;
+
+                        int result = coinChange(coins, amount);
+                        System.out.println("Fewest number of coins needed: " + result); // Output: 3
                     }
                 }
 
-                return dp[amount] > amount ? -1 : dp[amount];
-            }
+            7. Explanation of the Code:
+            ---------------------------
 
-            public static void main(String[] args) {
-                int[] coins = {1, 2, 5};
-                int amount = 11;
+                1. Initialization:
+                   - We initialize the `dp` array with `amount + 1` because this value is larger than any possible minimum
+                   number of coins needed (i.e., it's a form of "infinity").
 
-                int result = coinChange(coins, amount);
-                System.out.println("Fewest number of coins needed: " + result); // Output: 3
-            }
-        }
+                2. DP Array Update:
+                   - For each coin and for each amount that can be made with that coin, we update the `dp` array to reflect
+                   the minimum number of coins needed.
 
-        7. Explanation of the Code:
-
-            1. Initialization:
-               - We initialize the `dp` array with `amount + 1` because this value is larger than any possible minimum
-               number of coins needed (i.e., it's a form of "infinity").
-
-            2. DP Array Update:
-               - For each coin and for each amount that can be made with that coin, we update the `dp` array to reflect
-               the minimum number of coins needed.
-
-            3. Result:
-               - After processing all coins and amounts, if `dp[amount]` is still `amount + 1`, it means the amount cannot
-               be formed with the given coins, so we return `-1`. Otherwise, we return the value in `dp[amount]`.
+                3. Result:
+                   - After processing all coins and amounts, if `dp[amount]` is still `amount + 1`, it means the amount cannot
+                   be formed with the given coins, so we return `-1`. Otherwise, we return the value in `dp[amount]`.
 
         This approach ensures that we find the optimal solution in terms of the fewest number of coins needed, while also
         efficiently handling the constraints of the problem.

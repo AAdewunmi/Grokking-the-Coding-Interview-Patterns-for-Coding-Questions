@@ -14,7 +14,7 @@ Fibonacci numbers
                     F(n-1) + F(n-2)   if n > 1
                 }
 
-    *** Different Approaches to Compute Fibonacci Numbers:
+    * Different Approaches to Compute Fibonacci Numbers:
     ------------------------------------------------------
 
         1. Naive Recursive Approach
@@ -31,16 +31,17 @@ Fibonacci numbers
     leading to exponential time complexity.
 
     * Java Implementation:
+    ----------------------
 
-    public int fibonacci(int n) {
-        if (n <= 1) {
-            return n;
+        public int fibonacci(int n) {
+            if (n <= 1) {
+                return n;
+            }
+            return fibonacci(n - 1) + fibonacci(n - 2);
         }
-        return fibonacci(n - 1) + fibonacci(n - 2);
-    }
 
-    * Time Complexity: O(2^n)
-    * Space Complexity: O(n) (due to recursion stack)
+        * Time Complexity: O(2^n)
+        * Space Complexity: O(n) (due to recursion stack)
 
     2. Memoization (Top-Down Dynamic Programming):
     ----------------------------------------------
@@ -49,33 +50,34 @@ Fibonacci numbers
     or an array to store the results of previously computed Fibonacci numbers.
 
     * Java Implementation:
+    ----------------------
 
-    import java.util.HashMap;
+        import java.util.HashMap;
 
-    public class Fibonacci {
-        private HashMap<Integer, Integer> memo = new HashMap<>();
+        public class Fibonacci {
+            private HashMap<Integer, Integer> memo = new HashMap<>();
 
-        public int fibonacci(int n) {
-            if (n <= 1) {
-                return n;
+            public int fibonacci(int n) {
+                if (n <= 1) {
+                    return n;
+                }
+                if (memo.containsKey(n)) {
+                    return memo.get(n);
+                }
+                int result = fibonacci(n - 1) + fibonacci(n - 2);
+                memo.put(n, result);
+                return result;
             }
-            if (memo.containsKey(n)) {
-                return memo.get(n);
+
+            public static void main(String[] args) {
+                Fibonacci fib = new Fibonacci();
+                System.out.println(fib.fibonacci(10));  // Output: 55
             }
-            int result = fibonacci(n - 1) + fibonacci(n - 2);
-            memo.put(n, result);
-            return result;
         }
 
-        public static void main(String[] args) {
-            Fibonacci fib = new Fibonacci();
-            System.out.println(fib.fibonacci(10));  // Output: 55
-        }
-    }
 
-
-    * Time Complexity: O(n)
-    * Space Complexity: O(n) (due to memoization table and recursion stack)
+        * Time Complexity: O(n)
+        * Space Complexity: O(n) (due to memoization table and recursion stack)
 
     3. Tabulation (Bottom-Up Dynamic Programming):
     ----------------------------------------------
@@ -84,30 +86,31 @@ Fibonacci numbers
     by building the solution from the ground up.
 
     * Java Implementation:
+    ----------------------
 
-    public class Fibonacci {
+        public class Fibonacci {
 
-        public int fibonacci(int n) {
-            if (n <= 1) {
-                return n;
+            public int fibonacci(int n) {
+                if (n <= 1) {
+                    return n;
+                }
+                int[] dp = new int[n + 1];
+                dp[0] = 0;
+                dp[1] = 1;
+                for (int i = 2; i <= n; i++) {
+                    dp[i] = dp[i - 1] + dp[i - 2];
+                }
+                return dp[n];
             }
-            int[] dp = new int[n + 1];
-            dp[0] = 0;
-            dp[1] = 1;
-            for (int i = 2; i <= n; i++) {
-                dp[i] = dp[i - 1] + dp[i - 2];
+
+            public static void main(String[] args) {
+                Fibonacci fib = new Fibonacci();
+                System.out.println(fib.fibonacci(10));  // Output: 55
             }
-            return dp[n];
         }
 
-        public static void main(String[] args) {
-            Fibonacci fib = new Fibonacci();
-            System.out.println(fib.fibonacci(10));  // Output: 55
-        }
-    }
-
-    * Time Complexity: O(n)
-    * Space Complexity: O(n) (due to the array)
+        * Time Complexity: O(n)
+        * Space Complexity: O(n) (due to the array)
 
     4. Space-Optimized Tabulation:
     ------------------------------
@@ -116,36 +119,37 @@ Fibonacci numbers
 
     * Java Implementation:
 
-    public class Fibonacci {
+        public class Fibonacci {
 
-        public int fibonacci(int n) {
-            if (n <= 1) {
-                return n;
+            public int fibonacci(int n) {
+                if (n <= 1) {
+                    return n;
+                }
+                int a = 0, b = 1;
+                for (int i = 2; i <= n; i++) {
+                    int c = a + b;
+                    a = b;
+                    b = c;
+                }
+                return b;
             }
-            int a = 0, b = 1;
-            for (int i = 2; i <= n; i++) {
-                int c = a + b;
-                a = b;
-                b = c;
+
+            public static void main(String[] args) {
+                Fibonacci fib = new Fibonacci();
+                System.out.println(fib.fibonacci(10));  // Output: 55
             }
-            return b;
         }
 
-        public static void main(String[] args) {
-            Fibonacci fib = new Fibonacci();
-            System.out.println(fib.fibonacci(10));  // Output: 55
-        }
-    }
+        * Time Complexity: O(n)
+        * Space Complexity: O(1) (constant space)
 
-    * Time Complexity: O(n)
-    * Space Complexity: O(1) (constant space)
+    * Summary:
+    ----------
 
-    * Summary
-
-    - Naive Recursive Approach: Exponential time complexity O(2^n) and linear space complexity O(n).
-    - Memoization: Linear time complexity O(n) and linear space complexity O(n).
-    - Tabulation: Linear time complexity O(n) and linear space complexity O(n).
-    - Space-Optimized Tabulation: Linear time complexity O(n) and constant space complexity O(1).
+        - Naive Recursive Approach: Exponential time complexity O(2^n) and linear space complexity O(n).
+        - Memoization: Linear time complexity O(n) and linear space complexity O(n).
+        - Tabulation: Linear time complexity O(n) and linear space complexity O(n).
+        - Space-Optimized Tabulation: Linear time complexity O(n) and constant space complexity O(1).
 
     Dynamic programming techniques like memoization and tabulation efficiently compute Fibonacci numbers by leveraging
     overlapping subproblems and optimal substructure, transforming an exponential time complexity problem into a linear one.

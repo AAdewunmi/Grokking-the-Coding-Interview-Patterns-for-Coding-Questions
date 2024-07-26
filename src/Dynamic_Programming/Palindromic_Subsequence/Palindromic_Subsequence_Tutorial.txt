@@ -2,7 +2,7 @@ Palindromic Subsequence
 =======================
 
 - Introduction:
----------------
+===============
 
     A palindromic subsequence is a sequence of characters within a string that reads the same forward and backward and
     is derived from the original string by deleting some or none of the characters without changing the order of the
@@ -28,7 +28,7 @@ Palindromic Subsequence
         - The longest palindromic subsequence is "abdba" with a length of 5.
 
 - Solution Approach to Palindromic Subsequence:
------------------------------------------------
+===============================================
 
     To find the longest palindromic subsequence in a given string, several approaches can be taken, but the most common
     and efficient method involves dynamic programming. Here's a detailed explanation of this approach:
@@ -107,13 +107,13 @@ Palindromic Subsequence
             If they are different, we take the maximum length found by either excluding `s[i]` or `s[j]`.
           3. Result: The value `dp[0][n-1]` gives the length of the longest palindromic subsequence in the entire string.
 
-      * Time and Space Complexity:
-          - Time Complexity: O(n^2) because we have two nested loops that both run (n) times to fill the `dp` table.
-          - Space Complexity: O(n^2) because we use a 2D array `dp` of size (n * n).
+          * Time and Space Complexity:
+              - Time Complexity: O(n^2) because we have two nested loops that both run (n) times to fill the `dp` table.
+              - Space Complexity: O(n^2) because we use a 2D array `dp` of size (n * n).
 
-      * Space Optimization:
-      To optimize space, we can notice that to compute `dp[i][j]`, we only need the current row and the previous row.
-      Hence, we can reduce space complexity to \(O(n)\) using two 1D arrays instead of a 2D array.
+          * Space Optimization:
+          To optimize space, we can notice that to compute `dp[i][j]`, we only need the current row and the previous row.
+          Hence, we can reduce space complexity to \(O(n)\) using two 1D arrays instead of a 2D array.
 
       Here’s the optimized version:
 
