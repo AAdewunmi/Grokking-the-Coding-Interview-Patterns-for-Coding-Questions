@@ -1,8 +1,7 @@
-# $$\textcolor{red}{\text{UNDER CONSTRUCTION}}$$
-
 # Project Title:
 
 Grokking the Coding Interview Patterns: Includes Topic Tutorials Plus LeetCode Questions & Solutions in JAVA ☕️
+
 
 ## 1. Project Description:
 
@@ -28,6 +27,7 @@ for FAANGM coding interviews.
 
 Hope you find it useful 😎 
 
+
 ## 2. Prerequisites:
 
 Before solving Leetcode problems, make sure you are familiar with the following:
@@ -45,6 +45,7 @@ Before solving Leetcode problems, make sure you are familiar with the following:
         L Data Structure: Stack, Queue, Graph, Tree, etc.
 
         L Algorithms: Sorting, Searching, etc
+
 
 ## 3. Outline:
 
@@ -124,13 +125,37 @@ Coding Interview Patterns are classified according to skills level:
 
 [9. Ordered Set ](src/Ordered_Set)
 
-## 4. Resources:
 
-I acknowledge the use of OpenAI's ChatGPT for topic explanation 🤖, LeetCode and HackerRank for coding interview questions 👨‍💻
+## 4. Installation:
 
-## 5. Adapted from: 
+i. Clone the git repo
 
-"Grokking the Coding Interview: Patterns for Coding Questions" by Design Gurus (2024).
+```
+https://github.com/AAdewunmi/Grokking-the-Coding-Interview-Patterns-for-Coding-Questions.git
+```
+
+ii. Open project folder
+
+iii. Explore
+
+😎
+
+
+## 5. Resources:
+
+I acknowledge the use of LeetCode for coding interview questions 👨‍💻, OpenAI's ChatGPT for topic explanation and solutions to coding questions 🤖.
+
+
+## 6. Contributing:
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+
+## 7. Adapted from: 
+
+Project Name: "Grokking the Coding Interview: Patterns for Coding Questions" 
+
+Created by: Design Gurus (2024).
 
 URL: https://www.designgurus.io/course-play/grokking-the-coding-interview/doc/63afd6338d316e91ad9fc027
 
