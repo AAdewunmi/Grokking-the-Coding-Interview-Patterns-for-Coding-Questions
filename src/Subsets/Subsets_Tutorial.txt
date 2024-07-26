@@ -1,110 +1,192 @@
-Subsets
-=======
+ Subsets
+ =======
 
-- Introduction:
+ - Introduction:
+ ===============
 
-The subsets coding pattern is a common approach in algorithm design and problem-solving, particularly in combinatorics
-and backtracking problems. This pattern is used to generate all possible subsets of a given set of elements.
-It can be applied to various problems, including generating power sets, solving permutation and combination problems,
-and finding all possible ways to partition a set.
+     The subsets coding pattern is a common approach in algorithm design and problem-solving, particularly in combinatorics
+     and backtracking problems. This pattern is used to generate all possible subsets of a given set of elements.
+     It can be applied to various problems, including generating power sets, solving permutation and combination problems,
+     and finding all possible ways to partition a set.
 
-Here's a breakdown of the subsets coding pattern:
+     Here's a breakdown of the subsets coding pattern:
 
-- Definition:
+     - Definition:
+     -------------
 
-The subsets pattern involves finding all possible subsets of a given set. A subset is a set that contains some or all
-elements of the original set, including the empty set and the set itself.
+     The subsets pattern involves finding all possible subsets of a given set. A subset is a set that contains some or all
+     elements of the original set, including the empty set and the set itself.
 
-- Applications:
+     - Applications:
+     ---------------
 
-    Power Set Generation: Finding all subsets of a given set.
-    Combination Problems: Finding all combinations of a set of elements.
-    Partition Problems: Dividing a set into two or more subsets.
-    Subset Sum Problems: Finding subsets that satisfy certain criteria (e.g., sum of elements equals a given value).
+         Power Set Generation: Finding all subsets of a given set.
+         Combination Problems: Finding all combinations of a set of elements.
+         Partition Problems: Dividing a set into two or more subsets.
+         Subset Sum Problems: Finding subsets that satisfy certain criteria (e.g., sum of elements equals a given value).
 
-- Methods:
+ - Methods:
+ ==========
 
-There are several ways to generate subsets, including iterative and recursive approaches. Two common methods are:
+     There are several ways to generate subsets, including iterative and recursive approaches. Two common methods are:
 
-*** Iterative Method:
+     * Iterative Method:
+     ===================
 
-The iterative method often uses bit manipulation to generate all subsets of a given set.
+     The iterative method often uses bit manipulation to generate all subsets of a given set.
 
-import java.util.ArrayList;
-import java.util.List;
+         import java.util.ArrayList;
+         import java.util.List;
 
-public class SubsetsIterative {
-    public static List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        int n = nums.length;
-        int numberOfSubsets = 1 << n; // 2^n
+         public class SubsetsIterative {
+             public static List<List<Integer>> subsets(int[] nums) {
+                 List<List<Integer>> result = new ArrayList<>();
+                 int n = nums.length;
+                 int numberOfSubsets = 1 << n; // 2^n
 
-        for (int i = 0; i < numberOfSubsets; i++) {
-            List<Integer> subset = new ArrayList<>();
-            for (int j = 0; j < n; j++) {
-                if ((i & (1 << j)) != 0) {
-                    subset.add(nums[j]);
-                }
-            }
-            result.add(subset);
-        }
+                 for (int i = 0; i < numberOfSubsets; i++) {
+                     List<Integer> subset = new ArrayList<>();
+                     for (int j = 0; j < n; j++) {
+                         if ((i & (1 << j)) != 0) {
+                             subset.add(nums[j]);
+                         }
+                     }
+                     result.add(subset);
+                 }
 
-        return result;
-    }
+                 return result;
+             }
 
-    public static void main(String[] args) {
-        int[] nums = {1, 2, 3};
-        List<List<Integer>> subsets = subsets(nums);
-        System.out.println(subsets);
-    }
-}
+             public static void main(String[] args) {
+                 int[] nums = {1, 2, 3};
+                 List<List<Integer>> subsets = subsets(nums);
+                 System.out.println(subsets);
+             }
+         }
 
-- Explanation:
+     - Explanation:
+     --------------
 
-    Iterative Method:
-    - Bit Manipulation: We use a loop to iterate through numbers from `0` to `2^n - 1`, where `n` is the length of the input array `nums`.
-    - Each number in this range represents a subset. The binary representation of the number determines which elements are included in the subset.
-        For example, if `i` is `5` (binary `101`), it means the subset includes the 1st and 3rd elements of `nums`.
-    - We check each bit position using the expression `(i & (1 << j))` to determine if the j-th element should be included in the subset.
+         Iterative Method:
+         - Bit Manipulation: We use a loop to iterate through numbers from `0` to `2^n - 1`, where `n` is the length of
+             the input array `nums`.
+         - Each number in this range represents a subset. The binary representation of the number determines which elements
+             are included in the subset.
+             For example, if `i` is `5` (binary `101`), it means the subset includes the 1st and 3rd elements of `nums`.
+         - We check each bit position using the expression `(i & (1 << j))` to determine if the j-th element should be
+             included in the subset.
 
-*** Recursive Method:
+     * Recursive Method:
+     ===================
 
-The recursive method uses backtracking to generate all subsets.
+     The recursive method uses backtracking to generate all subsets.
 
-import java.util.ArrayList;
-import java.util.List;
+     import java.util.ArrayList;
+     import java.util.List;
 
-public class SubsetsRecursive {
-    public static List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        backtrack(result, new ArrayList<>(), nums, 0);
-        return result;
-    }
+         public class SubsetsRecursive {
+             public static List<List<Integer>> subsets(int[] nums) {
+                 List<List<Integer>> result = new ArrayList<>();
+                 backtrack(result, new ArrayList<>(), nums, 0);
+                 return result;
+             }
 
-    private static void backtrack(List<List<Integer>> result, List<Integer> tempList, int[] nums, int start) {
-        result.add(new ArrayList<>(tempList));
-        for (int i = start; i < nums.length; i++) {
-            tempList.add(nums[i]);
-            backtrack(result, tempList, nums, i + 1);
-            tempList.remove(tempList.size() - 1);
-        }
-    }
+             private static void backtrack(List<List<Integer>> result, List<Integer> tempList, int[] nums, int start) {
+                 result.add(new ArrayList<>(tempList));
+                 for (int i = start; i < nums.length; i++) {
+                     tempList.add(nums[i]);
+                     backtrack(result, tempList, nums, i + 1);
+                     tempList.remove(tempList.size() - 1);
+                 }
+             }
 
-    public static void main(String[] args) {
-        int[] nums = {1, 2, 3};
-        List<List<Integer>> subsets = subsets(nums);
-        System.out.println(subsets);
-    }
-}
+             public static void main(String[] args) {
+                 int[] nums = {1, 2, 3};
+                 List<List<Integer>> subsets = subsets(nums);
+                 System.out.println(subsets);
+             }
+         }
 
-- Explanation:
+     - Explanation:
+     --------------
 
-Recursive Method:
-    - Backtracking: We use a helper method `backtrack` to generate subsets. This method takes the current list of subsets `result`,
-        a temporary list `tempList` that represents the current subset being built, the input array `nums`, and the starting index `start`.
-    - At each step, we add a copy of `tempList` to `result`.
-    - Then, we iterate over the remaining elements, adding each one to `tempList`, recursing to generate subsets that include this new element,
-        and then removing the element to backtrack and try the next possibility.
+     Recursive Method:
+         - Backtracking: We use a helper method `backtrack` to generate subsets. This method takes the current list of
+             subsets `result`, a temporary list `tempList` that represents the current subset being built, the input array
+             `nums`, and the starting index `start`.
+         - At each step, we add a copy of `tempList` to `result`.
+         - Then, we iterate over the remaining elements, adding each one to `tempList`, recursing to generate subsets that
+             include this new element, and then removing the element to backtrack and try the next possibility.
 
-Both methods generate all possible subsets of the given set, but they do so in slightly different ways. The iterative method is more direct
-and may be easier to understand, while the recursive method provides a clear illustration of the backtracking approach.
+     Both methods generate all possible subsets of the given set, but they do so in slightly different ways. The iterative
+     method is more direct and may be easier to understand, while the recursive method provides a clear illustration of the
+     backtracking approach.
+
+ - Subsets Example LeetCode Question: 90. Subsets II
+ ====================================================
+
+     To solve the problem of finding all possible subsets (the power set) of an integer array `nums` that may contain duplicates,
+     you can use a backtracking approach. The goal is to generate all subsets while ensuring that duplicates are not included
+     in the final solution set.
+
+     Here's a step-by-step approach to solve the problem in Java, along with considerations for time and space complexity:
+
+         1. Sort the Array: Sorting the array helps in easily identifying duplicates. By sorting, duplicate elements will be
+         adjacent, making it easier to skip them during the subset generation process.
+
+         2. Backtracking: Use a backtracking approach to generate subsets. Start with an empty subset and iteratively add
+         elements from the array to build subsets.
+
+         3. Skip Duplicates: During the subset generation process, if an element is the same as the previous element (and
+         the previous element was not included in the current subset), skip it to avoid generating duplicate subsets.
+
+     * Here is the Java implementation of this approach:
+     ---------------------------------------------------
+
+         import java.util.ArrayList;
+         import java.util.Arrays;
+         import java.util.List;
+
+         public class SubsetsWithDup {
+             public List<List<Integer>> subsetsWithDup(int[] nums) {
+                 List<List<Integer>> result = new ArrayList<>();
+                 Arrays.sort(nums);  // Sort the array to handle duplicates
+                 backtrack(result, new ArrayList<>(), nums, 0);
+                 return result;
+             }
+
+             private void backtrack(List<List<Integer>> result, List<Integer> tempList, int[] nums, int start) {
+                 result.add(new ArrayList<>(tempList));  // Add the current subset to the result
+
+                 for (int i = start; i < nums.length; i++) {
+                     // Skip duplicates
+                     if (i > start && nums[i] == nums[i - 1]) continue;
+                     tempList.add(nums[i]);
+                     backtrack(result, tempList, nums, i + 1);
+                     tempList.remove(tempList.size() - 1);
+                 }
+             }
+
+             public static void main(String[] args) {
+                 SubsetsWithDup solution = new SubsetsWithDup();
+                 int[] nums = {1, 2, 2};
+                 List<List<Integer>> subsets = solution.subsetsWithDup(nums);
+                 for (List<Integer> subset : subsets) {
+                     System.out.println(subset);
+                 }
+             }
+         }
+
+     * Time and Space Complexity Analysis:
+     -------------------------------------
+
+         1. Time Complexity: The time complexity is O(2^n * n), where n is the number of elements in the array.
+             The reason is that there are 2^n possible subsets for a set of size n, and generating each subset can take
+             up to O(n) time (for copying the subset to the result list).
+
+         2. Space Complexity: The space complexity is also O(2^n * n). This includes the space required to store all the
+             subsets (which can be up to 2^n subsets, each of which can be up to size n) and the recursion stack which
+             can go up to O(n) deep.
+
+     In summary, this approach ensures that all unique subsets are generated without duplicates, leveraging sorting and
+     a backtracking approach to manage the subsets efficiently.
