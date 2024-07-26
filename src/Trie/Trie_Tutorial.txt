@@ -2,63 +2,74 @@ Trie
 ====
 
 - Introduction:
+===============
 
     A Trie, also known as a prefix tree or digital tree, is a type of search tree used to store a dynamic set or associative
     array where the keys are usually strings. Unlike a binary search tree, no node in the tree stores the key associated with
     that node; instead, its position in the tree defines the key with which it is associated.
 
-    *** Characteristics of a Trie:
-    1. Structure: Each node represents a single character of a key. The root node is associated with an empty string.
-        Each edge represents a character in the key.
-    2. Keys: Keys are typically strings. A path from the root to a particular node corresponds to a prefix of some of the keys.
-    3. Search Efficiency: Tries are highly efficient for searching and storing strings. The time complexity for search, insert,
-        and delete operations is O(L), where L is the length of the key.
+    * Characteristics of a Trie:
+    ----------------------------
 
-    *** Key Operations:
+        1. Structure: Each node represents a single character of a key. The root node is associated with an empty string.
+            Each edge represents a character in the key.
+        2. Keys: Keys are typically strings. A path from the root to a particular node corresponds to a prefix of some of
+            the keys.
+        3. Search Efficiency: Tries are highly efficient for searching and storing strings. The time complexity for
+            search, insert, and delete operations is O(L), where L is the length of the key.
 
-    - Insert: Adding a word involves traversing the Trie according to the characters of the word and creating nodes as necessary.
-    - Search: To search for a word, traverse the Trie according to the characters of the word. If you reach the end of the word
-        and the corresponding node is a terminal node, the word exists in the Trie.
-    - Delete: Removing a word involves finding the node corresponding to the last character of the word and removing it, adjusting
-        the tree as necessary to maintain the structure.
+    * Key Operations:
+    ------------------
 
-    *** Example:
+        - Insert: Adding a word involves traversing the Trie according to the characters of the word and creating nodes
+            as necessary.
+        - Search: To search for a word, traverse the Trie according to the characters of the word. If you reach the end
+            of the word and the corresponding node is a terminal node, the word exists in the Trie.
+        - Delete: Removing a word involves finding the node corresponding to the last character of the word and removing
+            it, adjusting the tree as necessary to maintain the structure.
 
-    Let's consider inserting the words "cat", "cap", and "dog" into a Trie:
+    * Example:
+    ----------
 
-    1. Start with an empty root node.
-    2. Insert "cat":
-       - Add 'c' as a child of the root.
-       - Add 'a' as a child of 'c'.
-       - Add 't' as a child of 'a' and mark it as the end of the word.
-    3. Insert "cap":
-       - Traverse to 'c'.
-       - Traverse to 'a'.
-       - Add 'p' as a child of 'a' and mark it as the end of the word.
-    4. Insert "dog":
-       - Add 'd' as a child of the root.
-       - Add 'o' as a child of 'd'.
-       - Add 'g' as a child of 'o' and mark it as the end of the word.
+        Let's consider inserting the words "cat", "cap", and "dog" into a Trie:
 
-    The resulting Trie structure would look something like this:
+        1. Start with an empty root node.
+        2. Insert "cat":
+           - Add 'c' as a child of the root.
+           - Add 'a' as a child of 'c'.
+           - Add 't' as a child of 'a' and mark it as the end of the word.
+        3. Insert "cap":
+           - Traverse to 'c'.
+           - Traverse to 'a'.
+           - Add 'p' as a child of 'a' and mark it as the end of the word.
+        4. Insert "dog":
+           - Add 'd' as a child of the root.
+           - Add 'o' as a child of 'd'.
+           - Add 'g' as a child of 'o' and mark it as the end of the word.
 
-            (root)
-             /  \
-            c    d
-           / \    \
-          a   a    o
-         /   /      \
-        t   p        g
-       (E) (E)      (E)
+        The resulting Trie structure would look something like this:
 
-    Here, (E) indicates the end of a word.
+                (root)
+                 /  \
+                c    d
+               / \    \
+              a   a    o
+             /   /      \
+            t   p        g
+           (E) (E)      (E)
 
-    *** Advantages:
+        Here, (E) indicates the end of a word.
+
+    * Advantages:
+    -------------
+
         - Efficient Prefix Searches: Ideal for applications where many keys share common prefixes.
         - Predictive Text: Useful in autocomplete features.
         - Spell Checking: Can be used to implement fast spell-checking algorithms.
 
-    *** Disadvantages:
+    * Disadvantages:
+    ----------------
+
         - Space Consumption: Can use a lot of memory, especially if the set of keys stored is sparse.
         - Complex Implementation: More complex to implement compared to other data structures like hash tables.
 
@@ -66,188 +77,219 @@ Trie
     and search engines.
 
 - High-Level Pseudocode for Trie:
+==================================
 
     Here's a high-level pseudocode for a Trie that captures the essential logic of insert, search, and delete operations without
     going into the specifics of class definitions and internal structure details.
 
-    *** Trie Operations
+    * Trie Operations:
+    ------------------
 
-    1. Initialize Trie
+        1. Initialize Trie
 
-        function initializeTrie():
-            root = createNode()
+            function initializeTrie():
+                root = createNode()
 
-    2. Insert a Word
+        2. Insert a Word
 
-        function insert(word):
-            node = root
-            for each character in word:
-                if character is not in node's children:
-                    add a new node for character in node's children
-                move to the child node corresponding to character
-            mark the current node as end of word
+            function insert(word):
+                node = root
+                for each character in word:
+                    if character is not in node's children:
+                        add a new node for character in node's children
+                    move to the child node corresponding to character
+                mark the current node as end of word
 
-    3. Search for a Word
+        3. Search for a Word
 
-        function search(word):
-            node = root
-            for each character in word:
-                if character is not in node's children:
-                    return False
-                move to the child node corresponding to character
-            return True if current node is end of word, else False
-
-    4. Delete a Word
-
-        function delete(word):
-            function deleteRecursively(node, word, depth):
-                if depth == length of word:
-                    if node is not end of word:
+            function search(word):
+                node = root
+                for each character in word:
+                    if character is not in node's children:
                         return False
-                    unmark the node as end of word
-                    return True if node has no children
-                character = word[depth]
-                if character is not in node's children:
+                    move to the child node corresponding to character
+                return True if current node is end of word, else False
+
+        4. Delete a Word
+
+            function delete(word):
+                function deleteRecursively(node, word, depth):
+                    if depth == length of word:
+                        if node is not end of word:
+                            return False
+                        unmark the node as end of word
+                        return True if node has no children
+                    character = word[depth]
+                    if character is not in node's children:
+                        return False
+                    shouldDeleteChild = deleteRecursively(node's child corresponding to character, word, depth + 1)
+                    if shouldDeleteChild:
+                        remove character from node's children
+                        return True if node has no children and is not end of another word
                     return False
-                shouldDeleteChild = deleteRecursively(node's child corresponding to character, word, depth + 1)
-                if shouldDeleteChild:
-                    remove character from node's children
-                    return True if node has no children and is not end of another word
-                return False
 
-            deleteRecursively(root, word, 0)
+                deleteRecursively(root, word, 0)
 
-        *** Explanation
+        * Explanation:
+        --------------
 
-        1. initializeTrie:
-            - Creates the root node of the Trie.
+            1. initializeTrie:
+                - Creates the root node of the Trie.
 
-        2. insert(word):
-            - Starts from the root node.
-            - For each character in the word, if it doesn't exist in the current node's children, add a new node.
-            - Move to the corresponding child node for each character.
-            - Mark the last node as the end of the word after processing all characters.
+            2. insert(word):
+                - Starts from the root node.
+                - For each character in the word, if it doesn't exist in the current node's children, add a new node.
+                - Move to the corresponding child node for each character.
+                - Mark the last node as the end of the word after processing all characters.
 
-        3. search(word):
-            - Starts from the root node.
-            - For each character in the word, check if it exists in the current node's children.
-            - If a character is missing, return `False`.
-            - After processing all characters, return `True` if the current node is marked as the end of a word.
+            3. search(word):
+                - Starts from the root node.
+                - For each character in the word, check if it exists in the current node's children.
+                - If a character is missing, return `False`.
+                - After processing all characters, return `True` if the current node is marked as the end of a word.
 
-        4. delete(word):
-            - Uses a recursive helper function `deleteRecursively` to delete a word from the Trie.
-            - The helper function checks if the current depth matches the length of the word.
-            - If at the end of the word, unmark the node as the end of the word and check if the node has no children.
-            - If not at the end, continue to the next character and call the function recursively.
-            - If a child node should be deleted, remove the character from the current node's children.
-            - Return whether the current node should be deleted based on the presence of children and end-of-word status.
+            4. delete(word):
+                - Uses a recursive helper function `deleteRecursively` to delete a word from the Trie.
+                - The helper function checks if the current depth matches the length of the word.
+                - If at the end of the word, unmark the node as the end of the word and check if the node has no children.
+                - If not at the end, continue to the next character and call the function recursively.
+                - If a child node should be deleted, remove the character from the current node's children.
+                - Return whether the current node should be deleted based on the presence of children and end-of-word status.
 
         This high-level pseudocode focuses on the core logic of the Trie operations, providing a clear and concise overview
         without delving into the implementation specifics.
 
 - Trie Example: LeetCode Problem 1268. Search Suggestions System
+=================================================================
 
     To solve this problem, we can use a Trie data structure to efficiently store and search for product names with a common prefix.
     We'll implement the Trie with methods to insert words and to get suggestions based on a prefix. For each character of `searchWord`,
     we'll retrieve at most three lexicographically smallest product names that have the current prefix. (ChatGPT coded the solution 🤖)
 
-    Here's a step-by-step approach and the corresponding Java code:
+    * Here's a step-by-step approach and the corresponding Java code:
+    -----------------------------------------------------------------
 
-    1. Define the Trie Node: Each node contains an array for child nodes and a list of suggestions.
-    2. Insert Products into Trie: Insert each product into the Trie, maintaining the list of suggestions at each node.
-    3. Search for Suggestions: For each prefix formed by the characters of `searchWord`, search the Trie to get suggestions.
+        1. Define the Trie Node: Each node contains an array for child nodes and a list of suggestions.
+        2. Insert Products into Trie: Insert each product into the Trie, maintaining the list of suggestions at each node.
+        3. Search for Suggestions: For each prefix formed by the characters of `searchWord`, search the Trie to get suggestions.
 
-    *** Trie Node Definition
+    * Trie Node Definition:
+    -----------------------
 
-    class TrieNode {
-        TrieNode[] children;
-        List<String> suggestions;
+        class TrieNode {
+            TrieNode[] children;
+            List<String> suggestions;
 
-        public TrieNode() {
-            children = new TrieNode[26]; // For each letter in the alphabet
-            suggestions = new ArrayList<>();
-        }
-    }
-
-
-    *** Trie Definition
-
-    class Trie {
-        private TrieNode root;
-
-        public Trie() {
-            root = new TrieNode();
+            public TrieNode() {
+                children = new TrieNode[26]; // For each letter in the alphabet
+                suggestions = new ArrayList<>();
+            }
         }
 
-        public void insert(String word) {
-            TrieNode node = root;
-            for (char c : word.toCharArray()) {
-                int index = c - 'a';
-                if (node.children[index] == null) {
-                    node.children[index] = new TrieNode();
+
+    * Trie Definition:
+    ------------------
+
+        class Trie {
+            private TrieNode root;
+
+            public Trie() {
+                root = new TrieNode();
+            }
+
+            public void insert(String word) {
+                TrieNode node = root;
+                for (char c : word.toCharArray()) {
+                    int index = c - 'a';
+                    if (node.children[index] == null) {
+                        node.children[index] = new TrieNode();
+                    }
+                    node = node.children[index];
+                    addSuggestion(node.suggestions, word);
                 }
-                node = node.children[index];
-                addSuggestion(node.suggestions, word);
             }
-        }
 
-        private void addSuggestion(List<String> suggestions, String word) {
-            suggestions.add(word);
-            Collections.sort(suggestions);
-            if (suggestions.size() > 3) {
-                suggestions.remove(suggestions.size() - 1); // Keep only the 3 smallest lexicographically
-            }
-        }
-
-        public List<String> getSuggestions(String prefix) {
-            TrieNode node = root;
-            for (char c : prefix.toCharArray()) {
-                int index = c - 'a';
-                if (node.children[index] == null) {
-                    return new ArrayList<>();
+            private void addSuggestion(List<String> suggestions, String word) {
+                suggestions.add(word);
+                Collections.sort(suggestions);
+                if (suggestions.size() > 3) {
+                    suggestions.remove(suggestions.size() - 1); // Keep only the 3 smallest lexicographically
                 }
-                node = node.children[index];
             }
-            return node.suggestions;
-        }
-    }
 
-    *** Solution Class
+            public List<String> getSuggestions(String prefix) {
+                TrieNode node = root;
+                for (char c : prefix.toCharArray()) {
+                    int index = c - 'a';
+                    if (node.children[index] == null) {
+                        return new ArrayList<>();
+                    }
+                    node = node.children[index];
+                }
+                return node.suggestions;
+            }
+        }
+
+    * Solution Class:
+    -----------------
 
     import java.util.*;
 
-    class Solution {
-        public List<List<String>> suggestedProducts(String[] products, String searchWord) {
-            Trie trie = new Trie();
-            for (String product : products) {
-                trie.insert(product);
-            }
+        class Solution {
+            public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+                Trie trie = new Trie();
+                for (String product : products) {
+                    trie.insert(product);
+                }
 
-            List<List<String>> result = new ArrayList<>();
-            String prefix = "";
-            for (char c : searchWord.toCharArray()) {
-                prefix += c;
-                result.add(trie.getSuggestions(prefix));
-            }
+                List<List<String>> result = new ArrayList<>();
+                String prefix = "";
+                for (char c : searchWord.toCharArray()) {
+                    prefix += c;
+                    result.add(trie.getSuggestions(prefix));
+                }
 
-            return result;
+                return result;
+            }
         }
-    }
 
-    *** Explanation
+    * Explanation:
+    --------------
 
-    1. TrieNode Class:
-        - children: An array representing 26 possible children nodes for each character (a to z).
-        - suggestions: A list to keep track of up to three lexicographically smallest products with the current prefix.
+        1. TrieNode Class:
+            - children: An array representing 26 possible children nodes for each character (a to z).
+            - suggestions: A list to keep track of up to three lexicographically smallest products with the current prefix.
 
-    2. Trie Class:
-        - insert(String word): Inserts a word into the Trie, updating the suggestions list at each node.
-        - addSuggestion(List<String> suggestions, String word)**: Adds a word to the suggestions list and ensures the
-            list contains at most three lexicographically smallest words.
-        - getSuggestions(String prefix): Returns the list of suggestions for a given prefix by traversing the Trie.
+        2. Trie Class:
+            - insert(String word): Inserts a word into the Trie, updating the suggestions list at each node.
+            - addSuggestion(List<String> suggestions, String word): Adds a word to the suggestions list and ensures the
+                list contains at most three lexicographically smallest words.
+            - getSuggestions(String prefix): Returns the list of suggestions for a given prefix by traversing the Trie.
 
-    3. Solution Class:
-        - suggestedProducts(String[] products, String searchWord): Initializes the Trie with the given products, then
-        iteratively forms prefixes from `searchWord` and retrieves suggestions for each prefix.
+        3. Solution Class:
+            - suggestedProducts(String[] products, String searchWord): Initializes the Trie with the given products, then
+            iteratively forms prefixes from `searchWord` and retrieves suggestions for each prefix.
+
+    * Time and Space Complexity Analysis:
+    -------------------------------------
+
+          * Building the Trie:
+          --------------------
+
+              - Time Complexity: Inserting each product into the Trie takes O(L) time, where L is the average length of the
+              product names. If there are N products, the total time to build the Trie is O(N * L).
+              - Space Complexity: The space complexity for storing the Trie is O(T), where T is the total number of characters
+              in all the products.
+
+          * Searching for Suggestions:
+          ----------------------------
+
+              - Time Complexity: For each character in the search word, we traverse the Trie from the root to the current character,
+              which takes O(L) time in the worst case. After reaching the node, performing a DFS to collect suggestions takes O(3)
+              time for each node visited, since we limit suggestions to three. Thus, for a search word of length M, the time
+              complexity is O(M * (L + 3)).
+
+              - Space Complexity: The space complexity for the DFS stack is O(L), where L is the depth of the Trie. Additionally,
+              storing the results requires O(M * 3), as we store up to three suggestions for each prefix of the search word.
 
     This approach efficiently handles the problem requirements using a Trie for prefix-based search and suggestion management.
