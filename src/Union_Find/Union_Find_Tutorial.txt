@@ -10,7 +10,8 @@ Union Find
     particularly useful for problems where we need to find whether 2 elements belong to the same group or need to solve
     connectivity-related problems in a graph or tree.
 
-    *** Pros and Cons of DSU
+    * Pros and Cons of DSU:
+    -----------------------
 
         1. Pros:
             Efficiency: Provides near constant time operations for union and find operations, making it highly efficient.
@@ -19,13 +20,16 @@ Union Find
             Space Overhead: Requires additional space to store the parent and rank of each element.
             Initial Setup: Requires initial setup to create and initialize the data structure.
 
-    *** Why Choose Union-Find Over BFS/DFS?
+    * Why Choose Union-Find Over BFS/DFS?
+    -------------------------------------
 
     You can solve similar problems using the Breadth-First Search (BFS) and Depth-First Search (DFS) algorithms,
     but the Union Find algorithm provides the optimal solution over them. For problems related to connectivity checks and
     component identification, Union-Find is often more efficient than BFS/DFS.
 
-    *** Time Complexity:
+    * Time Complexity:
+    ------------------
+
          1. BFS/DFS: For BFS and DFS, the time complexity is O (V + E), where V is the number of vertices and E is the
             number of edges. This can be quite slow for large graphs.
 
@@ -43,7 +47,8 @@ Union Find
 
             4. Equivalence Relations: Managing equivalence relations and partitioning sets based on those relations.
 
-    *** Key Concepts and Components:
+    * Key Concepts and Components:
+    ------------------------------
 
        + Key Concepts:
 
@@ -82,174 +87,182 @@ Union Find
                    }
 
 
- - Union-Find data structure Operations:
- =======================================
+- Union-Find data structure Operations:
+=======================================
 
-Here's an overview of the operations, including the less common deletion operation:
+    Here's an overview of the operations, including the less common deletion operation:
 
-    1. Making New Sets:
+        1. Making New Sets:
+        -------------------
 
-        - Initializes each element as its own set.
-        - Each element is its own parent initially, and the rank of each element is 0.
+            - Initializes each element as its own set.
+            - Each element is its own parent initially, and the rank of each element is 0.
 
-        public class UnionFind {
-            private int[] parent;
-            private int[] rank;
+                    public class UnionFind {
+                        private int[] parent;
+                        private int[] rank;
 
-            // Constructor to initialize parent and rank arrays
-            public UnionFind(int size) {
-                parent = new int[size];
-                rank = new int[size];
-                for (int i = 0; i < size; i++) {
-                    parent[i] = i;
-                    rank[i] = 0;
+                        // Constructor to initialize parent and rank arrays
+                        public UnionFind(int size) {
+                            parent = new int[size];
+                            rank = new int[size];
+                            for (int i = 0; i < size; i++) {
+                                parent[i] = i;
+                                rank[i] = 0;
+                            }
+                        }
+                    }
+
+        2. Finding Set Representatives:
+        -------------------------------
+
+            - Determines the representative (or root) of the set containing a particular element.
+            - Uses path compression to flatten the structure, making future operations faster.
+
+                    public int find(int x) {
+                        if (parent[x] != x) {
+                            parent[x] = find(parent[x]);  // Path compression
+                        }
+                        return parent[x];
+                    }
+
+        3. Merging Two Sets:
+        --------------------
+
+            - Merges two sets into a single set.
+            - Uses union by rank to attach the smaller tree under the root of the larger tree, keeping the tree flat and efficient.
+
+                    public void union(int x, int y) {
+                        int rootX = find(x);
+                        int rootY = find(y);
+
+                        if (rootX != rootY) {
+                            if (rank[rootX] > rank[rootY]) {
+                                parent[rootY] = rootX;
+                            } else if (rank[rootX] < rank[rootY]) {
+                                parent[rootX] = rootY;
+                            } else {
+                                parent[rootY] = rootX;
+                                rank[rootX]++;
+                            }
+                        }
+                    }
+
+        4. Deletion (Less Common):
+        --------------------------
+
+            - The standard Union-Find data structure does not support efficient deletion. Deleting an element from a set would
+                require significant changes to maintain the properties of the data structure. However, in some applications, a
+                workaround is to mark elements as inactive or use a different data structure to handle deletions.
+            - One common approach is to use a flag array to mark elements as "deleted" without actually removing them from the data structure.
+
+                    private boolean[] active;
+
+                    public UnionFind(int size) {
+                        parent = new int[size];
+                        rank = new int[size];
+                        active = new boolean[size];
+                        for (int i = 0; i < size; i++) {
+                            parent[i] = i;
+                            rank[i] = 0;
+                            active[i] = true;  // All elements are initially active
+                        }
+                    }
+
+                    public void delete(int x) {
+                        active[x] = false;  // Mark the element as inactive
+                    }
+
+                    public boolean isActive(int x) {
+                        return active[x];
+                    }
+
+
+        5. Full Implementation in Java:
+        -------------------------------
+
+        Here's a complete implementation of the Union-Find data structure, including the basic operations and a
+            method to mark elements as deleted:
+
+                public class UnionFind {
+                    private int[] parent;
+                    private int[] rank;
+                    private boolean[] active;
+
+                    // Constructor to initialize parent, rank, and active arrays
+                    public UnionFind(int size) {
+                        parent = new int[size];
+                        rank = new int[size];
+                        active = new boolean[size];
+                        for (int i = 0; i < size; i++) {
+                            parent[i] = i;
+                            rank[i] = 0;
+                            active[i] = true;  // All elements are initially active
+                        }
+                    }
+
+                    // Find operation with path compression
+                    public int find(int x) {
+                        if (parent[x] != x) {
+                            parent[x] = find(parent[x]);
+                        }
+                        return parent[x];
+                    }
+
+                    // Union operation with union by rank
+                    public void union(int x, int y) {
+                        int rootX = find(x);
+                        int rootY = find(y);
+
+                        if (rootX != rootY) {
+                            if (rank[rootX] > rank[rootY]) {
+                                parent[rootY] = rootX;
+                            } else if (rank[rootX] < rank[rootY]) {
+                                parent[rootX] = rootY;
+                            } else {
+                                parent[rootY] = rootX;
+                                rank[rootX]++;
+                            }
+                        }
+                    }
+
+                    // Mark an element as inactive (deleted)
+                    public void delete(int x) {
+                        active[x] = false;  // Mark the element as inactive
+                    }
+
+                    // Check if an element is active
+                    public boolean isActive(int x) {
+                        return active[x];
+                    }
+
+                    public static void main(String[] args) {
+                        int n = 10;  // Number of elements
+                        UnionFind uf = new UnionFind(n);
+
+                        // Perform Union operations
+                        uf.union(1, 2);
+                        uf.union(2, 3);
+                        uf.union(4, 5);
+
+                        // Perform Find operations
+                        System.out.println(uf.find(1));  // Output will be the representative of the set containing 1
+                        System.out.println(uf.find(4));  // Output will be the representative of the set containing 4
+
+                        // Delete an element
+                        uf.delete(2);
+
+                        // Check if elements are active
+                        System.out.println(uf.isActive(2));  // Output will be false
+                        System.out.println(uf.isActive(3));  // Output will be true
+                    }
                 }
-            }
-        }
+        + Complexity
 
-    2. Finding Set Representatives:
-        - Determines the representative (or root) of the set containing a particular element.
-        - Uses path compression to flatten the structure, making future operations faster.
-
-        public int find(int x) {
-            if (parent[x] != x) {
-                parent[x] = find(parent[x]);  // Path compression
-            }
-            return parent[x];
-        }
-
-    3. Merging Two Sets:
-        - Merges two sets into a single set.
-        - Uses union by rank to attach the smaller tree under the root of the larger tree, keeping the tree flat and efficient.
-
-        public void union(int x, int y) {
-            int rootX = find(x);
-            int rootY = find(y);
-
-            if (rootX != rootY) {
-                if (rank[rootX] > rank[rootY]) {
-                    parent[rootY] = rootX;
-                } else if (rank[rootX] < rank[rootY]) {
-                    parent[rootX] = rootY;
-                } else {
-                    parent[rootY] = rootX;
-                    rank[rootX]++;
-                }
-            }
-        }
-
-    4. Deletion (Less Common):
-        - The standard Union-Find data structure does not support efficient deletion. Deleting an element from a set would
-            require significant changes to maintain the properties of the data structure. However, in some applications, a
-            workaround is to mark elements as inactive or use a different data structure to handle deletions.
-        - One common approach is to use a flag array to mark elements as "deleted" without actually removing them from the data structure.
-
-        private boolean[] active;
-
-        public UnionFind(int size) {
-            parent = new int[size];
-            rank = new int[size];
-            active = new boolean[size];
-            for (int i = 0; i < size; i++) {
-                parent[i] = i;
-                rank[i] = 0;
-                active[i] = true;  // All elements are initially active
-            }
-        }
-
-        public void delete(int x) {
-            active[x] = false;  // Mark the element as inactive
-        }
-
-        public boolean isActive(int x) {
-            return active[x];
-        }
-
-
-    5. Full Implementation in Java
-
-    Here's a complete implementation of the Union-Find data structure, including the basic operations and a
-        method to mark elements as deleted:
-
-    public class UnionFind {
-        private int[] parent;
-        private int[] rank;
-        private boolean[] active;
-
-        // Constructor to initialize parent, rank, and active arrays
-        public UnionFind(int size) {
-            parent = new int[size];
-            rank = new int[size];
-            active = new boolean[size];
-            for (int i = 0; i < size; i++) {
-                parent[i] = i;
-                rank[i] = 0;
-                active[i] = true;  // All elements are initially active
-            }
-        }
-
-        // Find operation with path compression
-        public int find(int x) {
-            if (parent[x] != x) {
-                parent[x] = find(parent[x]);
-            }
-            return parent[x];
-        }
-
-        // Union operation with union by rank
-        public void union(int x, int y) {
-            int rootX = find(x);
-            int rootY = find(y);
-
-            if (rootX != rootY) {
-                if (rank[rootX] > rank[rootY]) {
-                    parent[rootY] = rootX;
-                } else if (rank[rootX] < rank[rootY]) {
-                    parent[rootX] = rootY;
-                } else {
-                    parent[rootY] = rootX;
-                    rank[rootX]++;
-                }
-            }
-        }
-
-        // Mark an element as inactive (deleted)
-        public void delete(int x) {
-            active[x] = false;  // Mark the element as inactive
-        }
-
-        // Check if an element is active
-        public boolean isActive(int x) {
-            return active[x];
-        }
-
-        public static void main(String[] args) {
-            int n = 10;  // Number of elements
-            UnionFind uf = new UnionFind(n);
-
-            // Perform Union operations
-            uf.union(1, 2);
-            uf.union(2, 3);
-            uf.union(4, 5);
-
-            // Perform Find operations
-            System.out.println(uf.find(1));  // Output will be the representative of the set containing 1
-            System.out.println(uf.find(4));  // Output will be the representative of the set containing 4
-
-            // Delete an element
-            uf.delete(2);
-
-            // Check if elements are active
-            System.out.println(uf.isActive(2));  // Output will be false
-            System.out.println(uf.isActive(3));  // Output will be true
-        }
-    }
-    + Complexity
-
-    - Find and Union operations are nearly constant time, O(α(n)), where α is the Inverse Ackermann function, which
-        grows very slowly.
-    - Deletion is not supported efficiently in the basic Union-Find structure; the workaround using an active array
-        has O(1) complexity for marking an element as inactive.
+            - Find and Union operations are nearly constant time, O(α(n)), where α is the Inverse Ackermann function, which
+                grows very slowly.
+            - Deletion is not supported efficiently in the basic Union-Find structure; the workaround using an active array
+                has O(1) complexity for marking an element as inactive.
 
  - Union-Find data structure Optimization:
  =========================================
@@ -258,130 +271,139 @@ Here's an overview of the operations, including the less common deletion operati
     Two common optimizations improve the efficiency of union-find operations: Path Compression and Union by Rank/Union by Size.
     These optimizations help achieve nearly constant time complexity for union and find operations.
 
-    1. Path Compression
+    1. Path Compression:
+    --------------------
+
     Path Compression is an optimization technique used during the find operation. The main idea is to make the tree flat, so future
     find operations are faster.
 
-    *** Implementation:
+    * Implementation:
+    -----------------
+
     When performing a find operation, traverse all the way up to the root and make each node on the path point directly to the root.
     This flattens the structure, leading to more efficient future operations.
 
-    class UnionFind {
-        private int[] parent;
-        private int[] rank; // For Union by Rank or Size
+            class UnionFind {
+                private int[] parent;
+                private int[] rank; // For Union by Rank or Size
 
-        public UnionFind(int size) {
-            parent = new int[size];
-            rank = new int[size];
-            for (int i = 0; i < size; i++) {
-                parent[i] = i;
-                rank[i] = 1; // For Union by Size, initialize rank as 1
-            }
-        }
+                public UnionFind(int size) {
+                    parent = new int[size];
+                    rank = new int[size];
+                    for (int i = 0; i < size; i++) {
+                        parent[i] = i;
+                        rank[i] = 1; // For Union by Size, initialize rank as 1
+                    }
+                }
 
-        public int find(int x) {
-            if (parent[x] != x) {
-                parent[x] = find(parent[x]); // Path compression
-            }
-            return parent[x];
-        }
+                public int find(int x) {
+                    if (parent[x] != x) {
+                        parent[x] = find(parent[x]); // Path compression
+                    }
+                    return parent[x];
+                }
 
-        public void unionByRank(int x, int y) {
-            int rootX = find(x);
-            int rootY = find(y);
+                public void unionByRank(int x, int y) {
+                    int rootX = find(x);
+                    int rootY = find(y);
 
-            if (rootX != rootY) {
-                if (rank[rootX] > rank[rootY]) {
-                    parent[rootY] = rootX;
-                } else if (rank[rootX] < rank[rootY]) {
-                    parent[rootX] = rootY;
-                } else {
-                    parent[rootY] = rootX;
-                    rank[rootX]++;
+                    if (rootX != rootY) {
+                        if (rank[rootX] > rank[rootY]) {
+                            parent[rootY] = rootX;
+                        } else if (rank[rootX] < rank[rootY]) {
+                            parent[rootX] = rootY;
+                        } else {
+                            parent[rootY] = rootX;
+                            rank[rootX]++;
+                        }
+                    }
+                }
+
+                public void unionBySize(int x, int y) {
+                    int rootX = find(x);
+                    int rootY = find(y);
+
+                    if (rootX != rootY) {
+                        if (rank[rootX] > rank[rootY]) {
+                            parent[rootY] = rootX;
+                            rank[rootX] += rank[rootY]; // Update the size
+                        } else {
+                            parent[rootX] = rootY;
+                            rank[rootY] += rank[rootX]; // Update the size
+                        }
+                    }
+                }
+
+                public static void main(String[] args) {
+                    UnionFind uf = new UnionFind(10);
+
+                    uf.unionByRank(1, 2);
+                    uf.unionByRank(2, 3);
+                    uf.unionByRank(4, 5);
+                    uf.unionByRank(6, 7);
+                    uf.unionByRank(5, 6);
+                    uf.unionByRank(3, 7);
+
+                    System.out.println(uf.find(1)); // Output: 1
+                    System.out.println(uf.find(3)); // Output: 1
+                    System.out.println(uf.find(5)); // Output: 4
+                    System.out.println(uf.find(7)); // Output: 4
                 }
             }
-        }
-
-        public void unionBySize(int x, int y) {
-            int rootX = find(x);
-            int rootY = find(y);
-
-            if (rootX != rootY) {
-                if (rank[rootX] > rank[rootY]) {
-                    parent[rootY] = rootX;
-                    rank[rootX] += rank[rootY]; // Update the size
-                } else {
-                    parent[rootX] = rootY;
-                    rank[rootY] += rank[rootX]; // Update the size
-                }
-            }
-        }
-
-        public static void main(String[] args) {
-            UnionFind uf = new UnionFind(10);
-
-            uf.unionByRank(1, 2);
-            uf.unionByRank(2, 3);
-            uf.unionByRank(4, 5);
-            uf.unionByRank(6, 7);
-            uf.unionByRank(5, 6);
-            uf.unionByRank(3, 7);
-
-            System.out.println(uf.find(1)); // Output: 1
-            System.out.println(uf.find(3)); // Output: 1
-            System.out.println(uf.find(5)); // Output: 4
-            System.out.println(uf.find(7)); // Output: 4
-        }
-    }
 
     2. Union by Rank
+    -----------------
+
     Union by Rank is an optimization that attaches the shorter tree under the root of the taller tree. This keeps the tree as flat as possible.
 
-    *** Implementation:
+    * Implementation:
+    -----------------
     Each node has a rank (or height). When merging two sets, the root of the smaller tree is made a child of the root of the larger tree.
     If the ranks are equal, one root is arbitrarily chosen, and its rank is increased by one.
 
-    public void unionByRank(int x, int y) {
-        int rootX = find(x);
-        int rootY = find(y);
+            public void unionByRank(int x, int y) {
+                int rootX = find(x);
+                int rootY = find(y);
 
-        if (rootX != rootY) {
-            if (rank[rootX] > rank[rootY]) {
-                parent[rootY] = rootX;
-            } else if (rank[rootX] < rank[rootY]) {
-                parent[rootX] = rootY;
-            } else {
-                parent[rootY] = rootX;
-                rank[rootX]++;
+                if (rootX != rootY) {
+                    if (rank[rootX] > rank[rootY]) {
+                        parent[rootY] = rootX;
+                    } else if (rank[rootX] < rank[rootY]) {
+                        parent[rootX] = rootY;
+                    } else {
+                        parent[rootY] = rootX;
+                        rank[rootX]++;
+                    }
+                }
             }
-        }
-    }
 
-    3. Union by Size
+    3. Union by Size:
+    -----------------
     Union by Size is similar to Union by Rank but uses the size of the trees (number of elements) instead of their height.
     The smaller tree is always added to the larger tree, ensuring that the resultant tree remains balanced.
 
-    *** Implementation:
+    * Implementation:
     Each node keeps track of the size of the tree it represents. When merging two sets, the root of the smaller tree is
     made a child of the root of the larger tree, and the size of the larger tree is updated.
 
-    public void unionBySize(int x, int y) {
-        int rootX = find(x);
-        int rootY = find(y);
+            public void unionBySize(int x, int y) {
+                int rootX = find(x);
+                int rootY = find(y);
 
-        if (rootX != rootY) {
-            if (rank[rootX] > rank[rootY]) {
-                parent[rootY] = rootX;
-                rank[rootX] += rank[rootY]; // Update the size
-            } else {
-                parent[rootX] = rootY;
-                rank[rootY] += rank[rootX]; // Update the size
+                if (rootX != rootY) {
+                    if (rank[rootX] > rank[rootY]) {
+                        parent[rootY] = rootX;
+                        rank[rootX] += rank[rootY]; // Update the size
+                    } else {
+                        parent[rootX] = rootY;
+                        rank[rootY] += rank[rootX]; // Update the size
+                    }
+                }
             }
-        }
-    }
-    ```
 
-    4. Combining Path Compression with Union by Rank/Size
+    4. Combining Path Compression with Union by Rank/Size:
+    ------------------------------------------------------
+
     Combining these optimizations results in an extremely efficient union-find structure with nearly constant time
     complexity for union and find operations.
 
@@ -413,110 +435,112 @@ Here's an overview of the operations, including the less common deletion operati
     To solve this problem, we can use the Union-Find data structure to efficiently group the connected cities and count
     the number of disjoint sets (provinces). Here is a step-by-step Java solution (ChatGPT coded the solution 🤖):
 
-    *** Steps:
+    * Steps:
+    ---------
+        1. Initialize Union-Find Structure: Create a Union-Find data structure to manage city connections.
+        2. Process Connections: For each pair of cities that are directly connected, perform a union operation.
+        3. Count Provinces: After processing all connections, count the number of unique roots in the Union-Find structure,
+            which corresponds to the number of provinces.
 
-    1. Initialize Union-Find Structure: Create a Union-Find data structure to manage city connections.
-    2. Process Connections: For each pair of cities that are directly connected, perform a union operation.
-    3. Count Provinces: After processing all connections, count the number of unique roots in the Union-Find structure,
-        which corresponds to the number of provinces.
+    * Java Implementation:
+    ----------------------
 
-    *** Java Implementation:
+            public class Solution {
+                // Union-Find data structure
+                class UnionFind {
+                    private int[] parent;
+                    private int[] rank;
 
-    public class Solution {
-        // Union-Find data structure
-        class UnionFind {
-            private int[] parent;
-            private int[] rank;
+                    // Constructor to initialize parent and rank arrays
+                    public UnionFind(int size) {
+                        parent = new int[size];
+                        rank = new int[size];
+                        for (int i = 0; i < size; i++) {
+                            parent[i] = i;
+                            rank[i] = 0;
+                        }
+                    }
 
-            // Constructor to initialize parent and rank arrays
-            public UnionFind(int size) {
-                parent = new int[size];
-                rank = new int[size];
-                for (int i = 0; i < size; i++) {
-                    parent[i] = i;
-                    rank[i] = 0;
-                }
-            }
+                    // Find operation with path compression
+                    public int find(int x) {
+                        if (parent[x] != x) {
+                            parent[x] = find(parent[x]);
+                        }
+                        return parent[x];
+                    }
 
-            // Find operation with path compression
-            public int find(int x) {
-                if (parent[x] != x) {
-                    parent[x] = find(parent[x]);
-                }
-                return parent[x];
-            }
+                    // Union operation with union by rank
+                    public void union(int x, int y) {
+                        int rootX = find(x);
+                        int rootY = find(y);
 
-            // Union operation with union by rank
-            public void union(int x, int y) {
-                int rootX = find(x);
-                int rootY = find(y);
+                        if (rootX != rootY) {
+                            if (rank[rootX] > rank[rootY]) {
+                                parent[rootY] = rootX;
+                            } else if (rank[rootX] < rank[rootY]) {
+                                parent[rootX] = rootY;
+                            } else {
+                                parent[rootY] = rootX;
+                                rank[rootX]++;
+                            }
+                        }
+                    }
 
-                if (rootX != rootY) {
-                    if (rank[rootX] > rank[rootY]) {
-                        parent[rootY] = rootX;
-                    } else if (rank[rootX] < rank[rootY]) {
-                        parent[rootX] = rootY;
-                    } else {
-                        parent[rootY] = rootX;
-                        rank[rootX]++;
+                    // Get the number of unique roots (provinces)
+                    public int getCount() {
+                        int count = 0;
+                        for (int i = 0; i < parent.length; i++) {
+                            if (parent[i] == i) {
+                                count++;
+                            }
+                        }
+                        return count;
                     }
                 }
-            }
 
-            // Get the number of unique roots (provinces)
-            public int getCount() {
-                int count = 0;
-                for (int i = 0; i < parent.length; i++) {
-                    if (parent[i] == i) {
-                        count++;
+                public int findCircleNum(int[][] isConnected) {
+                    int n = isConnected.length;
+                    UnionFind uf = new UnionFind(n);
+
+                    for (int i = 0; i < n; i++) {
+                        for (int j = i + 1; j < n; j++) {
+                            if (isConnected[i][j] == 1) {
+                                uf.union(i, j);
+                            }
+                        }
                     }
+
+                    return uf.getCount();
                 }
-                return count;
-            }
-        }
 
-        public int findCircleNum(int[][] isConnected) {
-            int n = isConnected.length;
-            UnionFind uf = new UnionFind(n);
+                public static void main(String[] args) {
+                    Solution solution = new Solution();
+                    int[][] isConnected = {
+                        {1, 1, 0},
+                        {1, 1, 0},
+                        {0, 0, 1}
+                    };
 
-            for (int i = 0; i < n; i++) {
-                for (int j = i + 1; j < n; j++) {
-                    if (isConnected[i][j] == 1) {
-                        uf.union(i, j);
-                    }
+                    int numberOfProvinces = solution.findCircleNum(isConnected);
+                    System.out.println("Number of Provinces: " + numberOfProvinces);  // Output should be 2
                 }
             }
 
-            return uf.getCount();
-        }
+    * Explanation:
 
-        public static void main(String[] args) {
-            Solution solution = new Solution();
-            int[][] isConnected = {
-                {1, 1, 0},
-                {1, 1, 0},
-                {0, 0, 1}
-            };
+        1. Union-Find Class:
+           - The `UnionFind` class manages the parent and rank arrays, provides the `find` and `union` methods to manage
+           connections, and a `getCount` method to count the number of unique sets (provinces).
 
-            int numberOfProvinces = solution.findCircleNum(isConnected);
-            System.out.println("Number of Provinces: " + numberOfProvinces);  // Output should be 2
-        }
-    }
+        2. findCircleNum Method:
+           - The `findCircleNum` method initializes the Union-Find structure.
+           - It processes the `isConnected` matrix to union connected cities.
+           - Finally, it returns the count of unique roots in the Union-Find structure, representing the number of provinces.
 
-    *** Explanation:
+        3. Main Method:
+           - The main method provides a sample `isConnected` matrix and prints the number of provinces.
 
-    1. Union-Find Class:
-       - The `UnionFind` class manages the parent and rank arrays, provides the `find` and `union` methods to manage connections, and a `getCount` method to count the number of unique sets (provinces).
-
-    2. findCircleNum Method:
-       - The `findCircleNum` method initializes the Union-Find structure.
-       - It processes the `isConnected` matrix to union connected cities.
-       - Finally, it returns the count of unique roots in the Union-Find structure, representing the number of provinces.
-
-    3. Main Method:
-       - The main method provides a sample `isConnected` matrix and prints the number of provinces.
-
-    4. Complexity:
-    - Time Complexity: O(n^2 * α(n)), where n is the number of cities, and α(n) is the Inverse Ackermann function.
-        The double loop iterates over all pairs of cities.
-    - Space Complexity: O(n), for storing the parent and rank arrays.
+        4. Complexity:
+        - Time Complexity: O(n^2 * α(n)), where n is the number of cities, and α(n) is the Inverse Ackermann function.
+            The double loop iterates over all pairs of cities.
+        - Space Complexity: O(n), for storing the parent and rank arrays.
