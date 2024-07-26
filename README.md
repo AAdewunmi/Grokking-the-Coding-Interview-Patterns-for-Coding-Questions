@@ -102,6 +102,18 @@ Coding Interview Patterns are classified according to skills level:
 
 [4. Dynamic Programming ](src/Dynamic_Programming)
 
+
+- [4a. 0/1 Knapsack ](src/Dynamic_Programming/_1_0_Knapsack)
+
+- [4b. Unbounded Knapsack ](src/Dynamic_Programming/Unbounded_Knapsack)
+
+- [4c. Fibonacci Numbers ](src/Dynamic_Programming/Fibonacci_Numbers)
+
+- [4d. Palindromic Subsequence ](src/Dynamic_Programming/Palindromic_Subsequence)
+
+- [4e. Longest Common Sub-String ](src/Dynamic_Programming/Longest_Common_SubString)
+
+
 [5. Backtracking ](src/Backtracking)
 
 [6. Trie ](src/Trie)
