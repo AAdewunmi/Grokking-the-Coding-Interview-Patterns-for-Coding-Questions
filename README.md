@@ -6,7 +6,10 @@ Grokking the Coding Interview Patterns: Includes Topic Tutorials Plus LeetCode Q
 ## 1. Project Description:
 
 This repository contains topic tutorials on "must know" coding interview patterns, their associated LeetCode questions 
-and solutions in Java programming language. Each section is structured as follows:
+and solutions in Java programming language. It is based on "Grokking the Coding Interview: Patterns for Coding Questions" 
+by Design Gurus. 
+
+Each section is structured as follows:
     
     * Bitwise XOR
 
@@ -19,13 +22,6 @@ and solutions in Java programming language. Each section is structured as follow
         L Problem_3_Complement_Of_Base_10_Number.java (LeetCode Question: 1009. Complement of Base 10 Integer)
 
         L Problem_4_Flip_And_Invert_An_Image.java (LeetCode Question: 832. Flipping an Image)
-
-This coding interview resource is based on "Grokking the Coding Interview: Patterns for Coding Questions" by Design Gurus.
-
-I am an advocate of learning-in-public, so I thought I'd create a public repository to keep all my learning on preparation
-for FAANGM coding interviews.
-
-Hope you find it useful 😎 
 
 
 ## 2. Prerequisites:
