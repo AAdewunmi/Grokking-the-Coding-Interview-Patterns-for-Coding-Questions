@@ -122,6 +122,23 @@ Coding Interview Patterns are classified according to skills level:
 [9. Ordered Set ](src/Ordered_Set)
 
 
+
+*** *Below is a visual representation of the three main pillars that make up Data Structures and Algorithms for Coding Interview's* 
+
+*i.e. Data Structures, Algorithms, and Problem-Solving Techniques. It demonstrates the relationship between these three pillar's of* 
+
+*Computer Science knowledge.*
+
+
+![download](https://github.com/user-attachments/assets/ef9fff3a-b37f-43b1-aae5-013a2c9fdaf9)
+
+
+*Reproduced from "How I Mastered Data Structures and Algorithms" By Ashish Pratap Singh* 
+
+*URL: https://blog.algomaster.io/p/15-leetcode-patterns*
+
+
+
 ## 4. Installation:
 
 i. Clone the git repo
