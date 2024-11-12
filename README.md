@@ -123,11 +123,9 @@ Coding Interview Patterns are classified according to skills level:
 
 
 
-*** *Below is a visual representation of the three main pillars that make up Data Structures and Algorithms for Coding Interview's* 
-
-*i.e. Data Structures, Algorithms, and Problem-Solving Techniques. It demonstrates the relationship between these three pillar's of* 
-
-*Computer Science knowledge.*
+    Below is a visual representation of the three main pillars that make up Data Structures and Algorithms 
+    for Coding Interview's i.e. Data Structures, Algorithms, and Problem-Solving Techniques. 
+    It demonstrates the relationship between these three pillar's of Computer Science knowledge.
 
 
 ![download](https://github.com/user-attachments/assets/ef9fff3a-b37f-43b1-aae5-013a2c9fdaf9)
@@ -138,6 +136,18 @@ Coding Interview Patterns are classified according to skills level:
 *URL: https://blog.algomaster.io/p/15-leetcode-patterns*
 
 
+    Neetcode Roadmap: This is a structured approach to preparing for technical interviews, particularly 
+    for software engineering roles. It was created by NeetCode, a popular YouTube channel and website 
+    that offers a variety of resources for coding interview preparation. The roadmap is designed to help 
+    candidates tackle common interview topics in a systematic and comprehensive way.
+
+
+![Screenshot 2024-11-12 at 14 26 01](https://github.com/user-attachments/assets/a15247b6-ae3d-441a-b4b4-2609d9cfbeea)
+
+
+*Reproduced from "Neetcode Roadmap"* 
+
+*URL: https://neetcode.io/roadmap*
 
 ## 4. Installation:
 
