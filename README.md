@@ -122,6 +122,11 @@ Coding Interview Patterns are classified according to skills level:
 [9. Ordered Set ](src/Ordered_Set)
 
 
+## 4. Coding Interview Preparation Roadmaps:
+
+
+#### (a) AlgoMaster Roadmap:
+
 
     Below is a visual representation of the three main pillars that make up Data Structures and Algorithms 
     for Coding Interview's i.e. Data Structures, Algorithms, and Problem-Solving Techniques. 
@@ -136,6 +141,11 @@ Coding Interview Patterns are classified according to skills level:
 *URL: https://blog.algomaster.io/p/15-leetcode-patterns*
 
 
+--------------------------------------------------------
+
+
+#### (b) Neetcode Roadmap:
+
     Neetcode Roadmap: This is a structured approach to preparing for technical interviews, particularly 
     for software engineering roles. It was created by NeetCode, a popular YouTube channel and website 
     that offers a variety of resources for coding interview preparation. The roadmap is designed to help 
@@ -149,7 +159,8 @@ Coding Interview Patterns are classified according to skills level:
 
 *URL: https://neetcode.io/roadmap*
 
-## 4. Installation:
+
+## 5. Installation:
 
 i. Clone the git repo
 
@@ -164,17 +175,17 @@ iii. Explore
 😎
 
 
-## 5. Resources:
+## 6. Resources:
 
 I acknowledge the use of LeetCode for coding interview questions 👨‍💻, OpenAI's ChatGPT for topic explanation and solutions to coding questions 🤖.
 
 
-## 6. Contributing:
+## 7. Contributing:
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 
-## 7. Adapted from: 
+## 8. Adapted from: 
 
 Project Name: "Grokking the Coding Interview: Patterns for Coding Questions" 
 
