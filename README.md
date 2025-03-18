@@ -163,9 +163,11 @@ Coding Interview Patterns are classified according to skills level:
 
 Thought I'd include a list of practice questions under known headings.
 
-1. [Two Pointers (215 Questions)](https://leetcode.com/problem-list/two-pointers/)
+1. [Two Pointers (215 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/two-pointers/)
 
-2. [Sliding Window (146 Questions)](https://leetcode.com/problem-list/sliding-window/)
+2. [Sliding Window (146 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/sliding-window/)
+
+3. [Prefix Sum (196 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/prefix-sum/)
 
 
 ## 6. Installation:
