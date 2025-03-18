@@ -159,8 +159,14 @@ Coding Interview Patterns are classified according to skills level:
 
 *URL: https://neetcode.io/roadmap*
 
+## 5. Leetcode Practice Questions:
 
-## 5. Installation:
+Thought I'd include a list of practice questions under known headings.
+
+1. [Two Pointers (215 Questions)](https://leetcode.com/problem-list/two-pointers/)
+
+
+## 6. Installation:
 
 i. Clone the git repo
 
@@ -175,17 +181,17 @@ iii. Explore
 😎
 
 
-## 6. Resources:
+## 7. Resources:
 
 I acknowledge the use of LeetCode for coding interview questions 👨‍💻, OpenAI's ChatGPT for topic explanation and solutions to coding questions 🤖.
 
 
-## 7. Contributing:
+## 8. Contributing:
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 
-## 8. Adapted from: 
+## 9. Adapted from: 
 
 Project Name: "Grokking the Coding Interview: Patterns for Coding Questions" 
 
