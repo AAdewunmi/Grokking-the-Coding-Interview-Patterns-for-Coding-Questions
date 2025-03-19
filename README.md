@@ -159,7 +159,8 @@ Coding Interview Patterns are classified according to skills level:
 
 *URL: https://neetcode.io/roadmap*
 
-## 5. Leetcode Practice Questions:
+
+## 5. Leetcode Practice Questions (Curated By Leetcode):
 
 Thought I'd include a list of practice questions under known headings.
 
@@ -169,7 +170,64 @@ Thought I'd include a list of practice questions under known headings.
 
 3. [Prefix Sum (196 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/prefix-sum/)
 
-*** More to come ... 
+4. [Hash Table (679 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/hash-table/)
+
+5. [Counting (157 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/counting/)
+
+6. [Linked List (79 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/linked-list/)
+
+7. [Doubly-Linked List (11 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/doubly-linked-list/)
+
+8. [Stack (167 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/stack/)
+
+9. [Queue (47 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/queue/)
+
+10. [Monotonic Stack (19 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/monotonic-stack/)
+
+11. [Monotonic Queue (48 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/monotonic-queue/)
+
+12. [Binary Tree (176 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/binary-tree/)
+
+13. [Binary Search Tree (40 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/binary-search-tree/)
+
+14. [Graph (159 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/graph/)
+
+15. [Breadth-First Search (Tree & Graph) (240 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/breadth-first-search/)
+
+16. [Depth-First Search (Tree & Graph) (314 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/depth-first-search/)
+
+17. [Heap (Priority Queue) (190 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/heap-priority-queue/)
+
+18. [Greedy (406 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/greedy/)
+
+19. [Binary Search (302 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/binary-search/)
+
+20. [Backtracking (107 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/backtracking/)
+
+21. [Dynamic Programming (571 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/dynamic-programming/)
+
+22. [Trie (56 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/trie/)
+
+23. [Bitmask (49 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/bitmask/)
+
+24. [Bit Manipulation (233 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/bit-manipulation/)
+
+25. [Math (563 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/math/)
+
+```
+The questions below are less likely to appear in a technical test, but they're still good to practice 💪
+```
+
+1. [Union Find (85 Questions [Easy, Medium, Hard])](https://leetcode.com/problem-list/union-find/)
+
+2. [Topological Sort (11 Questions [Medium, Hard])](https://leetcode.com/problem-list/topological-sort/)
+
+3. [Quickselect (7 Questions [Medium])](https://leetcode.com/problem-list/quickselect/)
+
+4. [Radix sort (3 Questions [Medium])](https://leetcode.com/problem-list/radix-sort/)
+
+5. [Minimum spanning tree (Kruskal's) (5 Questions [Medium, Hard])](https://leetcode.com/problem-list/minimum-spanning-tree/)
+
 
 ## 6. Installation:
 
